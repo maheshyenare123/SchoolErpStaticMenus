@@ -1,0 +1,496 @@
+<kt-portlet>
+	<kt-portlet-header [sticky]="true" [title]="'Class Timetable List'" [class]="'card-head-lg'"
+		[viewLoading$]="loading">
+		<ng-container ktPortletTools>
+			<button (click)="addClassTimetable()" mat-raised-button color="primary"
+				matTooltip="Create new ClassTimetable">New
+				ClassTimetable</button>
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<div class="kt-form kt-margin-b-30">
+			<form class="form" [formGroup]="searchForm">
+				<div class="card-body">
+
+					<div class="card-body-progress">
+						<mat-spinner [diameter]="20"></mat-spinner>
+					</div>
+
+					<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+						(close)="onAlertClose($event)">
+						Oh snap! Change a few things up and try submitting again.
+					</kt-alert>
+
+					<div class="form-group row">
+						<div class="col-lg-4 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Select Class" formControlName="classId"
+									(selectionChange)="onClassSelectChange($event.value)">
+
+									<mat-option *ngFor="let classData of classList" [value]="classData.id">
+										{{classData.classses}}
+									</mat-option>
+								</mat-select>
+								<mat-error>Class
+									<strong>is required</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-4 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Section" formControlName="sectionId">
+									<mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
+										{{sectionData.section}}
+									</mat-option>
+								</mat-select>
+								<mat-error>Section
+									<strong>is required</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-4 kt-margin-bottom-20-mobile">
+							<div class="d-flex justify-content-between">
+								<!-- <div class="mr-2"></div> -->
+								<div>
+									<button type="button" mat-raised-button color="primary" (click)="onSearch()"
+										matTooltip="Save changes">
+										Search
+									</button>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+				<!-- <div class="card-footer">
+					<div class="d-flex justify-content-between">
+						<div class="mr-2"></div>
+						<div>
+							<button type="button" mat-raised-button color="primary" (click)="onSearch()" [disabled]="viewLoading" matTooltip="Save changes">
+								Search
+							</button>
+						</div>
+					</div>
+				</div> -->
+			</form>
+
+
+		</div>
+		<!-- </kt-portlet-body>
+
+	<kt-portlet-body> -->
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<!-- <div class="form mb-3"> -->
+		<!-- start::FILTERS -->
+		<!-- <div class="form-filtration"> -->
+		<!-- <div class="row align-items-center">
+					<div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<mat-select [(value)]="filterStatus" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">Selling</mat-option>
+								<mat-option value="1">Sold</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Status</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<mat-select [(value)]="filterCondition" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">New</mat-option>
+								<mat-option value="1">Used</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Contidion</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div> -->
+		<!-- <div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" #searchInput placeholder="Search"
+								class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div> -->
+		<!-- </div> -->
+		<!-- </div> -->
+
+		<!-- <div class="row align-items-center collapse form-group-actions kt-margin-top-20 kt-margin-bottom-20"
+				[ngClass]="{'show' : selection.selected.length > 0}">
+				<div class="col-xl-12">
+					<div class="form-group form-group-inline">
+						<div class="form-label form-label-no-wrap">
+							<label class="font-bold font-danger-">Selected records count:
+								{{ selection.selected.length }}</label>
+						</div>
+						<div>
+							<button mat-raised-button color="warn" (click)="deleteProducts()"
+								matTooltip="Delete selected products" class="mat-button-mt-4">
+								<mat-icon>delete</mat-icon>
+								Delete All
+							</button>&nbsp;
+						
+							<button mat-raised-button (click)="fetchProducts()" matTooltip="Fetch selected products"
+								class="mat-button-mt-4">
+								<mat-icon>clear_all</mat-icon>
+								Fetch Selected Records
+							</button>&nbsp;
+						
+							<button mat-raised-button (click)="updateStatusForProducts()"
+								matTooltip="Update status for selected products" class="mat-button-mt-4">
+								<mat-icon>update</mat-icon>
+								Update status
+							</button>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+		<!-- </div> -->
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- <div class="mat-table-wrapper">
+			<mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+				matSortActive="id" matSortDirection="asc" matSortDisableClear>
+
+				<ng-container matColumnDef="mon">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Monday
+					</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable" >{{classTimetable.timetable}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="tue">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Tuesday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable">{{classTimetable.timetable}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="wed">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Wednusday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable">{{classTimetable.timetable}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="thus">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Thusday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable">{{classTimetable.timetable}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="fri">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Friday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable" >{{classTimetable.timetable}}
+					</mat-cell>
+				</ng-container>
+
+                <ng-container matColumnDef="sat">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Saturday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable" >{{classTimetable.timetable}}
+					</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="sun">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Sunday</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable" >{{classTimetable.timetable}}
+					</mat-cell>
+                </ng-container>
+                
+                
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>
+						Actions
+					</mat-header-cell>
+					<mat-cell *matCellDef="let classTimetable">
+						<button type="button" (click)="editClassTimetable(classTimetable)" mat-icon-button color="primary"
+							matTooltip="Edit Class Timetable">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button color="warn" type="button" (click)="deleteClassTimetable(classTimetable)"
+							matTooltip="Delete Class Timetable">
+							<mat-icon>delete</mat-icon>
+						</button>&nbsp;
+						
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<div class="mat-table-message" *ngIf="!dataSource.hasItems">No records found</div>
+			<div class="mat-table-message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....</div>
+		</div>
+		<div class="mat-table-bottom">
+			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
+				[showFirstLastButtons]="true"></mat-paginator>
+		</div> -->
+		<!-- end: BOTTOM -->
+		<hr>
+		<table>
+
+			<thead>
+				<tr>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+					<th>Sunday</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody>
+				<!-- <tr>
+					<td colspan="6">
+						<hr>
+					</td>
+					
+				</tr> -->
+				<tr>
+					<br>
+				</tr>
+				<tr>
+					<td>
+						<!-- <span *ngFor="let data of classTimetablesData?.timeTable?.monday">  -->
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.monday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<ng-container *ngIf="classTimetablesData?.timetable?.monday.length>0">
+								<!-- <ng-template #elseData> -->
+								
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.monday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+								</ng-container>
+								</ng-container>
+								<!-- </ng-template> -->
+						</span>
+
+					</td>
+					<td>
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.tuesday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+							<ng-container *ngIf="classTimetablesData?.timetable?.tuesday.length>0">
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.tuesday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+								</ng-container>
+								<!-- </ng-template> -->
+							</ng-container>
+
+
+						</span>
+
+					</td>
+					<td>
+
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.wednesday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+							<ng-container *ngIf="classTimetablesData?.timetable?.wednesday.length>0">
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.wednesday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+
+								</ng-container>
+								<!-- </ng-template> -->
+							</ng-container>
+						</span>
+					</td>
+					<td>
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.thursday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+								
+							<ng-container *ngIf="classTimetablesData?.timetable?.thursday.length>0">
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.thursday">
+
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+								</ng-container>
+								<!-- </ng-template> -->
+							</ng-container>
+
+
+						</span>
+
+					</td>
+					<td>
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.friday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+								<ng-container *ngIf="classTimetablesData?.timetable?.friday.length>0">
+							
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.friday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+
+								</ng-container>
+								</ng-container>
+							<!-- </ng-template> -->
+
+
+						</span>
+
+					</td>
+					<td>
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.saturday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+								<ng-container *ngIf="classTimetablesData?.timetable?.saturday.length>0">
+							
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.saturday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+
+								</ng-container>
+								</ng-container>
+							<!-- </ng-template> -->
+
+
+						</span>
+
+					</td>
+					<td>
+						<span>
+							<ng-container *ngIf="classTimetablesData?.timetable?.sunday.length==0">
+								<mat-card>Not
+									Scheduled</mat-card>
+							</ng-container>
+							<!-- <ng-template #elseData> -->
+								<ng-container *ngIf="classTimetablesData?.timetable?.sunday.length>0">
+							
+								<ng-container *ngFor="let data of classTimetablesData?.timetable?.sunday">
+
+									<mat-card>
+										<span>Subject : {{data.subjectName}}</span> <br>
+										<span>{{data.timeFrom}}-{{data.timeTo}}</span> <br>
+										<span>Room Number : {{data.roomNo}}</span> <br>
+									</mat-card>
+									<br>
+								</ng-container>
+								</ng-container>
+							<!-- </ng-template> -->
+
+
+
+						</span>
+
+					</td>
+
+				</tr>
+			</tbody>
+			<!-- <ng-container *ngIf="classTimetablesResult.timetable.monday=='monday'"></ng-container> -->
+			<!-- <tbody>
+	
+<tr>
+			<th>Monday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.monday"><td> <mat-card>Simple card</mat-card></td> </div>
+			
+		</tr>
+	
+		<tr>
+			<th>Tuesday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.tuesday"> <td> <mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+		<tr>
+			<th>Wednesday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.wednesday"> <td> <mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+		<tr>
+			<th>Thursday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.thursday"><td>  <mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+		<tr>
+			<th>Friday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.friday"><td>  <mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+		<tr>
+			<th>Saturday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.saturday"><td>  <mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+		<tr>
+			<th>Sunday</th>
+			<td><mat-card>Simple card</mat-card> </td>
+			<div *ngFor="let data of classTimetablesData?.timeTable?.sunday"> <td><mat-card>Simple card</mat-card> </td></div>
+			
+		</tr>
+
+	</tbody> -->
+		</table>
+
+
+
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

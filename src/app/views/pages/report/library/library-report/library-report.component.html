@@ -1,0 +1,32 @@
+<kt-portlet>
+    <kt-portlet-header [sticky]="true" [title]="'Library Report'" [class]="'card-head-lg'">
+
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="bookIssueReport()">
+                    <mat-icon>description</mat-icon> Book Issue Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="bookDueReport()">
+                    <mat-icon>description</mat-icon> Book Due Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="bookInventoryReport()">
+                    <mat-icon>description</mat-icon> Book Inventory Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="bookIssueReturnReport()">
+                    <mat-icon>description</mat-icon> Book Issue Return Report
+                </a>
+            </div>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

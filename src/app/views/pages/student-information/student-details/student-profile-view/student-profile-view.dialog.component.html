@@ -1,0 +1,659 @@
+<div class="card card-custom" style="height: 768px ;overflow-y: scroll;"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+	</div>
+
+	<div class="card-body">
+		<div class="card-body-progress">
+			<mat-spinner [diameter]="20"></mat-spinner>
+		</div>
+
+		<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+			(close)="onAlertClose($event)">
+			Oh snap! Change a few things up and try submitting again.
+		</kt-alert>
+
+
+	
+
+
+		<div class="form-group kt-form__group row">
+			<div class="col-lg-3 kt-margin-bottom-20-mobile">
+
+				<table style="width: 100%;text-align: center;">
+					<tr>
+						<td colspan="2">
+							<img src="../../../../../../assets/media/no_image.png" height="100" width="100"
+								style="border-radius: 50%;">
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<h4>{{student.firstname}} {{student.lastname}}</h4>
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<table style="width: 100%;border-bottom: 1px lightgray;">
+					<tr>
+						<td style="text-align: left;">
+							<label>Admission No</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.admissionNo}}
+						</td>
+
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Roll Number</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.rollNo}}
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Class</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.classId}} (2019-20)
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Section</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.sectionId}}
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>RTE</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.rte}}
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Gender</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.gender}}
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<h5>Sibling</h5>
+				<table style="width: 100%;text-align: center;">
+					<tr>
+						<td colspan="2">
+							<img src="../../../../../../assets/media/no_image.png" height="100" width="100"
+								style="border-radius: 50%;">
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Mahesh Yenare</h4>
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<table style="width: 100%;border-bottom: 1px lightgray;">
+					<tr>
+						<td style="text-align: left;">
+							<label>Admission No</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.admissionNo}}
+						</td>
+
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Class</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.classId}} (2019-20)
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Section</label>
+						</td>
+						<td style="text-align: right;">
+							{{student.sectionId}}A
+						</td>
+					</tr>
+
+				</table>
+
+			</div>
+
+			<div class="col-lg-9 kt-margin-bottom-20-mobile">
+				<mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+					<mat-tab label="Profile">
+						<table style="width: 100%;border-bottom: 1px lightgray;">
+							<tr>
+								<td style="text-align: left;">
+									<label>Admission Date</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.admissionDate}}
+								</td>
+
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Date of Birth</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.dob}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Category</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.categoryId}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Mobile Number</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.mobileno}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Cast</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.cast}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Religion</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.religion}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Email</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.email}}
+								</td>
+							</tr>
+						</table>
+						<hr>
+						<h5>Address</h5>
+						<hr>
+						<table style="width: 100%;border-bottom: 1px lightgray;">
+							<tr>
+								<td style="text-align: left;">
+									<label>Current Address</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.currentAddress}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Permanent Address</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.permanentAddress}}
+								</td>
+							</tr>
+						</table>
+						<hr>
+						<h5>Parent / Guardian Details</h5>
+						<hr>
+
+						<table style="width: 100%;border-bottom: 1px lightgray;">
+							<tr>
+								<td style="text-align: left;">
+									<label>Father Name</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.fatherName}}
+								</td>
+								<td rowspan="3"><img src="../../../../../../assets/media/no_image.png" height="100"
+										width="100" style="border-radius: 50%;"></td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Father Phone</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.fatherPhone}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Father Occupation</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.fatherOccupation}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Mother Name</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.motherName}}
+								</td>
+								<td rowspan="3"><img src="../../../../../../assets/media/no_image.png" height="100"
+										width="100" style="border-radius: 50%;"></td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Mother Phone</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.motherPhone}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Mother Occupation</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.motherOccupation}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Name</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianName}}
+								</td>
+								<td rowspan="3"><img src="../../../../../../assets/media/no_image.png" height="100"
+										width="100" style="border-radius: 50%;"></td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Email</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianEmail}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Relation</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianRelation}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Phone</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianPhone}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Occupation</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianOccupation}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Guardian Address</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.guardianAddress}}
+								</td>
+							</tr>
+						</table>
+						<hr>
+						<h5>Miscellaneous Details</h5>
+						<hr>
+						<table style="width: 100%;border-bottom: 1px lightgray;">
+							<tr>
+								<td style="text-align: left;">
+									<label>Blood Group</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.bloodGroup}}
+								</td>
+
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Student House</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.schoolHouseId}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Height</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.height}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Weight</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.weight}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>As on Date</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.measurementDate}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Previous School Details</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.previousSchool}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>National Identification Number</label>
+								</td>
+								<td style="text-align: left;">
+									<!-- {{student.rollNo}} -->7895862201as
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Local Identification Number</label>
+								</td>
+								<td style="text-align: left;">
+									<!-- {{student.height}} -->18132149
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Bank Account Number</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.bankAccountNo}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>Bank Name</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.bankName}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									<label>IFSC Code</label>
+								</td>
+								<td style="text-align: left;">
+									{{student.ifscCode}}
+								</td>
+							</tr>
+						</table>
+					</mat-tab>
+					<mat-tab label="Fees">
+						<table style="width: 100%;">
+							<thead >
+								
+								<th>Fees Group</th>
+								<th>Fees Code</th>
+								<th>Due Date</th>
+								<th>Status</th>
+								<th>Amount (₹)</th>
+								<th>Payment Id</th>
+								<th>Mode</th>
+								<th>Date</th>
+								<th>Discount (₹)</th>
+								<th>Fine (₹)</th>
+								<th>Paid (₹)</th>
+								<th>Balance</th>
+								
+							</thead>
+							<tbody *ngFor="let feesdeposite of feesDepositeList">
+								<tr>
+										<td>{{feesdeposite.feeGroupName}}</td>
+										<td>{{feesdeposite.feeCode}}</td>
+										<td>{{feesdeposite.dueDate}}</td>
+										<ng-container *ngIf="feesdeposite.status == 'unpaid'">
+											<td><span class="danger">Unpaid</span></td>
+										</ng-container>
+										<ng-container *ngIf="feesdeposite.status == 'paid'">
+											<td><span class="success">Paid</span></td>
+										</ng-container>
+										<ng-container *ngIf="feesdeposite.status == 'partial'">
+											<td><span class="warning">Partial</span></td>
+										</ng-container>
+										<td>{{feesdeposite.amount}}.00</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>{{feesdeposite.discount}}.00</td>
+										<td>{{feesdeposite.fine}}.00</td>
+										<td>{{feesdeposite.paid}}.00</td>
+										<td>{{feesdeposite.balance}}.00</td>
+								</tr>
+				
+								<tr *ngFor="let feesdeposite1 of feesdeposite.amountDetails">
+									
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>{{feesdeposite1.id}}</td>
+									<td>{{feesdeposite1.paymentMode}}</td>
+									<td>{{feesdeposite1.date}}</td>
+									<td>{{feesdeposite1.amountDiscount}}.00</td>
+									<td>{{feesdeposite1.amountFine}}.00</td>
+									<td>{{feesdeposite1.amount}}.00</td>
+									<td></td>
+													
+								</tr>
+				
+									
+				
+				
+							
+							</tbody>
+							<tfoot>
+								<tr>
+									
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>Grand Total</td>
+									<td>₹{{totalAmount}}.00</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>₹{{totalDiscount}}.00</td>
+									<td>₹{{totalFine}}.00</td>
+									<td>₹{{totalPaid}}.00</td>
+									<td>₹{{totalBalance}}.00</td>
+									
+								</tr>
+							</tfoot>
+						</table>
+					</mat-tab>
+					<mat-tab label="Documents">
+					<ng-container *ngIf="formShow == false;else elseform">
+						<button type="button" (click)="uploadDoc()" mat-icon-button color="primary"
+												matTooltip="Upload Document">
+												<mat-icon>cloud_upload</mat-icon>
+											</button>&nbsp;
+											<table style="width: 100%;">
+												<thead>
+													<th>Title</th>
+													<th>Name</th>
+													<th>Action</th>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Title 1</td>
+														<td>name.jsp</td>
+														<td>
+															<button type="button" (click)="downloadDoc()" mat-icon-button color="primary"
+																matTooltip="Download Document">
+																<mat-icon>cloud_download</mat-icon>
+															</button>&nbsp;
+
+															<button type="button" (click)="deleteDoc()" mat-icon-button color="warn"
+																matTooltip="Delete Document">
+																<mat-icon>delete</mat-icon>
+															</button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+					</ng-container>
+					<ng-template #elseform>
+						<kt-portlet-body >
+							<div class="kt-form kt-margin-b-30">
+								<form class="form" [formGroup]="documentForm">
+									<div class="card-body">
+							
+										<div class="card-body-progress">
+											<mat-spinner [diameter]="20"></mat-spinner>
+										</div>
+							
+										<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+											Oh snap! Change a few things up and try submitting again.
+										</kt-alert>
+							
+										<div class="form-group row">
+										
+											<div class="col-lg-3 kt-margin-bottom-20-mobile">
+												<mat-form-field class="mat-form-field-fluid">
+													<input matInput placeholder="Enter Title" formControlName="title" />
+													<mat-error>Title is
+														<strong>required</strong>
+													</mat-error>
+													
+												</mat-form-field>
+											</div>
+											<div class="col-lg-12 kt-margin-bottom-20-mobile">
+												<!-- <ngx-dropzone (change)="onSelect($event)">
+													<ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+													<ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+														<ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+													</ngx-dropzone-preview>
+												  
+												</ngx-dropzone> -->
+												<ngx-dropzone (change)="onSelect($event)">
+													<ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+											
+													<ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+														<!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+													  </ngx-dropzone-image-preview>
+												</ngx-dropzone>
+											</div>
+										</div>
+							
+									</div>
+									<div class="card-footer">
+										<div class="d-flex justify-content-between">
+											<div class="mr-2"></div>
+											<div>
+												<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+													Save
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							
+					
+							</div>
+						</kt-portlet-body>
+					</ng-template>
+				
+					</mat-tab>
+				</mat-tab-group>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- <div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button>
+				</div>
+			</div>
+		</div> -->
+
+</div>
+
+
+<style>
+	thead th {
+    border-bottom: 1px solid black;
+}
+
+
+tfoot tr td {
+    background-color:  lightgray; 
+}
+
+.success {
+ color: white;
+ background-color: #66aa18 !important;
+ padding: 2px;
+ border-radius: 3px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+.danger {
+    color: white;
+    background-color: #cf0303f6 !important;
+    padding: 2px;
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+   }
+
+.warning{
+    color: white;
+    background-color: #ff9801 !important;
+    padding: 2px;
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+   }
+</style>

@@ -1,0 +1,134 @@
+<div class="card card-custom"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="form" [formGroup]="staffLeaveRequestForm">
+		<div class="card-body">
+
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+			
+			<div class="form-group row">
+					<!-- set staffId and staffName as login staff   -->
+<!--  not Variavle related Role -->
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="Role" >
+								<mat-option value="0">Admin</mat-option>
+								<mat-option value="1">Teacher</mat-option>
+							</mat-select>
+
+						</mat-form-field>
+					</div>
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="Name"  formControlName="staffName">
+								<mat-option value="00">Mahesh(ASP0909)</mat-option>
+								<mat-option value="11">Teacher(ASP0909)</mat-option>
+							</mat-select>
+
+						</mat-form-field>
+					</div>
+
+                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput [matDatepicker]="picker"
+                            placeholder="Choose a Date "
+                            formControlName="date" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint align="start">Please enter
+                            <strong>Apply Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+                    </mat-form-field>
+				</div>
+				<div class="col-lg-3 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="Available Leave" formControlName="leaveTypeId" (change)="getLeaveType($event)" >
+							<mat-option *ngFor="let leaveType of leaveTypeList" [value]="leaveType.id" >
+								{{leaveType.type}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-3 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput [matDatepicker]="picker1"
+                            placeholder="Choose a Date "
+                            formControlName="leaveFrom" />
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-hint align="start">Please enter
+                            <strong>From Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+                    </mat-form-field>
+				</div>
+				<div class="col-lg-3 kt-margin-bottom-20-mobile">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput [matDatepicker]="picker2"
+                            placeholder="Choose a Date "
+                            formControlName="leaveTo" />
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-hint align="start">Please enter
+                            <strong>To Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+                    </mat-form-field>
+				</div>
+				<div class="col-lg-3 kt-margin-bottom-20-mobile">
+					<label >Status</label><br>
+					<mat-radio-group aria-label="Select an option" formControlName="status" >
+						<mat-radio-button value="pending">Pending</mat-radio-button>
+						<mat-radio-button value="approve ">Approve </mat-radio-button>
+						<mat-radio-button value="disapprove ">Disapprove </mat-radio-button>
+					  </mat-radio-group>
+				</div>
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<textarea matInput rows="3" placeholder="Enter Reason" formControlName="reason"></textarea>
+					</mat-form-field>
+                </div>
+			</div>
+			
+			<div class="col-lg-12 kt-margin-bottom-20-mobile">
+				<mat-form-field class="mat-form-field-fluid">
+					<textarea matInput rows="3" placeholder="Enter Note" formControlName="adminRemark"></textarea>
+				</mat-form-field>
+			</div>
+            <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                <!-- <ngx-dropzone (change)="onSelect($event)">
+                    <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                  
+                </ngx-dropzone> -->
+                <ngx-dropzone (change)="onSelect($event)">
+                    <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+            
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                        <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                      </ngx-dropzone-image-preview>
+                </ngx-dropzone>
+            </div>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

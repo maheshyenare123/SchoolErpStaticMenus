@@ -1,0 +1,521 @@
+<kt-portlet>
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Staff Details'">
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="kt-form kt-margin-b-30">
+
+            <div class="kt-portlet__body">
+
+                <!-- <div class="kt-portlet__body-progress">
+                                <mat-spinner [diameter]="20"></mat-spinner>
+                            </div> -->
+
+                <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+                    Oh snap! Change a few things up and try submitting again.
+                </kt-alert>
+
+
+                <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                    <mat-step [stepControl]="staffInformationFormGroup">
+                        <form [formGroup]="staffInformationFormGroup">
+                            <ng-template matStepLabel>Staff Information</ng-template>
+                            <div class="form-group kt-form__group row">
+                                <!-- <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Staff Id" formControlName="userId" />
+                                        <mat-error>Staff Id
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div> -->
+                                <!-- roleName staffDesignation  departmentName set via change fun-->
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Select Role" formControlName="roleId" (selectionChange)="onRoleSelectChange($event.value)">
+                                            <ng-container *ngFor="let role of rolesList">
+                                                <ng-container *ngIf="role.name!='Student' && role.name!='Parent'">
+                                                    <mat-option [value]="role.id">
+                                                        {{role.name}}
+                                                    </mat-option>
+                                                </ng-container>
+                                            </ng-container>
+
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Select Designation" formControlName="staffDesignationId">
+                                            <mat-option *ngFor="let designation of designationList" [value]="designation.id">
+                                                {{designation.designation}}
+                                            </mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Department" formControlName="departmentId">
+                                            <mat-option *ngFor="let department of departmentList" [value]="department.id">
+                                                {{department.departmentName}}
+                                            </mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter First Name" formControlName="name" />
+                                        <mat-error>First Name
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Last Name" formControlName="surname" />
+                                        <mat-error>Last Name
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Father Name" formControlName="fatherName" />
+                                        <mat-error>Father Name
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Mother Name" formControlName="motherName" />
+                                        <mat-error>Mother Name
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input type="email" matInput placeholder="Enter Email(Login UserName)" formControlName="email" />
+                                        <mat-error>Email is
+                                            <strong>required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Gender" formControlName="gender">
+                                            <mat-option value="male">Male</mat-option>
+                                            <mat-option value="female">Female</mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput [matDatepicker]="picker1" placeholder="Choose a Birth Date" formControlName="dob" />
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                        <mat-hint align="start">Please enter
+                                            <strong>Birth Date</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput [matDatepicker]="picker2" placeholder="Choose a Date Of Joining" formControlName="dateOfJoining" />
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                        <mat-hint align="start">Please enter
+                                            <strong>Date Of Joining</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Contact No" formControlName="contactNo" (keypress)=_keyPress($event)/>
+                                        <mat-error>Contact No
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Emergency Contact No" formControlName="emergencyContactNo" (keypress)=_keyPress($event)/>
+                                        <mat-error>Emergency Contact No
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Marital Status" formControlName="maritalStatus">
+                                            <mat-option value="Single">Single</mat-option>
+                                            <mat-option value="Married">Married</mat-option>
+                                            <mat-option value="Widowed">Widowed</mat-option>
+                                            <mat-option value="Widowed">Widowed</mat-option>
+                                            <mat-option value="Separated">Separated</mat-option>
+                                            <mat-option value="Not Specified">Not Specified</mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+
+                                    <label>Staff Photo</label>
+                                    <ngx-dropzone (change)="onSelectStaff($event)">
+                                        <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesStaff" [file]="f" [removable]="true"
+                                            (removed)="onRemoveStaff(f)">
+
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <textarea matInput rows="2" placeholder="Enter Current Address" formControlName="localAddress"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <textarea matInput rows="2" placeholder="Enter Permanent Address" formControlName="permanentAddress"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <textarea matInput rows="2" placeholder="Enter Qualification" formControlName="qualification"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <textarea matInput rows="2" placeholder="Enter Work Experience" formControlName="workExp"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <textarea matInput rows="3" placeholder="Enter Note" formControlName="note"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class=" form-group  row text-center">
+                                <div class="col-lg-12">
+
+                                    <button mat-button matStepperNext mat-raised-button color="primary">Next</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="addMoreDetailFormGroup" label="Add More Detail">
+                        <form [formGroup]="addMoreDetailFormGroup">
+
+
+                            <label>Payroll Details</label>
+                            <hr>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter EPF No" formControlName="epfNo" />
+                                        <mat-error>EPF No
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Basic Salary" formControlName="basicSalary" />
+                                        <mat-error>Basic Salary
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <mat-select placeholder="Contract Type" formControlName="contractType">
+                                            <mat-option value="Permanent">Permanent</mat-option>
+                                            <mat-option value="Probation">Probation</mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Shift" formControlName="shift" />
+                                        <mat-error>Shift
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Location" formControlName="location" />
+                                        <mat-error>Location
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <label>Leave Details</label>
+                            <hr>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Number Of Leaves" formControlName="numberOfLeaves" />
+                                        <mat-error>Number Of Leaves
+                                            <strong>is required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <!-- Make it dynamic for Leave Type Array  -->
+                            <!-- <div class="form-group kt-form__group row">
+                                
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile" formArrayName="leaveType"
+                                    *ngFor="let item of addMoreDetailFormGroup.get('leaveType')?.controls;let i = index;">
+                                    <ng-container [formGroupName]="i">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Number Of Leaves"
+                                                formControlName="numberOfLeaves" />
+                                            <mat-error>Number Of Leaves
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </ng-container>
+                                    </div>
+
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Number Of Leaves"
+                                                formControlName="numberOfLeaves" />
+                                            <mat-error>Number Of Leaves
+                                                <strong>is required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                   
+                                </div> -->
+
+                            <label>Bank Details</label>
+                            <hr>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Account Title" formControlName="accountTitle" />
+                                        <mat-error>Account Title
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Bank Account Number" formControlName="bankAccountNo" />
+                                        <mat-error>Bank Account Number
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Bank Name" formControlName="bankName" />
+                                        <mat-error>Bank Name
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter IFSC Code" formControlName="ifscCode" />
+                                        <mat-error>IFSC Code
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Bank Branch" formControlName="bankBranch" />
+                                        <mat-error>Bank Branch
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <label>Social Details</label>
+                            <hr>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Facebook" formControlName="facebook" />
+                                        <mat-error>Facebook
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Twitter" formControlName="twitter" />
+                                        <mat-error>Twitter
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Linkedin" formControlName="linkedin" />
+                                        <mat-error>Linkedin
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Instagram" formControlName="instagram" />
+                                        <mat-error>Instagram
+                                            <strong>is required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+
+                            <label>Upload Documents</label>
+                            <hr>
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <label>Resume</label>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+
+                                    <label>Document Photo</label>
+                                    <ngx-dropzone (change)="onSelectResume($event)">
+                                        <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f1 of filesResume" [file]="f1" [removable]="true"
+                                            (removed)="onRemoveResume(f1)">
+                                            <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <label>Joining Letter</label>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+
+                                    <label>Document Photo</label>
+                                    <ngx-dropzone (change)="onSelectJoinLetter($event)">
+                                        <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f1 of filesJoinLetter" [file]="f1" [removable]="true"
+                                            (removed)="onRemoveJoinLetter(f1)">
+                                            <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    <label>Other Document</label>
+                                </div>
+                                <div class="col-lg-3 kt-margin-bottom-20-mobile">
+
+                                    <label>Document Photo</label>
+                                    <ngx-dropzone (change)="onSelectOther($event)">
+                                        <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f1 of filesOther" [file]="f1" [removable]="true"
+                                            (removed)="onRemoveOther(f1)">
+                                            <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
+
+
+                            </div>
+
+                            <!-- <div>
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button matStepperNext>Next</button>
+                                </div> -->
+                        </form>
+
+                        <br>
+                        <br>
+                        <div class="row text-right">
+                            <div class="col-lg-12">
+
+                                <button type="button" mat-raised-button cdkFocusInitial matTooltip="Cancel changes" (click)="onCancel()">
+                                    Cancel
+                                </button>&nbsp;
+                                <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <!-- <mat-step>
+                            <ng-template matStepLabel>Done</ng-template>
+                            <p>You are now done.</p>
+                            <div>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button (click)="stepper.reset()">Reset</button>
+                            </div>
+                        </mat-step> -->
+                </mat-horizontal-stepper>
+
+
+
+
+
+            </div>
+
+
+
+            <div class="kt-separator kt-separator--dashed"></div>
+
+
+
+
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+
+</kt-portlet>

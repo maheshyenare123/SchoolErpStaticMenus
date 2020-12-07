@@ -1,0 +1,104 @@
+<div class="card card-custom"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="form" [formGroup]="noticeboardForm">
+		<div class="card-body">
+
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-group row">
+				<div class="col-lg-8 kt-margin-bottom-20-mobile">
+					<div class="form-group row">
+						<div class="col-lg-12 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Enter Title" formControlName="title" />
+								<mat-error> Title is
+									<strong>required</strong>
+								</mat-error>
+								
+							</mat-form-field>
+						</div>
+						<div class="col-lg-12 kt-margin-bottom-20-mobile">
+							<label> Message</label>
+							<ckeditor formControlName="message" [config]="ckeConfig" debounce="500"
+							  (paste)="onPastedescription($event)" (change)="onChangedescription($event)">
+							</ckeditor>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<div class="form-group row">
+						<div class="col-lg-12 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput [matDatepicker]="picker"
+									placeholder="Choose a Notice Date "
+									formControlName="noticeDate" />
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint align="start">Please enter
+									<strong>Notice Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+							</mat-form-field>
+						</div>
+			
+			
+			
+							<div class="col-lg-12 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput [matDatepicker]="picker1"
+										placeholder="Choose a Publish On"
+										formControlName="publishOn" />
+									<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+									<mat-datepicker #picker1></mat-datepicker>
+									<mat-hint align="start">Please enter
+										<strong> Publish On</strong> in 'mm/dd/yyyy' format</mat-hint>
+								</mat-form-field>
+							</div>
+
+							<div class="col-lg-12 kt-margin-bottom-20-mobile">
+								<label>Message To</label>
+								<section class="example-section" *ngFor="let check of roleCheckBoxList">
+									<mat-checkbox class="example-margin"  [checked]="check.isChecked" (change)="onRoleCheckBoxChanges($event.checked,check.data.id)">
+										{{check.data.name}} 
+									</mat-checkbox>
+									<!-- <mat-error *ngIf="checkBoxError">
+										Teacher
+										<strong>is required</strong>
+									</mat-error> -->
+								</section>
+
+							</div>
+						</div>
+				</div>
+			</div>
+
+			
+			
+		
+
+	
+
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

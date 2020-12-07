@@ -1,0 +1,291 @@
+<div class="card card-custom" style="height: 768px ;overflow-y: scroll;"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+	</div>
+
+	<div class="card-body">
+		<div class="card-body-progress">
+			<mat-spinner [diameter]="20"></mat-spinner>
+		</div>
+
+		<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+			(close)="onAlertClose($event)">
+			Oh snap! Change a few things up and try submitting again.
+		</kt-alert>
+
+
+		<div class="form-group kt-form__group row">
+			<div class="col-lg-12 kt-margin-bottom-20-mobile">
+				<table style="width: 100%;">
+					<tr>
+						<td rowspan="4">
+							<img src="../../../../../../assets/media/no_image.png" height="100" width="100"
+								style="border-radius: 50%;">
+						</td>
+						<td style="text-align: left;">
+							<label>Name</label>
+						</td>
+						<td style="text-align: left;">
+							Mahesh Yenare
+						</td>
+						<td style="text-align: left;">
+							<label>Class Section</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.class}} {{student.section}} -->First A
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Father Name</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.fatherName}} -->Father Name
+						</td>
+						<td style="text-align: left;">
+							<label>Admission No</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.admissionNo}} -->1001
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Mobile Number</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.mobileno}} -->36300000
+						</td>
+						<td style="text-align: left;">
+							<label>Roll Number</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.rollNo}} -->18132149
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+							<label>Category</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.category}} -->General
+						</td>
+						<td style="text-align: left;">
+							<label>RTE</label>
+						</td>
+						<td style="text-align: left;">
+							<!-- {{student.rte}} -->Yes
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-lg-12 kt-margin-bottom-20-mobile">
+				<table style="width: 100%;border: 1px solid black;">
+					<thead style="border: 1px solid black;">
+						<th>Fees Group</th>
+						<th>Fees Code</th>
+						<th>Due Date</th>
+						<th>Status</th>
+						<th>Amount (₹)</th>
+						<th>Payment Id</th>
+						<th>Mode</th>
+						<th>Date</th>
+						<th>Discount (₹)</th>
+						<th>Fine (₹)</th>
+						<th>Paid (₹)</th>
+						<th>Balance</th>
+					</thead>
+					<tbody style="border: 1px solid black;">
+						<tr>
+							<td>General</td>
+							<td>admission-fees</td>
+							<td>30/08/2020</td>
+							<td>Paid</td>
+							<td>5000.00</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>5000.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>3/1</td>
+							<td>Cash</td>
+							<td>07/08/2020</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>2000.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>3/2</td>
+							<td>Cheque</td>
+							<td>07/08/2020</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>1000.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>3/3</td>
+							<td>Cash</td>
+							<td>03/10/2020</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>2000.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>General</td>
+							<td>Bus-fees</td>
+							<td>31/08/2020</td>
+							<td>Paid</td>
+							<td>999.00</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>99.00</td>
+							<td>0.00</td>
+							<td>900.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>4/1</td>
+							<td>Cash</td>
+							<td>07/08/2020</td>
+							<td>99.00</td>
+							<td>0.00</td>
+							<td>400.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>4/2</td>
+							<td>Cash</td>
+							<td>03/10/2020</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>500.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>General</td>
+							<td>exam-fees</td>
+							<td>31/12/2020</td>
+							<td>Unpaid</td>
+							<td>5000.00</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>5000.00</td>
+						</tr>
+						<tr>
+							<td>School Sport Event</td>
+							<td>G-SPORT</td>
+							<td>10/10/2020</td>
+							<td>Paid</td>
+							<td>450.00</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>450.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>6/1</td>
+							<td>Cash</td>
+							<td>16/10/2020</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>450.00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Discount</td>
+							<td>Scholar</td>
+							<td></td>
+							<td>Discount of ₹2000.00 Assigned</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+					<tfoot style="border: 1px solid black;">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>Grand Total</td>
+							<td>₹11449.00</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>₹99.00</td>
+							<td>₹0.00</td>
+							<td>₹6350.00</td>
+							<td>₹5000.00</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>	
+	</div>
+	<!-- <div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button>
+				</div>
+			</div>
+		</div> -->
+
+</div>

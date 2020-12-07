@@ -1,0 +1,57 @@
+<kt-portlet>
+    <kt-portlet-header [sticky]="true" [title]="'Online Fees Collection Report'" [class]="'card-head-lg'">
+
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="feesStatement()">
+                    <mat-icon>description</mat-icon> Fees Statement
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="balanceFeesReport()">
+                    <mat-icon>description</mat-icon> Balance Fees Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="feesCollectionReport()">
+                    <mat-icon>description</mat-icon> Fees Collection Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile active">
+                <a class="cursor" (click)="onlineFeesCollectionReport()">
+                    <mat-icon>description</mat-icon> Online Fees Collection Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="incomeReport()">
+                    <mat-icon>description</mat-icon> Income Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="expenseReport()">
+                    <mat-icon>description</mat-icon> Expense Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="payrollReport()">
+                    <mat-icon>description</mat-icon> Payroll Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="incomeGroupReport()">
+                    <mat-icon>description</mat-icon> Income Group Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="expenseGroupReport()">
+                    <mat-icon>description</mat-icon> Expense Group Report
+                </a>
+            </div>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

@@ -1,0 +1,183 @@
+<div class="card card-custom" [ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }" style="overflow-y: scroll;height: 500px;">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+	</div>
+
+
+	<form class="form" [formGroup]="examSubjectForm">
+		<div class="card-body">
+
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+				(close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+
+			<table style="width: 100%;border-bottom: 1px lightgray;" *ngIf="examGroupDetail">
+				<tr>
+					<td style="text-align: left;">
+						<label>Exam Group</label>
+					</td>
+					<td style="text-align: left;">
+						<label>Exam Type</label>
+					</td>
+					<td style="text-align: left;">
+						<label>Description</label>
+					</td>
+					
+				</tr>
+				<tr>
+					<td style="text-align: left;">
+						{{examGroupDetail.name}}
+					</td>
+					<td style="text-align: left;">
+						{{examGroupDetail.examType}}
+					</td>
+					<td style="text-align: left;">
+						{{examGroupDetail.description}}
+					</td>
+				</tr>
+			</table>
+
+			<button type="button" mat-raised-button color="primary" class="col-md-1 pull-right"
+			(click)="addItemRow()">
+			<i class="material-icons">add</i>
+		</button>
+
+		<div class="card table-responsive">
+			<table class="table" style="width: 100%">
+				<thead>
+					<tr>
+						<th width="20%">Subject</th>
+						<th width="10%">Date</th>
+						<th width="10%">Time</th>
+						<th width="10%">Duration</th>
+						<th width="10%">Credit Hours</th>
+						<th width="10%">Room No</th>
+						<th width="10%">Marks(Max)</th>
+						<th width="10%">Marks(MIn)</th>
+						<th width="10%">Remove</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr formArrayName="items"
+						*ngFor="let item of examSubjectForm.get('items')?.controls;let i = index;">
+						<ng-container [formGroupName]="i">
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select placeholder="Select Subject" formControlName="subjectId"
+										(selectionChange)="onSubjectSelectChange($event.value,i)">
+										<mat-option *ngFor="let subject of subjectList"
+											[value]="subject.id">
+											{{subject.name}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</td>
+							<td class="form-group">
+									<mat-form-field class="mat-form-field-fluid">
+										<input matInput [matDatepicker]="picker"
+											placeholder="Choose a Date "
+											formControlName="dateFrom" />
+										<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+										<mat-datepicker #picker></mat-datepicker>
+										<mat-hint align="start">Please enter
+											<strong>Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+									</mat-form-field>
+							</td>
+							<td class="form-group">
+								<div class="ngx-timepicker-field-example">
+									
+									<ngx-timepicker-field [controlOnly]="true"
+										placeholder="Choose a Time " formControlName="timeFrom">
+									</ngx-timepicker-field>
+								</div>
+
+							</td>
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Duration"
+										formControlName="duration" />
+									<mat-error>Duration is
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</td>
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Credit Hours"
+										formControlName="creditHours" />
+									<mat-error> Credit Hours is
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</td>
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Room No"
+										formControlName="roomNo" />
+									<mat-error>Room No is
+										<strong>required</strong>
+									</mat-error>
+
+								</mat-form-field>
+							</td>
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Max Marks"
+										formControlName="maxMarks" />
+									<mat-error> Max Marks is
+										<strong>required</strong>
+									</mat-error>
+								</mat-form-field>
+							</td>
+							<td class="form-group">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Min Marks"
+										formControlName="minMarks" />
+									<mat-error>Min Marks is
+										<strong>required</strong>
+									</mat-error>
+
+								</mat-form-field>
+							</td>
+							<td>
+								<button mat-icon-button color="warn" type="button"
+									(click)="removeItemRow(i)">
+									<mat-icon>delete</mat-icon>
+								</button>
+							</td>
+						</ng-container>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+		</div>
+
+
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial
+						matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+						[disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>

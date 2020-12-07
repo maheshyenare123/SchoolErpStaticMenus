@@ -1,0 +1,32 @@
+thead th {
+    border-bottom: 1px solid black;
+}
+
+
+tfoot tr td {
+    background-color:  lightgray; 
+}
+
+.success {
+ color: white;
+ background-color: #66aa18 !important;
+ padding: 2px;
+ border-radius: 3px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+.danger {
+    color: white;
+    background-color: #cf0303f6 !important;
+    padding: 2px;
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+   }
+
+.warning{
+    color: white;
+    background-color: #ff9801 !important;
+    padding: 2px;
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+   }

@@ -1,0 +1,779 @@
+<kt-portlet>
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Student Detail'">
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="kt-form kt-margin-b-30">
+            
+                <div class="kt-portlet__body">
+
+                    <!-- <div class="kt-portlet__body-progress">
+                                <mat-spinner [diameter]="20"></mat-spinner>
+                            </div> -->
+
+                    <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+                        (close)="onAlertClose($event)">
+                        Oh snap! Change a few things up and try submitting again.
+                    </kt-alert>
+
+                  
+                    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                        <mat-step [stepControl]="studentInformationFormGroup">
+                            <form [formGroup]="studentInformationFormGroup">
+                                <ng-template matStepLabel>Student Information</ng-template>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Roll No" formControlName="rollNo" />
+                                            <mat-error>Roll No
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Class" formControlName="classId" (selectionChange)="onClassSelectChange($event.value)">
+                                                <mat-option *ngFor="let classData of classList" [value]="classData.id" >
+                                                    {{classData.classses}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Section" formControlName="sectionId">
+                                                <mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
+                                                    {{sectionData.section}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter First Name"
+                                                formControlName="firstname" />
+                                            <mat-error>First Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Last Name" formControlName="lastname" />
+                                            <mat-error>Last Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Gender" formControlName="gender">
+                                                <mat-option value="male">Male</mat-option>
+                                                <mat-option value="female">Female</mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput [matDatepicker]="picker1" placeholder="Choose a Birth Date"
+                                                formControlName="dob" />
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-hint align="start">Please enter
+                                                <strong>Birth Date</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Category" formControlName="categoryId">
+                                                <mat-option *ngFor="let category of categoryList" [value]="category.id">
+                                                    {{category.category}}
+                                                  </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Religion" formControlName="religion" />
+                                            <mat-error>Religion
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Caste" formControlName="cast" />
+                                            <mat-error>Caste
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Mobile Number"
+                                                formControlName="mobileno" (keypress)=_keyPress($event)/>
+                                            <mat-error>Mobile Number
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input type="email" matInput placeholder="Enter Email"
+                                                formControlName="email" />
+                                            <mat-error>Email is
+                                                <strong>required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput [matDatepicker]="picker2"
+                                                placeholder="Choose a Admission Date" formControlName="admissionDate" />
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                            <mat-hint align="start">Please enter
+                                                <strong>Admission Date</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Blood Group" formControlName="bloodGroup">
+                                                <mat-option value="o+">O+</mat-option>
+                                                <mat-option value="a+">A+</mat-option>
+                                                <mat-option value="b+">B+</mat-option>
+                                                <mat-option value="ab+">AB+</mat-option>
+                                                <mat-option value="a-">A-</mat-option>
+                                                <mat-option value="b-">B-</mat-option>
+                                                <mat-option value="ab-">AB-</mat-option>
+                                                <mat-option value="o-">O-</mat-option>
+
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Student House" formControlName="schoolHouseId">
+                                                <mat-option *ngFor="let studentHouse of studentHouseList" [value]="studentHouse.id">
+                                                    {{studentHouse.houseName}}
+                                                  </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input type="text" matInput placeholder="Enter Height"
+                                                formControlName="height" />
+                                            <mat-error>Height is
+                                                <strong>required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input type="text" matInput placeholder="Enter Weight"
+                                                formControlName="weight" />
+                                            <mat-error>Weight is
+                                                <strong>required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput [matDatepicker]="picker3" placeholder="Choose a As On Date"
+                                                formControlName="measurementDate" />
+                                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker3></mat-datepicker>
+                                            <mat-hint align="start">Please enter
+                                                <strong>As On Date</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    
+                                        <label>Student Photo</label>
+                                        <ngx-dropzone (change)="onSelectStudent($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f of filesStudent" [file]="f" [removable]="true"
+                                                (removed)="onRemoveStudent(f)">
+                                               
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-accordion class="example-headers-align" multi>
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        Add Sibling
+                                                    </mat-panel-title>
+                                                    <mat-panel-description>
+                                                        <!-- Type your name and age
+                                              <mat-icon>account_circle</mat-icon> -->
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+
+                                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                                    <mat-form-field class="mat-form-field-fluid">
+                                                        <mat-select placeholder="Class" formControlName="classId"(selectionChange)="onClassSelectChange($event.value)">
+                                                            <mat-option *ngFor="let classData of classList" [value]="classData.id" >
+                                                                {{classData.classses}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                                    <mat-form-field class="mat-form-field-fluid">
+                                                        <mat-select placeholder="Section" formControlName="sectionId">
+                                                            <mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
+                                                                {{sectionData.section}}
+                                                            </mat-option>
+                                                        </mat-select>
+
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                                    <mat-form-field class="mat-form-field-fluid">
+                                                        <mat-select placeholder="Student" formControlName="siblingId">
+                                                            <mat-option value="00">Business</mat-option>
+                                                            <mat-option value="11">Individual</mat-option>
+                                                        </mat-select>
+
+                                                    </mat-form-field>
+                                                </div>
+                                                <button type="button" mat-raised-button color="primary"
+                                                    (click)="onSubmit1()" [disabled]="viewLoading"
+                                                    matTooltip="Save changes">
+                                                    Save
+                                                </button>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                                
+                            <br>
+
+                                <div class=" form-group  row text-center">
+                                    <div class="col-lg-12">
+
+                                        <button mat-button matStepperNext mat-raised-button color="primary">Next</button>
+                                    </div>
+                                    </div>
+                            
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="parentGuardianFormGroup" label="Parent Guardian Detail">
+                            <form [formGroup]="parentGuardianFormGroup">
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Father Name"
+                                                formControlName="fatherName" />
+                                            <mat-error>Father Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Father Phone"
+                                                formControlName="fatherPhone" (keypress)=_keyPress($event) />
+                                            <mat-error>Father Phone
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Father Occupation"
+                                                formControlName="fatherOccupation" />
+                                            <mat-error>Father Occupation
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        
+                                        <label>Father Photo</label>
+                                        <ngx-dropzone (change)="onSelectFather($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f1 of filesFather" [file]="f1" [removable]="true"
+                                                (removed)="onRemoveFather(f1)">
+                                                
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Mother Name"
+                                                formControlName="motherName" />
+                                            <mat-error>Mother Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Mother Phone"
+                                                formControlName="motherPhone" (keypress)=_keyPress($event) />
+                                            <mat-error>Mother Phone
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Mother Occupation"
+                                                formControlName="motherOccupation" />
+                                            <mat-error>Mother Occupation
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                    
+                                        <label>Mother Photo</label>
+                                        <ngx-dropzone (change)="onSelectMother($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f2 of filesMother" [file]="f2" [removable]="true"
+                                                (removed)="onRemoveMother(f2)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <label>If Guardian Is</label><br>
+                                        <mat-radio-group aria-label="Select an option" formControlName="guardianIs" (change)="onChangeGuardianIs($event)">
+                                            <mat-radio-button value="Father">Father</mat-radio-button>
+                                            <mat-radio-button value="Mother">Mother</mat-radio-button>
+                                            <mat-radio-button value="Other">Other</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Guardian Name"
+                                                formControlName="guardianName" />
+                                            <mat-error>Guardian Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Guardian Phone"
+                                                formControlName="guardianPhone"  (keypress)=_keyPress($event)/>
+                                            <mat-error>Guardian Phone
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Guardian Occupation"
+                                                formControlName="guardianOccupation" />
+                                            <mat-error>Guardian Occupation
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                       
+                                        <label>Guardian Photo</label>
+                                        <ngx-dropzone (change)="onSelectGuardian($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f3 of filesGuardian" [file]="f3" [removable]="true"
+                                                (removed)="onRemoveGuardian(f3)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Guardian Relation"
+                                                formControlName="guardianRelation" />
+                                            <mat-error>Guardian Relation
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Guardian Email"
+                                                formControlName="guardianEmail" />
+                                            <mat-error>Guardian Email
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <textarea matInput rows="2" placeholder="Enter Guardian Address"
+                                                formControlName="guardianAddress"></textarea>
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                               
+                                        
+                <div class=" form-group  row text-center">
+                    <div class="col-lg-12">
+                        <button mat-button matStepperPrevious mat-raised-button color="primary">Back</button>&nbsp;&nbsp;
+                        <button mat-button matStepperNext mat-raised-button color="primary">Next</button>
+                    </div>
+                    </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="addMoreDetailFormGroup" label="Add More Detail">
+                            <form [formGroup]="addMoreDetailFormGroup">
+                                <label>Student Address Details</label>
+                                <hr>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <input type="checkbox" />
+                                        &nbsp;&nbsp;
+                                        If Guardian Address is Current Address
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <input type="checkbox" />
+                                        &nbsp;&nbsp;
+                                        If Permanent Address is Current Address
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <textarea matInput rows="2" placeholder="Enter Current Address"
+                                                formControlName="currentAddress"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <textarea matInput rows="2" placeholder="Enter Permanent Address"
+                                                formControlName="permanentAddress"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <label>Transport Details</label>
+                                <hr>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label> Route List</mat-label>
+                                            <select matNativeControl formControlName="routeId">
+                                                <optgroup label="RajGurunagar">
+                                                    <option value="MH-14-DW-1772">MH-14-DW-1772</option>
+                                                </optgroup>
+                                                <optgroup label="Moshi">
+                                                    <option value="MH-14-XY-6672">MH-14-XY-6672</option>
+                                                </optgroup>
+                                            </select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <label>Hostel Details</label>
+                                <hr>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <!-- <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Hostel" formControlName="hostelRoomId">
+                                                <mat-option value="0">Business</mat-option>
+                                                <mat-option value="1">Individual</mat-option>
+                                            </mat-select>
+                                        </mat-form-field> -->
+
+                                            <mat-form-field class="mat-form-field-fluid">
+                                                <mat-select placeholder="Hostel" formControlName="hostelId">
+                                                    <mat-option *ngFor="let hostel of hostelList" [value]="hostel.id" >
+                                                        {{hostel.hostelName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                     
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Hostel Room Name" formControlName="hostelRoomId">
+                                                <mat-option value="00">Business</mat-option>
+                                                <mat-option value="11">Individual</mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <label>Miscellaneous Details</label>
+                                <hr>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Bank Account Number"
+                                                formControlName="bankAccountNo" />
+                                            <mat-error>Bank Account Number
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Bank Name" formControlName="bankName" />
+                                            <mat-error>Bank Name
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter IFSC Code" formControlName="ifscCode" />
+                                            <mat-error>IFSC Code
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter National Identification Number"
+                                                formControlName="bankAccountNo" />
+                                            <mat-error>National Identification Number
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Local Identification Number"
+                                                formControlName="bankName" />
+                                            <mat-error>Local Identification Number
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                        <label>RTE</label><br>
+                                        <mat-radio-group aria-label="Select an option" formControlName="rte">
+                                            <mat-radio-button value="Yes">Yes</mat-radio-button>
+                                            <mat-radio-button value="No">No</mat-radio-button>
+
+                                        </mat-radio-group>
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <textarea matInput rows="2" placeholder="Enter Previous School Details"
+                                                formControlName="previousSchool"></textarea>
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <textarea matInput rows="2" placeholder="Enter Note"
+                                                formControlName="note"></textarea>
+                                        </mat-form-field>
+
+                                    </div>
+                                </div>
+                                <label>Upload Documents</label>
+                                <hr>
+                                <div class="form-group kt-form__group row">
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Title"
+                                                 />
+                                                 <!-- formControlName="title" -->
+                                            <mat-error>Title
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        
+                                        <label>Document Photo</label>
+                                        <ngx-dropzone (change)="onSelectTitle($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f1 of filesTitle" [file]="f1" [removable]="true"
+                                                (removed)="onRemoveTitle(f1)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Title"
+                                                 />
+                                            <mat-error>Title
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                       
+                                        <label>Document Photo</label>
+                                        <ngx-dropzone (change)="onSelectTitle1($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f1 of filesTitle1" [file]="f1" [removable]="true"
+                                                (removed)="onRemoveTitle1(f1)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Title"
+                                                 />
+                                            <mat-error>Title
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        
+                                        <label>Document Photo</label>
+                                        <ngx-dropzone (change)="onSelectTitle2($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f1 of filesTitle2" [file]="f1" [removable]="true"
+                                                (removed)="onRemoveTitle2(f1)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Enter Title"
+                                                 />
+                                            <mat-error>Title
+                                                <strong>is required</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                                       
+                                        <label>Document Photo</label>
+                                        <ngx-dropzone (change)="onSelectTitle3($event)">
+                                            <ngx-dropzone-label>Drop file here!</ngx-dropzone-label>
+
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f1 of filesTitle3" [file]="f1" [removable]="true"
+                                                (removed)="onRemoveTitle3(f1)">
+                                                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                </div>
+
+                                <!-- <div>
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button matStepperNext>Next</button>
+                                </div> -->
+                            </form>
+
+                            <br>
+                            <br>
+                            <div class="row text-right">
+                                <div class="col-lg-12">
+        
+                                    <button type="button" mat-raised-button cdkFocusInitial matTooltip="Cancel changes"
+                                        (click)="onCancel()">
+                                        Cancel
+                                    </button>&nbsp;
+                                    <button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+                                        [disabled]="viewLoading" matTooltip="Save changes">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <!-- <mat-step>
+                            <ng-template matStepLabel>Done</ng-template>
+                            <p>You are now done.</p>
+                            <div>
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button (click)="stepper.reset()">Reset</button>
+                            </div>
+                        </mat-step> -->
+                    </mat-horizontal-stepper>
+
+
+                    
+           
+
+                </div>
+
+            
+
+            <div class="kt-separator kt-separator--dashed"></div>
+
+
+
+
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+
+</kt-portlet>

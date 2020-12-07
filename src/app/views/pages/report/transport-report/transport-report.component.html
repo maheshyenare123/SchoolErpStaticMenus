@@ -1,0 +1,286 @@
+<kt-portlet>
+	<kt-portlet-header [class]="'kt-portlet__head--lg'">
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<div class="kt-form kt-margin-b-30">
+			<form class="form" [formGroup]="searchForm">
+				<div class="card-body">
+		
+					<div class="card-body-progress">
+						<mat-spinner [diameter]="20"></mat-spinner>
+					</div>
+		
+					<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+						Oh snap! Change a few things up and try submitting again.
+					</kt-alert>
+		
+					<div class="form-group row">
+						<div class="col-lg-3 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Select Class" formControlName="classId" (selectionChange)="onClassSelectChange($event.value)">
+
+									<mat-option *ngFor="let classData of classList" [value]="classData.id" >
+										{{classData.classses}}
+									</mat-option>
+								</mat-select>
+								<mat-error>Class
+									<strong>is required</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-3 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Section" formControlName="sectionId">
+									<mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
+										{{sectionData.section}}
+									</mat-option>
+								</mat-select>
+								<mat-error>Section
+									<strong>is required</strong>
+								</mat-error>
+							</mat-form-field>
+                        </div>
+                        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <mat-select placeholder="Select Route" formControlName="searchText">
+                                    <mat-option *ngFor="let route of routeList" [value]="route.id" >
+                                        {{route.routeTitle}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <mat-select placeholder="Select Vehicle" formControlName="searchText">
+                                    <mat-option *ngFor="let vehicle of vehicleList" [value]="vehicle.id" >
+                                        {{vehicle.vehicleNo}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                        </div>
+						<!-- OR
+						<div class="col-lg-3 kt-margin-bottom-20-mobile">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Enter Search Text" formControlName="searchText" />
+								<mat-error> Search Text is
+									<strong>required</strong>
+								</mat-error>
+								
+							</mat-form-field>
+						</div> -->
+						<div class="col-lg-3 kt-margin-bottom-20-mobile">
+							<button type="button" mat-raised-button color="primary" (click)="onSearch()" [disabled]="viewLoading" matTooltip="Save changes">
+								Search
+							</button>
+						</div>
+					</div>
+		
+				</div>
+				<!-- <div class="card-footer">
+					<div class="d-flex justify-content-between">
+						<div class="mr-2"></div>
+						<div>
+							<button type="button" mat-raised-button color="primary" (click)="onSearch()" [disabled]="viewLoading" matTooltip="Save changes">
+								Search
+							</button>
+						</div>
+					</div>
+				</div> -->
+			</form>
+		
+
+		</div>
+	</kt-portlet-body>
+
+
+
+
+
+
+
+	<kt-portlet-header [sticky]="true" [class]="'card-head-lg'"
+		[viewLoading$]="dataSource.loading$">
+		<!-- <ng-container ktPortletTools>
+			<button (click)="addStudent()" mat-raised-button color="primary" matTooltip="Create new Student">New
+				Student</button>
+		</ng-container> -->
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="form mb-3">
+			<!-- start::FILTERS -->
+			<div class="form-filtration">
+				<!-- <div class="row align-items-center">
+					<div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<mat-select [(value)]="filterStatus" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">Selling</mat-option>
+								<mat-option value="1">Sold</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Status</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<mat-select [(value)]="filterCondition" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">New</mat-option>
+								<mat-option value="1">Used</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Contidion</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div> -->
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" #searchInput placeholder="Search"
+								class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+        
+            <!-- <div class="row align-items-center collapse form-group-actions kt-margin-top-20 kt-margin-bottom-20"
+				[ngClass]="{'show' : selection.selected.length > 0}">
+				<div class="col-xl-12">
+					<div class="form-group form-group-inline">
+						<div class="form-label form-label-no-wrap">
+							<label class="font-bold font-danger-">Selected records count:
+								{{ selection.selected.length }}</label>
+						</div>
+						<div>
+							<button mat-raised-button color="warn" (click)="deleteProducts()"
+								matTooltip="Delete selected products" class="mat-button-mt-4">
+								<mat-icon>delete</mat-icon>
+								Delete All
+							</button>&nbsp;
+						
+							<button mat-raised-button (click)="fetchProducts()" matTooltip="Fetch selected products"
+								class="mat-button-mt-4">
+								<mat-icon>clear_all</mat-icon>
+								Fetch Selected Records
+							</button>&nbsp;
+						
+							<button mat-raised-button (click)="updateStatusForProducts()"
+								matTooltip="Update status for selected products" class="mat-button-mt-4">
+								<mat-icon>update</mat-icon>
+								Update status
+							</button>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			
+		<!-- </div> -->
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+	<div class="mat-table-wrapper">
+			<mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+				matSortActive="id" matSortDirection="asc" matSortDisableClear>
+				<!-- Checkbox Column -->
+				<!-- <ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+							[checked]="selection.hasValue() && isAllSelected()"
+							[indeterminate]="selection.hasValue() && !isAllSelected()" [color]="'primary'">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()"
+							(change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container> -->
+                
+                <ng-container matColumnDef="classSection">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Class(Section)
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.classId}} ({{student.sectionId}})</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="admissionNo">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Admission No
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.admissionNo}}</mat-cell>
+				</ng-container>
+                <ng-container matColumnDef="name">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Name
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.firstname}} {{student.lastname}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="contact">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Contact</mat-header-cell>
+					<mat-cell *matCellDef="let student">{{student.mobileno}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fatherName">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Father Name
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.fatherName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fatherPhone">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Father Phone</mat-header-cell>
+					<mat-cell *matCellDef="let student">{{student.fatherPhone}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="motherName">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>motherName</mat-header-cell>
+					<mat-cell *matCellDef="let student">{{student.motherName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="motherPhone">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>motherPhone</mat-header-cell>
+					<mat-cell *matCellDef="let student">{{student.motherPhone}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="routeTitle">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Route Title
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.guardianName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="vehicleNo">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Vehicle No
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.guardianRelation}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="driverName">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Driver Name
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.guardianPhone}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="driveContact">
+					<mat-header-cell *matHeaderCellDef mat-sort-header >Driver Contact
+					</mat-header-cell>
+					<mat-cell *matCellDef="let student" >{{student.guardianPhone}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fare">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Fare</mat-header-cell>
+					<mat-cell *matCellDef="let student">{{student.mobileno}}</mat-cell>
+                </ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<div class="mat-table-message" *ngIf="!dataSource.hasItems">No records found</div>
+			<div class="mat-table-message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table-bottom">
+			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
+				[showFirstLastButtons]="true"></mat-paginator>
+		</div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

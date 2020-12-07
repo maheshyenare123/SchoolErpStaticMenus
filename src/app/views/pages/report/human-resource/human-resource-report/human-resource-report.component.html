@@ -1,0 +1,22 @@
+<kt-portlet>
+    <kt-portlet-header [sticky]="true" [title]="'Human Resource Report'" [class]="'card-head-lg'">
+
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="staffReport()">
+                    <mat-icon>description</mat-icon> Staff Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="payrollsReport()">
+                    <mat-icon>description</mat-icon> Payrolls Report
+                </a>
+            </div>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

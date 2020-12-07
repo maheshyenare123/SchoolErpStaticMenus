@@ -1,0 +1,181 @@
+<div class="card card-custom" style="height: 768px ;overflow-y: scroll;"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<!--  -->
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{getTitle()}}</h3>
+		</div>
+		<button mat-raised-button color="warn" (click)="print1()" class="mb-2">print</button>
+	</div>
+	<!-- <form class="form" [formGroup]="staffPayslipForm"> -->
+		<div class="card-body">
+
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+		
+			<div id="content" >
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+				
+					<table style="width: 100%;text-align: center;">
+						<tr>
+							<td rowspan="3">
+								Image
+							</td>
+							<td><h1>ARTCODE SCHOOL</h1></td>
+						</tr>
+						<tr>
+							<td><h4>Pune Phone: 123456789</h4></td>
+						</tr>
+						<tr>
+							<td><h2>Payslip for the period of September 2020</h2></td>
+							<!-- {{staffPayslip.month}}{{staffPayslip.year}} -->
+						</tr>
+					</table>
+					<table style="width: 100%;;">
+						<tr>
+							<td>Payslip #7</td>
+							<!-- {{staffPayslip.id}} -->
+							<td style="text-align: right;">Payment Date: 29/10/2020</td>
+							<!-- {{staffPayslip.paymentDate}} -->
+						</tr>	
+					</table>
+				</div>
+				<br>
+				<hr>
+				<br>
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<table style="width: 100%;">
+						<tr>
+							<td>
+								<label>Name:</label>
+							</td>
+							<td>
+								<!-- {{staff.name}} {{staff.surname}} -->Mahesh Yenare
+							</td>
+							<td>
+								<label>StaffId:</label>
+							</td>
+							<td>
+								<!-- {{staff.userId}} -->APSP0909
+							</td>
+						</tr>
+						
+						<tr>
+							
+							<td>
+								<label>Department:</label>
+							</td>
+							<td>
+								<!-- {{staff.departmentName}} -->Computer
+							</td>
+							<td>
+								<label>Designation:</label>
+							</td>
+							<td>
+								<!-- {{staff.staffDesignation}} -->Jr. Teacher
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<hr>
+				<br>
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<table style="width: 100%;">
+						<tr>
+							<td>
+								<label>Earning</label>
+							</td>
+							<td>
+								<label>Amount(₹)</label>
+							</td>
+							<td>
+								<label>Deduction</label>
+							</td>
+							<td>
+								<label>Amount(₹)</label>
+							</td>
+						</tr>
+						
+						<tr>
+							
+							<td>
+								<label>Total Earning</label>
+							</td>
+							<td>
+								<!-- {{staffPayslip.totalAllowance}} -->2000
+							</td>
+							<td>
+								<label>Total Deduction</label>
+							</td>
+							<td>
+								<!-- {{staffPayslip.totalDeduction}} -->1000
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<hr>
+				<br>
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<table style="width: 100%;">
+						<tr>
+							<td>
+								<label>PaymentMode</label>
+							</td>
+							<td>
+								<label>Cash</label>
+								<!-- {{staffPayslip.paymentMode}} -->
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Basic Salary(₹)</label>
+							</td>
+							<td>
+								<label>20000</label>
+									<!-- {{staffPayslip.basic}} -->
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Gross Salary(₹)</label>
+							</td>
+							<td>
+								<label>21000</label>
+									<!-- {{staffPayslip.grossSalary}} -->
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Net Salary(₹)</label>
+							</td>
+							<td>
+								<label>21000</label>
+									<!-- {{staffPayslip.netSalary}} -->
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>	
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+						Cancel
+					</button>&nbsp;
+					<!-- <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+						Save
+					</button> -->
+				</div>
+			</div>
+		</div>
+	<!-- </form> -->
+</div>

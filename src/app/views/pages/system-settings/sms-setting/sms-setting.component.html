@@ -1,0 +1,59 @@
+<div class="form-group kt-form__group row">
+    <div class="col-lg-12 kt-margin-bottom-20-mobile">
+        <kt-portlet>
+            <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+            <kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Sms Setting'">
+
+            </kt-portlet-header>
+            <!-- end::Header -->
+            <kt-portlet-body>
+                <div class="kt-form kt-margin-b-30">
+                    <form class="kt-form" [formGroup]="smsForm">
+                        <div class="kt-portlet__body">
+
+                            <!-- <div class="kt-portlet__body-progress">
+                                        <mat-spinner [diameter]="20"></mat-spinner>
+                                    </div> -->
+
+                            <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+                                (close)="onAlertClose($event)">
+                                Oh snap! Change a few things up and try submitting again.
+                            </kt-alert>
+
+                            <div class="form-group kt-form__group row">
+                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Sms Url" formControlName="url" />
+                                        <mat-error>Sms Url is
+                                            <strong>required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row text-right">
+                                <div class="col-lg-12">
+
+                                    <button type="button" mat-raised-button cdkFocusInitial matTooltip="Cancel changes"
+                                        (click)="onCancel()">
+                                        Cancel
+                                    </button>&nbsp;
+                                    <button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+                                        [disabled]="viewLoading" matTooltip="Save changes">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div class="kt-separator kt-separator--dashed"></div>
+                </div>
+            </kt-portlet-body>
+            <!-- end::Body -->
+        </kt-portlet>
+    </div>
+  
+</div>

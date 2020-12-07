@@ -1,0 +1,268 @@
+<div class="form-group kt-form__group row">
+    <div class="col-lg-4 kt-margin-bottom-20-mobile">
+        <kt-portlet>
+            <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+            <kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Fees Master'">
+            </kt-portlet-header>
+            <!-- end::Header -->
+            <kt-portlet-body>
+                <div class="kt-form kt-margin-b-30">
+                    <form class="kt-form" [formGroup]="feesMasterForm">
+                        <div class="kt-portlet__body">
+
+                            <!-- <div class="kt-portlet__body-progress">
+                                        <mat-spinner [diameter]="20"></mat-spinner>
+                                    </div> -->
+
+                            <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+                                (close)="onAlertClose($event)">
+                                Oh snap! Change a few things up and try submitting again.
+                            </kt-alert>
+
+                            <div class="form-group kt-form__group row">
+								<div class="col-lg-12 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Select Fees Group" formControlName="feeGroupId" 
+                                            (selectionChange)="getNameByGroupId($event.value)"
+                                            >
+                                                <mat-option *ngFor="let feesGroup of feesGroupList" [value]="feesGroup.id" >
+                                                    {{feesGroup.name}}
+                                                  </mat-option>
+											</mat-select>
+											<mat-error>Class
+												<strong>is required</strong>
+											</mat-error>
+										</mat-form-field>
+								</div>
+								<div class="col-lg-12 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+                                            <mat-select placeholder="Select Fees Type" formControlName="feetypeId" 
+                                            (selectionChange)="getNameByTypeId($event.value)">
+                                                <mat-option *ngFor="let feesType of feesTypeList" [value]="feesType.id">
+                                                {{feesType.type}}
+                                              </mat-option>
+											</mat-select>
+											<mat-error>Section
+												<strong>is required</strong>
+											</mat-error>
+										</mat-form-field>
+								</div>
+                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput [matDatepicker]="picker1" placeholder="Choose a Due Date"
+                                            formControlName="dueDate" />
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                        <mat-hint align="start">Please enter
+                                            <strong>Due Date</strong> in 'mm/dd/yyyy' format</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                    <mat-form-field class="mat-form-field-fluid">
+                                        <input matInput placeholder="Enter Fees Master Amount" formControlName="amount"  (keypress)=_keyPress($event)/>
+                                        <mat-error>Fees Master Amount is
+                                            <strong>required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                                    <label >Fine Type</label><br>
+                                    <mat-radio-group aria-label="Select an option" formControlName="fineType" (change)="onFineTypeChange($event)"  >
+                                        <mat-radio-button value="None">None</mat-radio-button>
+                                        <mat-radio-button value="Percentage">Percentage</mat-radio-button>
+                                        <mat-radio-button value="Fix Amount">Fix Amount</mat-radio-button>
+                                      </mat-radio-group>
+                                </div>
+
+                                <ng-container *ngIf="percentageFieldDisable == true;else elsepercentageFieldDisable">
+                                    <div class="col-lg-12 kt-margin-bottom-20-mobile" >
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Percentage" formControlName="finePercentage"  readonly/>
+                                            <mat-error>Percentage is
+                                                <strong>required</strong>
+                                            </mat-error>
+    
+                                        </mat-form-field>
+                                    </div>
+                                </ng-container>
+                                <ng-template #elsepercentageFieldDisable>
+                                    <div class="col-lg-12 kt-margin-bottom-20-mobile" >
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Percentage" formControlName="finePercentage"  (keypress)=_keyPress($event) (keyup)="calculateFineAmountFromFinePercentage($event)" />
+                                            <mat-error>Percentage is
+                                                <strong>required</strong>
+                                            </mat-error>
+    
+                                        </mat-form-field>
+                                    </div>
+                                </ng-template>
+                               
+                                <ng-container *ngIf="fixAmountFieldDisable == true;else elsefixAmountFieldDisable">
+                                    <div class="col-lg-12 kt-margin-bottom-20-mobile" >
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Fine Amount" formControlName="fineAmount"  readonly/>
+                                            <mat-error>Fine Amount is
+                                                <strong>required</strong>
+                                            </mat-error>
+    
+                                        </mat-form-field>
+                                    </div>
+                                </ng-container>
+                                <ng-template #elsefixAmountFieldDisable>
+                                    <div class="col-lg-12 kt-margin-bottom-20-mobile">
+                                        <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput placeholder="Fine Amount" formControlName="fineAmount"  (keypress)=_keyPress($event)/>
+                                            <mat-error>Fine Amount is
+                                                <strong>required</strong>
+                                            </mat-error>
+    
+                                        </mat-form-field>
+                                    </div>
+                                </ng-template>
+                                
+                            </div>
+                            <div class="row text-right">
+                                <div class="col-lg-12">
+
+                                    <button type="button" mat-raised-button cdkFocusInitial matTooltip="Cancel changes"
+                                        (click)="onCancel()">
+                                        Cancel
+                                    </button>&nbsp;
+                                    <button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+                                        [disabled]="viewLoading" matTooltip="Save changes">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div class="kt-separator kt-separator--dashed"></div>
+
+
+
+
+                </div>
+            </kt-portlet-body>
+            <!-- end::Body -->
+
+        </kt-portlet>
+
+    </div>
+    <div class="col-lg-8 kt-margin-bottom-20-mobile">
+        <kt-portlet>
+            <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+            <kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Fees Master List'"
+                [viewLoading$]="dataSource.loading$">
+            </kt-portlet-header>
+            <!-- <button mat-icon-button color="primary" matTooltip="Assign Fees Master"
+                (click)="assignMasterFeesToStudent(feesMaster)">
+                <mat-icon>local_offer</mat-icon>
+            </button>&nbsp; -->
+
+            <!-- end::Header -->
+            <kt-portlet-body>
+                <!-- start::FILTERS -->
+                <div class="kt-form__filtration">
+                    <div class="row align-items-center">
+
+                        <div class="col-md-2 kt-margin-bottom-10-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <input matInput placeholder="Search Check Out Policy " #searchInput
+                                    placeholder="Search">
+                                <mat-hint align="start">
+                                    <strong>Search</strong> in all fields
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end::FILTERS -->
+                <div class="mat-table__wrapper">
+                    <mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+                        matSortActive="id" matSortDirection="asc" matSortDisableClear>
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                            <mat-cell *matCellDef="let feesMaster">{{feesMaster.id}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="feesGroup">
+                            <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Fees Group</mat-header-cell>
+                            <mat-cell *matCellDef="let feesMaster">{{feesMaster.feeGroupName}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="feescode">
+                            <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Fees Code
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let feesMaster">
+                                <table>
+                                    <tr *ngFor="let data of feesMaster.feeMasters; let i = index">
+                                        <td>{{data.feetypeName}}</td>
+                                        <td>₹{{data.amount}}.00</td>
+                                        <td> 
+                                            <button mat-icon-button color="primary" matTooltip="Edit Fees Master"
+                                                (click)="editFeesMaster(data)">
+                                                <mat-icon>create</mat-icon>
+                                            </button>&nbsp;
+                                            <button mat-icon-button color="warn" matTooltip="Delete Fees Master" type="button"
+                                                (click)="deleteFeesMaster(data)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                    </td>
+                                    </tr>
+                                </table>
+                            </mat-cell>
+                        </ng-container>
+                       
+
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                            <mat-cell *matCellDef="let feesMaster">
+
+                                <button mat-icon-button color="primary" matTooltip="Assign Fees Master"
+                                    (click)="assignMasterFeesToStudent(feesMaster)">
+                                    <mat-icon>local_offer</mat-icon>
+                                </button>&nbsp;
+
+                                <!-- <button mat-icon-button color="primary" matTooltip="Edit Fees Master"
+                                    (click)="editFeesMaster(feesMaster)">
+                                    <mat-icon>create</mat-icon>
+                                </button>&nbsp; -->
+
+                                <!-- <button mat-icon-button color="warn" matTooltip="Delete Fees Master" type="button"
+                                    (click)="deleteFeesMaster(feesMaster)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>&nbsp; -->
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    </mat-table>
+                    <!-- Message for empty data  -->
+                    <div class="mat-table__message" *ngIf="!dataSource.hasItems">No records found</div>
+                    <div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....
+                    </div>
+                </div>
+
+                <!-- start: BOTTOM -->
+                <div class="mat-table__bottom">
+                    <!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+                    <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+                    <!-- MATERIAL PAGINATOR | Binded to dasources -->
+                    <!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+                    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 15, 20, 30]"
+                        [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+                </div>
+                <!-- end: BOTTOM -->
+            </kt-portlet-body>
+            <!-- end::Body -->
+
+        </kt-portlet>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+<div class="card card-custom"
+	[ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }" style="height: 768px;overflow-y: scroll;">
+	<!-- <div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">Assign Student</h3>
+		</div>
+	</div> -->
+	<kt-portlet>
+		<kt-portlet-header [class]="'kt-portlet__head--lg'" [title]="'Assign Student'">
+		 </kt-portlet-header>
+		 <kt-portlet-body>
+			<div class="kt-form kt-margin-b-30">
+				<form class="form" [formGroup]="searchForm">
+					<div class="card-body">
+			
+						<div class="card-body-progress">
+							<mat-spinner [diameter]="20"></mat-spinner>
+						</div>
+			
+						<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+							Oh snap! Change a few things up and try submitting again.
+						</kt-alert>
+			
+						<div class="form-group row">
+							<div class="col-lg-3 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select placeholder="Select Class" formControlName="classId" (selectionChange)="onClassSelectChange($event.value)">
+	
+										<mat-option *ngFor="let classData of classList" [value]="classData.id" >
+											{{classData.classses}}
+										</mat-option>
+									</mat-select>
+									<mat-error>Class
+										<strong>is required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+							<div class="col-lg-3 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select placeholder="Section" formControlName="sectionId">
+										<mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
+											{{sectionData.section}}
+										</mat-option>
+									</mat-select>
+									<mat-error>Section
+										<strong>is required</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+							<!-- OR
+							<div class="col-lg-3 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Search Text" formControlName="searchText" />
+									<mat-error> Search Text is
+										<strong>required</strong>
+									</mat-error>
+									
+								</mat-form-field>
+							</div> -->
+						</div>
+			
+					</div>
+					<div class="card-footer">
+						<div class="d-flex justify-content-between">
+							<div class="mr-2"></div>
+							<div>
+								<button type="button" mat-raised-button color="primary" (click)="onSearch()" [disabled]="viewLoading" matTooltip="Save changes">
+									Search
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			
+	
+			</div>
+		</kt-portlet-body>
+
+ </kt-portlet>
+
+
+ <kt-portlet>
+	<kt-portlet-header [sticky]="true" [title]="'Assign Student List'" [class]="'card-head-lg'"></kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<table style="width: 100%;">
+			<thead >
+				<!-- <ng-container *ngIf="checkboxAll == true;else elsecheckboxAll">
+					<th><input type="checkbox" id="checkboxAll" (change)="onSelectionAll($event)" checked/></th>
+				</ng-container>
+				<ng-template #elsecheckboxAll>
+					<th><input type="checkbox" id="checkboxAll" (change)="onSelectionAll($event)" /></th>
+				</ng-template> -->
+				<th></th>
+				<th>Admission No</th>
+				<th>Name</th>
+				<th>Father Name</th>
+				<th>Gender</th>
+				<th>Category</th>
+			
+			</thead>
+			<tbody>
+				<tr *ngFor="let assignExamStudent of assignExamStudentList | paginate: { id: 'assignExamStudentPagination',
+				itemsPerPage: itemsPerPage, currentPage: pageNo, totalItems: assignExamStudentListLength};">
+					<ng-container *ngIf="checkboxSingle == true;else elsecheckboxSingle">
+						<th><input type="checkbox" (change)="onSelection(assignExamStudent, $event)" checked /></th>
+					</ng-container>
+					<ng-template #elsecheckboxSingle>
+					
+						<ng-container *ngIf="assignExamStudent.examStudentId != null;else elseisSaved">
+							<th><input type="checkbox" (change)="onSelection(assignExamStudent, $event)" checked/></th>
+						</ng-container>
+						<ng-template #elseisSaved>
+							<th><input type="checkbox" (change)="onSelection(assignExamStudent, $event)" /></th>
+						</ng-template>
+						
+						
+					</ng-template>
+					<td>{{assignExamStudent.admissionNo}}</td>
+					<td>{{assignExamStudent.firstname}} {{assignExamStudent.lastname}}</td>
+					<td>{{assignExamStudent.fatherName}}</td>
+					<td>{{assignExamStudent.gender}}</td>
+					<td>{{assignExamStudent.category}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+
+		<pagination-controls id="assignExamStudentPagination" (pageChange)="pageNoChange($event);pageNo = $event">
+		</pagination-controls>
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>
+
+ <div class="card-footer">
+	<div class="d-flex justify-content-between">
+		<div class="mr-2"></div>
+		<div>
+			<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+				Cancel
+			</button>&nbsp;
+			<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+				Save
+			</button>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+<style>
+	thead th {
+    border-bottom: 1px solid black;
+}
+
+
+tfoot tr td {
+    background-color:  lightgray; 
+}
+</style>

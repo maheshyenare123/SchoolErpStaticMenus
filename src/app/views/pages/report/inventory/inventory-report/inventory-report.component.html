@@ -1,0 +1,27 @@
+<kt-portlet>
+    <kt-portlet-header [sticky]="true" [title]="'Inventory Report'" [class]="'card-head-lg'">
+
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="stockReport()">
+                    <mat-icon>description</mat-icon> Stock Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="addItemReport()">
+                    <mat-icon>description</mat-icon> Add Item Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="issueItemReport()">
+                    <mat-icon>description</mat-icon> Issue Item Report
+                </a>
+            </div>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

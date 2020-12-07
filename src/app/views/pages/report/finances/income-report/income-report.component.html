@@ -1,0 +1,214 @@
+<kt-portlet>
+    <kt-portlet-header [sticky]="true" [title]="'Income Report'" [class]="'card-head-lg'">
+
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="feesStatement()">
+                    <mat-icon>description</mat-icon> Fees Statement
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="balanceFeesReport()">
+                    <mat-icon>description</mat-icon> Balance Fees Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="feesCollectionReport()">
+                    <mat-icon>description</mat-icon> Fees Collection Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="onlineFeesCollectionReport()">
+                    <mat-icon>description</mat-icon> Online Fees Collection Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile active">
+                <a class="cursor" (click)="incomeReport()">
+                    <mat-icon>description</mat-icon> Income Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="expenseReport()">
+                    <mat-icon>description</mat-icon> Expense Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="payrollReport()">
+                    <mat-icon>description</mat-icon> Payroll Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="incomeGroupReport()">
+                    <mat-icon>description</mat-icon> Income Group Report
+                </a>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                <a class="cursor" (click)="expenseGroupReport()">
+                    <mat-icon>description</mat-icon> Expense Group Report
+                </a>
+            </div>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>
+
+<kt-portlet>
+    <kt-portlet-header [class]="'kt-portlet__head--lg'">
+    </kt-portlet-header>
+    <!-- end::Header -->
+    <kt-portlet-body>
+        <div class="kt-form kt-margin-b-30">
+            <form class="form" [formGroup]="searchForm">
+                <div class="card-body">
+
+                    <div class="card-body-progress">
+                        <mat-spinner [diameter]="20"></mat-spinner>
+                    </div>
+
+                    <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+                        (close)="onAlertClose($event)">
+                        Oh snap! Change a few things up and try submitting again.
+                    </kt-alert>
+
+                    <div class="form-group row">
+                        <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <mat-select placeholder="Select Search Type" formControlName="searchType">
+                                    <mat-option value="Today">Today</mat-option>
+                                    <mat-option value="This Week">This Week</mat-option>
+                                    <mat-option value="Last Week">Last Week</mat-option>
+                                    <mat-option value="This Month">This Month</mat-option>
+                                    <mat-option value="Last Month">Last Month</mat-option>
+                                    <mat-option value="Last 3 Months">Last 3 Months</mat-option>
+                                    <mat-option value="Last 6 Months">Last 6 Months</mat-option>
+                                    <mat-option value="Last 12 Months">Last 12 Months</mat-option>
+                                    <mat-option value="This Year">This Year</mat-option>
+                                    <mat-option value="Last Year">Last Year</mat-option>
+                                </mat-select>
+                                <mat-error>Search Type
+                                    <strong>is required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <mat-select placeholder="Income Head" formControlName="searchText">
+                                    <mat-option *ngFor="let incomeHead of incomeHeadList" [value]="incomeHead.id">
+                                        {{incomeHead.incomeCategory}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                        </div> -->
+                        <div class="col-lg-4 kt-margin-bottom-20-mobile">
+                            <button type="button" mat-raised-button color="primary" (click)="onSearch()"
+                                [disabled]="viewLoading" matTooltip="Save changes">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <div class="mr-2"></div>
+                        <div>
+                            <button type="button" mat-raised-button color="primary" (click)="onSearch()"
+                                [disabled]="viewLoading" matTooltip="Save changes">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+            </form>
+
+        </div>
+    </kt-portlet-body>
+
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'kt-portlet__head--lg'" [viewLoading$]="dataSource.loading$">
+    </kt-portlet-header>
+    <!-- end::Header -->
+    <kt-portlet-body>
+        <!-- start::FILTERS -->
+        <!-- <div class="kt-form__filtration">
+                    <div class="row align-items-center">
+
+                        <div class="col-md-2 kt-margin-bottom-10-mobile">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <input matInput placeholder="Search Check Out Policy " #searchInput
+                                    placeholder="Search">
+                                <mat-hint align="start">
+                                    <strong>Search</strong> in all fields
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div> -->
+        <!-- end::FILTERS -->
+
+        <div class="mat-table__wrapper">
+            <mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+                matSortActive="id" matSortDirection="asc" matSortDisableClear>
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let income;let i=index">{{i+1}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="incomeHead">
+                    <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Income Head
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let income">{{income.incHeadId}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Name
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let income">{{income.name}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="invoiceNo">
+                    <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Invoice No
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let income">{{income.invoiceNo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Date
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let income">{{income.date}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Amount
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let income">{{income.amount}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+            <!-- Message for empty data  -->
+            <div class="mat-table__message" *ngIf="!dataSource.hasItems">No records found</div>
+            <div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....
+            </div>
+        </div>
+
+        <!-- start: BOTTOM -->
+        <div class="mat-table__bottom">
+            <!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+            <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+            <!-- MATERIAL PAGINATOR | Binded to dasources -->
+            <!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 15, 20, 30]"
+                [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+        <!-- end: BOTTOM -->
+
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>
+
