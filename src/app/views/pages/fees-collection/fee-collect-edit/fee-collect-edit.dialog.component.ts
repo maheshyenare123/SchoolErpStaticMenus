@@ -81,6 +81,7 @@ ngOnInit() {
 	this.student =  this.data.student
 	console.log(this.studentFeeDeposite)
 	this.createForm();
+	this.loadAllFeesDiscount();
 }
 	//get All Class List
 

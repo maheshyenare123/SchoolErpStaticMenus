@@ -96,6 +96,10 @@ const routes: Routes = [
           loadChildren: () => import('./views/pages/examination/examination.module').then(m => m.ExaminationModule),
         },
         {
+          path: 'certificate',
+          loadChildren: () => import('./views/pages/certificate/certificate.module').then(m => m.CertificateModule),
+        },
+        {
           path: 'communication',
           loadChildren: () => import('./views/pages/communication/communication.module').then(m => m.CommunicationModule),
         },

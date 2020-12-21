@@ -164,10 +164,10 @@ export class SectionComponent implements OnInit {
 	 */
 	deleteSection(_item: SectionDtoModel) {
 
-		const _title = 'Purpose';
-		const _description = 'Are you sure to permanently delete selected purpose?';
-		const _waitDesciption = 'Purpose is deleting...';
-		const _deleteMessage = ' Selected purpose has been deleted';
+		const _title = 'Section';
+		const _description = 'Are you sure to permanently delete selected section?';
+		const _waitDesciption = 'Section is deleting...';
+		const _deleteMessage = ' Selected section has been deleted';
 
 
 
@@ -271,7 +271,7 @@ export class SectionComponent implements OnInit {
 			this.createSection(editedSection);
 		}
 		this.loadSectionList();
-		const _saveMessage = editedSection.id > 0 ? 'Purpose  has been updated' : 'Purpose has been created';
+		const _saveMessage = editedSection.id > 0 ? 'Section  has been updated' : 'Section has been created';
 
 		const _messageType = editedSection.id > 0 ? MessageType.Update : MessageType.Create;
 

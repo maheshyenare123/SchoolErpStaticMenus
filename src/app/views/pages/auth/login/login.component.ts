@@ -18,8 +18,8 @@ import { AuthLoginService } from './auth-login.service';
  * ! Just example => Should be removed in development
  */
 const DEMO_PARAMS = {
-	EMAIL: 'admin@demo.com',
-	PASSWORD: 'demo'
+	EMAIL: 'superadmin@gmail.com',
+	PASSWORD: '123'
 };
 
 @Component({
@@ -172,6 +172,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		
 	}
 templateLogin(){
+	debugger
 	const controls = this.loginForm.controls;
 	const authData = {
 		email: controls.email.value,
