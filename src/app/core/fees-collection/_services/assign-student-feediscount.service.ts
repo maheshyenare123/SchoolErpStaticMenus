@@ -40,6 +40,26 @@ export class AssignStudentFeediscountService {
    // const httpParams = this.httpUtils.getFindHTTPParams(queryParams);
 //
 debugger
+
+if(gender != null && rte != null){
+  const httpParams =new HttpParams()
+  
+  .set('categoryId', category.toString())
+  .set('classesId', classId.toString())
+  .set('rte', rte.toString())
+  .set('gender', gender.toString())
+  .set('pageNo', queryParams.pageNo.toString())
+  .set('pageSize', queryParams.itemsPerPage.toString())
+  .set('sectionId', sectionId.toString())
+  .set('sortBy', 'id');
+  const url =Constants.URL.HOST_URL+Constants.Fees_Collection.AssignStudentFeediscount+'/'+feeGroupId ;
+  return this.http.get<QueryResultsModel>(url, {
+    headers: httpHeaders,
+    params: httpParams
+  });
+}
+
+
 if(gender == null && rte == null){
   const httpParams =new HttpParams()
   

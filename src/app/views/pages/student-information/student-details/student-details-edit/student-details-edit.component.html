@@ -512,9 +512,15 @@
                                 <hr>
                                 <div class="form-group kt-form__group row">
                                     <div class="col-lg-6 kt-margin-bottom-20-mobile">
-                                        <mat-form-field appearance="fill">
+                                        <mat-select placeholder="Route List" formControlName="routeId">
+                                            <mat-option *ngFor="let route of routeList" [value]="route.id" >
+                                                {{route.routeTitle}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-form-field appearance="fill">
                                             <mat-label> Route List</mat-label>
                                             <select matNativeControl formControlName="routeId">
+                                                
                                                 <optgroup label="RajGurunagar">
                                                     <option value="MH-14-DW-1772">MH-14-DW-1772</option>
                                                 </optgroup>
@@ -522,7 +528,7 @@
                                                     <option value="MH-14-XY-6672">MH-14-XY-6672</option>
                                                 </optgroup>
                                             </select>
-                                        </mat-form-field>
+                                        </mat-form-field> -->
                                     </div>
                                 </div>
                                 <label>Hostel Details</label>
@@ -537,7 +543,7 @@
                                         </mat-form-field> -->
 
                                             <mat-form-field class="mat-form-field-fluid">
-                                                <mat-select placeholder="Hostel" formControlName="hostelId">
+                                                <mat-select placeholder="Hostel" >
                                                     <mat-option *ngFor="let hostel of hostelList" [value]="hostel.id" >
                                                         {{hostel.hostelName}}
                                                     </mat-option>

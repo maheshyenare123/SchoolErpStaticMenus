@@ -44,8 +44,8 @@
 						<mat-form-field class="mat-form-field-fluid">
 							<mat-select placeholder="Select Discount"  (selectionChange)="onFeesDiscountChange($event.value)">
 
-								<mat-option *ngFor="let feesDiscount of feesDiscountList" [value]="classData.id" >
-									{{feesDiscount.feesDiscountAmount}}
+								<mat-option *ngFor="let feesDiscount of feesDiscountList" [value]="feesDiscount.id" >
+									{{feesDiscount.feesDiscountName}}
 								</mat-option>
 							</mat-select>
 							<mat-error>Class

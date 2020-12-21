@@ -1,9 +1,30 @@
 export class EnquiryModel {
 
+    // address: string;
+    // assigned: string;
+    // classes: string;
+    // classId: 0;
+    // contact: string;
+    // date: string;
+    // description: string;
+    // email: string;
+    // followUpDate: string;
+    // id: 0;
+    // isActive: string;
+    // name: string;
+    // noOfChild: string;
+    // note: string;
+    // reference: string;
+    // source: string;
+    // sourceId: 0;
+    // status: string;
+
+
+
     address: string;
     assigned: string;
+    classId: 0;
     classes: string;
-    classesId: 0;
     contact: string;
     date: string;
     description: string;
@@ -17,14 +38,14 @@ export class EnquiryModel {
     reference: string;
     source: string;
     sourceId: 0;
-    status: string;
+    status: string
 
     clear() {
        
         this.address = '';
         this.assigned = '';
         this.classes = '';
-        this.classesId = 0;
+        this.classId = 0;
         this.contact = '';
         this.date = '';
         this.description = '';
@@ -38,6 +59,6 @@ export class EnquiryModel {
         this.reference = '';
         this.source = '';
         this.sourceId = 0;
-        this.status = '';
+        this.status = 'active';
     }
 }

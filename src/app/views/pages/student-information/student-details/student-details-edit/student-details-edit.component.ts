@@ -18,6 +18,7 @@ import { StudentDtoModel, selectStudentsActionLoading, StudentUpdated, StudentOn
 import { StudentClassService, SectionService, StudentClassModel, SectionDtoModel } from 'src/app/core/academics';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HostelModel, HostelService } from 'src/app/core/hostel';
+import { RouteModel, RouteService } from 'src/app/core/transport';
 
 
 @Component({
@@ -60,6 +61,7 @@ export class StudentDetailsEditComponent implements OnInit {
   studentHouseList:SchoolHousModel[]=[];
   studentId: any;
   hostelList: HostelModel[] = [];
+  routeList: RouteModel[] = [];
   constructor(
     //public dialogRef: MatDialogRef<StudentDetailsEditDialogComponent>,
     //  @Inject(MAT_DIALOG_DATA) public data: any,
@@ -74,6 +76,7 @@ export class StudentDetailsEditComponent implements OnInit {
     private router: Router,
     private route:ActivatedRoute,
     private hostelService:HostelService,
+    private routeService: RouteService,
     ) {
   }
 
@@ -98,6 +101,7 @@ this.loadAllClasses();
 this.loadAllStudentCategory();
 this.loadAllStudentHouse()
 this.loadAllHostel();
+this.loadAllRoutes()
     //this.studentDetail = this.data.studentDetail;
     const newStudent = new StudentDtoModel();
 		newStudent.clear(); // Set all defaults fields
@@ -176,6 +180,19 @@ loadAllSectionsByClassId(id:number) {
 		}, err => {
 		});
   }
+
+
+  loadAllRoutes() {
+		debugger
+		this.routeService.getAllRoutes().subscribe(res => {
+			const data = res['data'];
+			this.routeList = data['content'];
+			console.log(this.routeList)
+		}, err => {
+		});
+	}
+
+
   /**
    * On destroy
    */

@@ -16,6 +16,8 @@ import { TypesUtilsService } from '../../../../../core/_base/crud';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ItemIssueModel, selectItemIssuesActionLoading, ItemIssueUpdated, ItemIssueOnServerCreated, selectLastCreatedItemIssueId, AddItemModel, AddItemService, ItemCategoryModel, ItemCategoryService } from '../../../../../core/inventory';
 import { Constants } from 'src/app/core/api_url';
+import { RoleService } from 'src/app/core/human-resource';
+import { RolesDtoModel } from 'src/app/core/Models/rolesDto.model';
 // // Services and Models
 
 
@@ -38,6 +40,7 @@ viewLoading = false;
 // Private properties
 private componentSubscriptions: Subscription;
 files: File[] = [];
+rolesList: RolesDtoModel[] = [];
 itemCategoryList: ItemCategoryModel[] = [];
 itemList:AddItemModel[] = [];
 constructor(public dialogRef: MatDialogRef<ItemIssueEditDialogComponent>,
@@ -46,7 +49,8 @@ constructor(public dialogRef: MatDialogRef<ItemIssueEditDialogComponent>,
 	private store: Store<AppState>,
 	private typesUtilsService: TypesUtilsService,
 	private itemCategoryService:ItemCategoryService,
-    private addItemService:AddItemService,
+	private addItemService:AddItemService,
+	private roleService:RoleService,
 	) {
 }
 
@@ -59,6 +63,7 @@ ngOnInit() {
 	this.itemIssue = this.data.itemIssue;
 	this.createForm();
 	this.loadAllItemCategory();
+	this.loadAllRoles();
 }
 
 /**
@@ -105,6 +110,21 @@ this.itemList.map(item =>{
   }
 })
 }
+
+loadAllRoles() {
+	debugger
+	this.roleService.getAllRoles().subscribe(res => {
+	  const data = res['data'];
+	  this.rolesList = data['content'];
+	  console.log(this.rolesList)
+	}, err => {
+	});
+  }
+  onRoleSelectChange(roleId){
+	var roleObj = this.rolesList.find(x => x.id === roleId);
+	// this.staffInformationFormGroup.controls.roleName.setValue(roleObj.roleName);
+  }
+
 createForm() {
 	this.itemIssueForm = this.fb.group({
 

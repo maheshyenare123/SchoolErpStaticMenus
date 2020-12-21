@@ -409,13 +409,24 @@
 					<td></td>
 					<td></td>					
 				</tr>
-
-					
-
-
-			
 			</tbody>
 			<tfoot>
+				<tr *ngFor="let feesdiscount of feesDiscountList">
+					<!-- <td></td> -->
+					<td>{{feesdiscount.feesDiscountName}}</td>
+					<td>{{feesdiscount.feesDiscountCode}}</td>
+					<td></td>
+					<td>Discount of ₹ {{feesdiscount.feesDiscountAmount}}.00 <span *ngIf="paymentId == null">Assigned</span> <span *ngIf="paymentId != null">applied for {{feesdiscount.paymentId}}</span></td>
+					<td></td>
+					<td></td>
+					<td>{{feesdiscount.paymentMode}}</td>
+					<td></td>
+					<td></td>
+					<td>{{feesdiscount.amountFine}}.00</td>
+					<td>{{feesdiscount.amount}}.00</td>
+					<td></td>
+					<td></td>					
+				</tr>
 				<tr>
 					<!-- <td></td> -->
 					<td></td>

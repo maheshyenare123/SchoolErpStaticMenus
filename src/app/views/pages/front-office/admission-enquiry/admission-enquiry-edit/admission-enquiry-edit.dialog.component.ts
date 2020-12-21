@@ -129,7 +129,7 @@ onSourceSelectChange(sourceId){
 			address: [this.enquiry.address, ''],
 			assigned: [this.enquiry.assigned, ''],
 			classes: [this.enquiry.classes, ''],
-			classesId: [this.enquiry.classesId, ''],
+			classId: [this.enquiry.classId, ''],
 			contact: [this.enquiry.contact, [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(10)]],
 			date: [this.typesUtilsService.getDateFromString(this.enquiry.date), Validators.compose([Validators.nullValidator])],
 			description: [this.enquiry.description, ''],
@@ -182,7 +182,7 @@ onSourceSelectChange(sourceId){
 			_enquiry.address = controls.address.value;
 			_enquiry.assigned = controls.assigned.value;
 			_enquiry.classes = controls.classes.value;
-			_enquiry.classesId = controls.classesId.value;
+			_enquiry.classId = controls.classId.value;
 			_enquiry.contact = controls.contact.value;
 			const _date = controls.date.value;
 			if (_date) {

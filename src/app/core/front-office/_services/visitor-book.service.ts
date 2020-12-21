@@ -66,8 +66,11 @@ export class VisitorBookService {
 
   // DELETE => delete the visitorBook from the server
   deleteVisitorBook(visitorBookId: number): Observable<VisitorBookModel> {
+    debugger
+    const httpHeaders = this.httpUtils.getHTTPHeaders();
     const url = `${Constants.URL.HOST_URL+Constants.Front_Office.Visitor_Book}/${visitorBookId}`;
-    return this.http.delete<VisitorBookModel>(url);
+    return this.http.delete<VisitorBookModel>(url, {headers: httpHeaders});
+
   }
 
   deleteVisitorBooks(ids: number[] = []): Observable<any> {

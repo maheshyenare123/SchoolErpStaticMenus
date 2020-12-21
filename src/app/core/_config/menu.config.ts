@@ -540,6 +540,21 @@ export class MenuConfig {
           ]
         },
 
+        
+
+        {
+          title: 'Certificate',
+          bullet: 'dot',
+          icon: 'flaticon-interface-7',
+          submenu: [
+            {
+              title: 'Certificate Design',
+              page: '/certificate/certificate-design'
+            },
+          ]
+        },
+
+
 
         {
           title: 'Communication',

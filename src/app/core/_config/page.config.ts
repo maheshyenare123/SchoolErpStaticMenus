@@ -300,6 +300,12 @@ export class PageConfig {
       
     },
 
+    'certificate': {
+      'certificate-design': {
+        page: { title: 'Certificate Design', desc: '' }
+      },
+      
+    },
 
     'communication': {
       'notice-board': {

@@ -7,7 +7,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthLoginService {
   
- url=`http://yamistha.cloudjiffy.net/auth/login/`;
+//  url=`http://yamistha.cloudjiffy.net/auth/login/`;
+
+ url=`http://3.140.52.88:8080/auth/login/`;
 
  
 
