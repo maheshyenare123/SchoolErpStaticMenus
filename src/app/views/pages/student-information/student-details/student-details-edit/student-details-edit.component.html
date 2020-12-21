@@ -537,7 +537,7 @@
                                         </mat-form-field> -->
 
                                             <mat-form-field class="mat-form-field-fluid">
-                                                <mat-select placeholder="Hostel" formControlName="hostelId">
+                                                <mat-select placeholder="Hostel" >
                                                     <mat-option *ngFor="let hostel of hostelList" [value]="hostel.id" >
                                                         {{hostel.hostelName}}
                                                     </mat-option>
