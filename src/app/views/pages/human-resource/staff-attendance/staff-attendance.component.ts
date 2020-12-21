@@ -149,13 +149,13 @@ loadAllRoles() {
 			this.hasFormErrors = true;
 			return;
 		}
-	const	date = this.typesUtilsService.dateFormat(controls.attendanceDate.value);
-		this.getAllStudentAttendanceList(controls.classId.value, controls.sectionId.value, date);
+	const	date = this.typesUtilsService.dateFormat(new Date());
+		this.getAllStudentAttendanceList(controls.roleId.value, date);
 
 
 	}
 
-	getAllStudentAttendanceList(classId, sectionId, date) {
+	getAllStudentAttendanceList(roleId,date) {
 
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 		this.subscriptions.push(sortSubscription);
