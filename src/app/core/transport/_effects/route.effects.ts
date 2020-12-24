@@ -49,7 +49,7 @@ export class RouteEffects {
       const data : FindResultsModel= result['data'];
       return new RoutesPageLoaded({
         routes: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

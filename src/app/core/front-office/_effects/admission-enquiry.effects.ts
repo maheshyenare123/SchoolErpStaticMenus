@@ -49,7 +49,7 @@ export class AdmissionEnquiryEffects {
       const data : FindResultsModel= result['data'];
       return new AdmissionEnquirysPageLoaded({
         enquirys: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

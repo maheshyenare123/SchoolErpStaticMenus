@@ -43,7 +43,7 @@ export class EmailService {
     const url =Constants.URL.HOST_URL+Constants.System_Settings.Email ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

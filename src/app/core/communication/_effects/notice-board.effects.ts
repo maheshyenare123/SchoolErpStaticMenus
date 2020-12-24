@@ -49,7 +49,7 @@ export class NoticeBoardEffects {
       const data : FindResultsModel= result['data'];
       return new NoticeBoardsPageLoaded({
         noticeBoards: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

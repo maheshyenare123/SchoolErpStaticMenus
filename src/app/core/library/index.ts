@@ -4,7 +4,7 @@ export {BookModel} from './_models/book.model';
 export {LibraryStaffMemberModel} from './_models/library-staff-member.model';
 export {LibraryStudentMemberModel} from './_models/library-student-member.model';
 export {BookIssueReturnModel} from './_models/book-issue-return.model';
-export {LibraryMemberListModel} from './_models/library-member-list.model';
+export {LibraryMemberIssueModel} from './_models/library-member-list.model';
 //datasource
 export {BooksDataSource} from './_data-sources/book.datasource';
 export {LibraryStudentMembersDataSource} from './_data-sources/library-student-member.datasource';

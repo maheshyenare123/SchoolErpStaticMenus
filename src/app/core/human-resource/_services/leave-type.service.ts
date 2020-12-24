@@ -42,7 +42,7 @@ export class LeaveTypeService {
     const url =Constants.URL.HOST_URL+Constants.Human_Resource.Leave_Type ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

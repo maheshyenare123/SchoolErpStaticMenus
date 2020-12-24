@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { BookIssueReturnsDataSource, BookIssueReturnModel, selectBookIssueReturnsActionLoading, BookService, BookModel } from 'src/app/core/library';
+import { BookIssueReturnsDataSource, BookIssueReturnModel, selectBookIssueReturnsActionLoading, BookService, BookModel, LibraryMemberIssueModel, } from 'src/app/core/library';
 import { QueryParamsModel, LayoutUtilsService, MessageType, TypesUtilsService } from 'src/app/core/_base/crud';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription, merge, fromEvent, of } from 'rxjs';
@@ -56,8 +56,11 @@ export class BookIssueReturnDialogComponent implements OnInit {
 	viewLoading = false;
 	// Private properties
 	private componentSubscriptions: Subscription;
-	libraryMember: BookIssueReturnModel;
+	libraryMember: LibraryMemberIssueModel;
+
 	showReturnDate: boolean = false;
+
+	
 
 
 	bookList: BookModel[] = [];
@@ -119,6 +122,10 @@ export class BookIssueReturnDialogComponent implements OnInit {
 		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
 			this.loadBookIssueReturnList(this.libraryMember.memberId);
 		}); // Remove this line, just loading imitation
+
+
+console.log(this.data);
+
 
 		this.libraryMember = this.data.librarymember;
 		console.log(this.libraryMember);

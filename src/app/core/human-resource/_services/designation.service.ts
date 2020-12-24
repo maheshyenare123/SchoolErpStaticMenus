@@ -42,7 +42,7 @@ export class StaffDesignationService {
     const url =Constants.URL.HOST_URL+Constants.Human_Resource.Staff_Designation ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

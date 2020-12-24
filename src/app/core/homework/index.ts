@@ -53,5 +53,5 @@ export {
 
 // Services
 export { HomeworkService } from './_services/homework.service';
-
+export  {HomeworkEvaluationService } from './_services/homework_evaluation.service';
 

@@ -42,7 +42,7 @@ export class ComplaintService {
     const url =Constants.URL.HOST_URL+Constants.Front_Office.Complain ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

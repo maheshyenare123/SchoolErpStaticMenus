@@ -28,42 +28,43 @@ import { SectionDtoModel, StudentClassModel, SectionService, StudentClassService
 	encapsulation: ViewEncapsulation.None
 })
 export class ApproveLeaveEditDialogComponent implements OnInit, OnDestroy {
-	
-	
-// Public properties
-approveLeave: ApproveLeaveDtoModel;
-approveLeaveForm: FormGroup;
-hasFormErrors = false;
-viewLoading = false;
-// Private properties
-private componentSubscriptions: Subscription;
-files: File[] = [];
 
-classList: StudentClassModel[] = [];
+
+	// Public properties
+	approveLeave: ApproveLeaveDtoModel;
+	approveLeaveForm: FormGroup;
+	hasFormErrors = false;
+	viewLoading = false;
+	// Private properties
+	private componentSubscriptions: Subscription;
+	files: File[] = [];
+
+	classList: StudentClassModel[] = [];
 	sectionList: SectionDtoModel[] = [];
-studentList: StudentDtoModel[] = [];
+	studentList: StudentDtoModel[] = [];
 
-constructor(public dialogRef: MatDialogRef<ApproveLeaveEditDialogComponent>,
-	@Inject(MAT_DIALOG_DATA) public data: any,
-	private fb: FormBuilder,
-	private store: Store<AppState>,
-	private typesUtilsService: TypesUtilsService,
-	private studentClassService: StudentClassService,
-	private sectionService: SectionService,
-	private studentService: StudentService) {
-}
+	constructor(public dialogRef: MatDialogRef<ApproveLeaveEditDialogComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: any,
+		private fb: FormBuilder,
+		private store: Store<AppState>,
+		private typesUtilsService: TypesUtilsService,
+		private studentClassService: StudentClassService,
+		private sectionService: SectionService,
+		private studentService: StudentService) {
+	}
 
-/**
- * On init
- */
-ngOnInit() {
+	/**
+	 * On init
+	 */
+	ngOnInit() {
 
-	this.loadAllClasses();
-	this.store.pipe(select(selectApproveLeavesActionLoading)).subscribe(res => this.viewLoading = res);
-	// loadding
-	this.approveLeave = this.data.approveLeave;
-	this.createForm();
-}
+		this.loadAllClasses();
+
+		this.store.pipe(select(selectApproveLeavesActionLoading)).subscribe(res => this.viewLoading = res);
+		// loadding
+		this.approveLeave = this.data.approveLeave;
+		this.createForm();
+	}
 	//get All Class List
 	loadAllClasses() {
 		debugger
@@ -74,102 +75,107 @@ ngOnInit() {
 		}, err => {
 		});
 	}
-	onClassSelectChange(classId){
+	onClassSelectChange(classId) {
 		this.loadAllSectionsByClassId(classId);
 	}
-	loadAllSectionsByClassId(id:number) {
+	loadAllSectionsByClassId(id: number) {
 		debugger
 		this.studentClassService.getAllSectionByClasssId(id).subscribe(res => {
-			this.sectionList =  res['data'];
+			this.sectionList = res['data'];
 			console.log(this.sectionList)
 		}, err => {
 		});
 	}
 
-	loadAllStudent() {
+	onSectionSelectChange(sectionId) {
+
+		this.loadAllStudent(this.approveLeaveForm.controls['classId'].value, sectionId)
+	}
+
+
+	loadAllStudent(classsId, sectionId) {
 		debugger
-		this.studentService.getAllStudents().subscribe(res => {
+		this.studentService.getAllStudents(classsId, sectionId).subscribe(res => {
 			const data = res['data'];
 			this.studentList = data['content'];
 			console.log(this.studentList)
-		
-		
+
 		}, err => {
 		});
 	}
-/**
- * On destroy
- */
-ngOnDestroy() {
-	if (this.componentSubscriptions) {
-		this.componentSubscriptions.unsubscribe();
-	}
-}
-
-createForm() {
-	this.approveLeaveForm = this.fb.group({
-
-	// 	applyDate: string;
-    // approveBy: number;
-    // docs: string;
-    // fromDate: string;
-    // id: number;
-    // isActive: string;
-    // reason: string;
-    // requestType: number;
-    // status: number;
-    // studentSessionId: number;
-    // toDate: string;
-classId: ['',],
-sectionId: ['',],
-studentId: ['',],
-	applyDate: [this.typesUtilsService.getDateFromString(this.approveLeave.applyDate), Validators.compose([Validators.nullValidator])],
-	fromDate: [this.typesUtilsService.getDateFromString(this.approveLeave.fromDate), Validators.compose([Validators.nullValidator])],
-	toDate: [this.typesUtilsService.getDateFromString(this.approveLeave.toDate), Validators.compose([Validators.nullValidator])],
-		approveBy: [this.approveLeave.approveBy,],
-		docs: [this.approveLeave.docs, ''],
-		isActive: [this.approveLeave.isActive, ''],
-		reason: [this.approveLeave.reason, ''],
-		requestType: [this.approveLeave.requestType,],
-		status: [this.approveLeave.status,],
-		studentSessionId: [this.approveLeave.studentSessionId,],
-	
-		
-
-	});
-}
-
-/**
- * Returns page title
- */
-getTitle(): string {
-	if (this.approveLeave.id > 0) {
-		return `Edit Approve Leave '${this.approveLeave.studentSessionId}'`;
+	/**
+	 * On destroy
+	 */
+	ngOnDestroy() {
+		if (this.componentSubscriptions) {
+			this.componentSubscriptions.unsubscribe();
+		}
 	}
 
-	return 'New Approve Leave';
-}
+	createForm() {
+		this.approveLeaveForm = this.fb.group({
 
-/**
- * Check control is invalid
- * @param controlName: string
- */
-isControlInvalid(controlName: string): boolean {
-	const control = this.approveLeaveForm.controls[controlName];
-	const result = control.invalid && control.touched;
-	return result;
-}
+			// 	applyDate: string;
+			// approveBy: number;
+			// docs: string;
+			// fromDate: string;
+			// id: number;
+			// isActive: string;
+			// reason: string;
+			// requestType: number;
+			// status: number;
+			// studentSessionId: number;
+			// toDate: string;
+			classId: ['',],
+			sectionId: ['',],
+			studentId: ['',],
+			applyDate: [this.typesUtilsService.getDateFromString(this.approveLeave.applyDate), Validators.compose([Validators.nullValidator])],
+			fromDate: [this.typesUtilsService.getDateFromString(this.approveLeave.fromDate), Validators.compose([Validators.nullValidator])],
+			toDate: [this.typesUtilsService.getDateFromString(this.approveLeave.toDate), Validators.compose([Validators.nullValidator])],
+			approveBy: [this.approveLeave.approveBy,],
+			docs: [this.approveLeave.docs, ''],
+			isActive: [this.approveLeave.isActive, ''],
+			reason: [this.approveLeave.reason, ''],
+			requestType: [this.approveLeave.requestType,],
+			status: [this.approveLeave.status,],
+			studentSessionId: [this.approveLeave.studentSessionId,],
 
-/** ACTIONS */
 
-/**
- * Returns prepared approveLeave
- */
-prepareapproveLeave(): ApproveLeaveDtoModel {
-	const controls = this.approveLeaveForm.controls;
-	const _approveLeave = new ApproveLeaveDtoModel();
-	_approveLeave.id = this.approveLeave.id;
-		
+
+		});
+	}
+
+	/**
+	 * Returns page title
+	 */
+	getTitle(): string {
+		if (this.approveLeave.id > 0) {
+			return `Edit Approve Leave '${this.approveLeave.studentSessionId}'`;
+		}
+
+		return 'New Approve Leave';
+	}
+
+	/**
+	 * Check control is invalid
+	 * @param controlName: string
+	 */
+	isControlInvalid(controlName: string): boolean {
+		const control = this.approveLeaveForm.controls[controlName];
+		const result = control.invalid && control.touched;
+		return result;
+	}
+
+	/** ACTIONS */
+
+	/**
+	 * Returns prepared approveLeave
+	 */
+	prepareapproveLeave(): ApproveLeaveDtoModel {
+		const controls = this.approveLeaveForm.controls;
+		const _approveLeave = new ApproveLeaveDtoModel();
+		_approveLeave.id = this.approveLeave.id;
+
 		const _applyDate = controls.applyDate.value;
 		if (_applyDate) {
 			_approveLeave.applyDate = this.typesUtilsService.dateFormat(_applyDate);
@@ -189,107 +195,108 @@ prepareapproveLeave(): ApproveLeaveDtoModel {
 			_approveLeave.toDate = '';
 		}
 
-	_approveLeave.approveBy = controls.approveBy.value;
-	_approveLeave.docs = controls.docs.value;
-	_approveLeave.isActive = controls.isActive.value;
-	_approveLeave.reason = controls.reason.value;
-	_approveLeave.requestType = controls.requestType.value;
-	_approveLeave.status = controls.status.value;
-	_approveLeave.studentSessionId = controls.studentSessionId.value;
-	_approveLeave.isActive='yes'
-	return _approveLeave;
-}
+		_approveLeave.approveBy = controls.approveBy.value;
+		_approveLeave.docs = controls.docs.value;
+		_approveLeave.isActive = controls.isActive.value;
+		_approveLeave.reason = controls.reason.value;
+		_approveLeave.requestType = controls.requestType.value;
+		_approveLeave.status = controls.status.value;
+		_approveLeave.studentSessionId = controls.studentSessionId.value;
 
-/**
- * On Submit
- */
-onSubmit() {
-	this.hasFormErrors = false;
-	const controls = this.approveLeaveForm.controls;
-	/** check form */
-	if (this.approveLeaveForm.invalid) {
-		Object.keys(controls).forEach(controlName =>
-			controls[controlName].markAsTouched()
-		);
-
-		this.hasFormErrors = true;
-		return;
+		_approveLeave.isActive = 'yes'
+		return _approveLeave;
 	}
 
-	const editedApproveLeave = this.prepareapproveLeave();
-	if (editedApproveLeave.id > 0) {
-		this.updateApproveLeave(editedApproveLeave);
-	} else {
-		this.createApproveLeave(editedApproveLeave);
-	}
-}
+	/**
+	 * On Submit
+	 */
+	onSubmit() {
+		this.hasFormErrors = false;
+		const controls = this.approveLeaveForm.controls;
+		/** check form */
+		if (this.approveLeaveForm.invalid) {
+			Object.keys(controls).forEach(controlName =>
+				controls[controlName].markAsTouched()
+			);
 
-/**
- * Update approveLeave
- *
- * @param _approveLeave: ApproveLeaveDtoModel
- */
-updateApproveLeave(_approveLeave: ApproveLeaveDtoModel) {
-	const updateApproveLeave: Update<ApproveLeaveDtoModel> = {
-		id: _approveLeave.id,
-		changes: _approveLeave
-	};
-	this.store.dispatch(new ApproveLeaveUpdated({
-		partialApproveLeave: updateApproveLeave,
-		approveLeave: _approveLeave
-	}));
-
-	// integrate ApproveLeave  update api
-
-	// Remove this line
-	of(undefined).pipe(delay(1000)).subscribe(() => this.dialogRef.close({ _approveLeave, isEdit: true }));
-	// Uncomment this line
-	// this.dialogRef.close({ _approveLeave, isEdit: true }
-}
-
-/**
- * Create ApproveLeave
- *
- * @param _approveLeave: ApproveLeaveDtoModel
- */
-createApproveLeave(_approveLeave: ApproveLeaveDtoModel) {
-	this.store.dispatch(new ApproveLeaveOnServerCreated({ approveLeave: _approveLeave }));
-	this.componentSubscriptions = this.store.pipe(
-		select(selectLastCreatedApproveLeaveId),
-		delay(1000), // Remove this line
-	).subscribe(res => {
-		if (!res) {
+			this.hasFormErrors = true;
 			return;
 		}
 
-		this.dialogRef.close({ _approveLeave, isEdit: false });
-	});
-
-	// integrate approveLeave  create api
-}
-
-/** Alect Close event */
-onAlertClose($event) {
-	this.hasFormErrors = false;
-}
-
-onSelect(event) {
-	console.log(event);
-	this.files.push(...event.addedFiles);
-  }
-   
-  onRemove(event) {
-	console.log(event);
-	this.files.splice(this.files.indexOf(event), 1);
-  }
-
-  _keyPress(event: any) {
-	const pattern = /[0-9]/;
-	let inputChar = String.fromCharCode(event.charCode);
-	if (!pattern.test(inputChar)) {
-		event.preventDefault();
-
+		const editedApproveLeave = this.prepareapproveLeave();
+		if (editedApproveLeave.id > 0) {
+			this.updateApproveLeave(editedApproveLeave);
+		} else {
+			this.createApproveLeave(editedApproveLeave);
+		}
 	}
-}
+
+	/**
+	 * Update approveLeave
+	 *
+	 * @param _approveLeave: ApproveLeaveDtoModel
+	 */
+	updateApproveLeave(_approveLeave: ApproveLeaveDtoModel) {
+		const updateApproveLeave: Update<ApproveLeaveDtoModel> = {
+			id: _approveLeave.id,
+			changes: _approveLeave
+		};
+		this.store.dispatch(new ApproveLeaveUpdated({
+			partialApproveLeave: updateApproveLeave,
+			approveLeave: _approveLeave
+		}));
+
+		// integrate ApproveLeave  update api
+
+		// Remove this line
+		of(undefined).pipe(delay(1000)).subscribe(() => this.dialogRef.close({ _approveLeave, isEdit: true }));
+		// Uncomment this line
+		// this.dialogRef.close({ _approveLeave, isEdit: true }
+	}
+
+	/**
+	 * Create ApproveLeave
+	 *
+	 * @param _approveLeave: ApproveLeaveDtoModel
+	 */
+	createApproveLeave(_approveLeave: ApproveLeaveDtoModel) {
+		this.store.dispatch(new ApproveLeaveOnServerCreated({ approveLeave: _approveLeave }));
+		this.componentSubscriptions = this.store.pipe(
+			select(selectLastCreatedApproveLeaveId),
+			delay(1000), // Remove this line
+		).subscribe(res => {
+			if (!res) {
+				return;
+			}
+
+			this.dialogRef.close({ _approveLeave, isEdit: false });
+		});
+
+		// integrate approveLeave  create api
+	}
+
+	/** Alect Close event */
+	onAlertClose($event) {
+		this.hasFormErrors = false;
+	}
+
+	onSelect(event) {
+		console.log(event);
+		this.files.push(...event.addedFiles);
+	}
+
+	onRemove(event) {
+		console.log(event);
+		this.files.splice(this.files.indexOf(event), 1);
+	}
+
+	_keyPress(event: any) {
+		const pattern = /[0-9]/;
+		let inputChar = String.fromCharCode(event.charCode);
+		if (!pattern.test(inputChar)) {
+			event.preventDefault();
+
+		}
+	}
 }
 

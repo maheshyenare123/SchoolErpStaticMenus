@@ -23,7 +23,7 @@ import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { StudentAttendencesPageRequested, OneStudentAttendenceDeleted, ManyStudentAttendencesDeleted, StudentAttendencesStatusUpdated, StudentAttendenceUpdated, StudentAttendenceOnServerCreated, selectLastCreatedStudentAttendenceId } from '../../../../core/attendance';
 import { StudentClassModel, SectionDtoModel, StudentClassService, SectionService } from 'src/app/core/academics';
 import { StudentModel } from 'src/app/core/Models/student.model';
-
+import { Constants } from '../../../../core/api_url';
 @Component({
 	selector: 'kt-student-attendance',
 	templateUrl: './student-attendance.component.html',
@@ -273,6 +273,15 @@ this.markAsHoliday=false;
 	}
 	onMarkAsHoliday(){
 	this.markAsHoliday=true;
+
+	var attendanceTypeObj = this.attendanceTypeList.find(x => x.type.toLowerCase() === Constants.HOLIDAY.toLowerCase());
+    this.dataSource.forEach((ele,index)=>{	
+	this.dataSource[index].attendenceTypeId=attendanceTypeObj.id;
+	this.dataSource[index].attendenceType=attendanceTypeObj.type;
+
+	})
+	
+
 }
 	onChangeAttendanceType(index,attendanceType){
 	

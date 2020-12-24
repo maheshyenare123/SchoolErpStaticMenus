@@ -49,7 +49,7 @@ export class ExpenseEffects {
       const data : FindResultsModel= result['data'];
       return new ExpensesPageLoaded({
         expenses: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

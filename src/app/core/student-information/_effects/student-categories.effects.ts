@@ -49,7 +49,7 @@ export class CategoryEffects {
       const data : FindResultsModel= result['data'];
       return new CategorysPageLoaded({
         categorys: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

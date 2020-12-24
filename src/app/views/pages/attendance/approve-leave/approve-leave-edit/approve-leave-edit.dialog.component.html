@@ -20,7 +20,7 @@
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<mat-form-field class="mat-form-field-fluid">
 					<mat-select placeholder="Select Class" formControlName="classId" >
-						<mat-option *ngFor="let classData of classList" [value]="classData.id" (change)="onClassSelectChange($event.value)">
+						<mat-option *ngFor="let classData of classList" [value]="classData.id" (selectionChange)="onClassSelectChange($event.value)">
 							{{classData.classses}}
 						</mat-option>
 					</mat-select>
@@ -44,7 +44,7 @@
 						<!-- formControlName="studentId" there is no such variable  -->
 						<mat-select placeholder="Select Student" formControlName="studentId">
 							<mat-option *ngFor="let student of studentList" [value]="student.id">
-								{{sectionData.section}}
+								{{student.name}}
 							</mat-option>
 
 

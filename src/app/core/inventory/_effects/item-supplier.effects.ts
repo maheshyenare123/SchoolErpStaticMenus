@@ -49,7 +49,7 @@ export class ItemSupplierEffects {
       const data : FindResultsModel= result['data'];
       return new ItemSuppliersPageLoaded({
         itemSuppliers: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

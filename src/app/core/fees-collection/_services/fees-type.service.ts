@@ -42,7 +42,7 @@ export class FeesTypeService {
     const url =Constants.URL.HOST_URL+Constants.Fees_Collection.Fees_Type ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

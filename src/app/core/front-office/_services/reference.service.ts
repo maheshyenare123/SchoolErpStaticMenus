@@ -42,7 +42,7 @@ export class ReferenceService {
     const url =Constants.URL.HOST_URL+Constants.Front_Office.Reference ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

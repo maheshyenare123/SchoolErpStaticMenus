@@ -20,4 +20,4 @@ export class BookIssueReturnModel{
         this.isReturned= 0;
         this.memberId= 0;     
     }
-    }
+    }    

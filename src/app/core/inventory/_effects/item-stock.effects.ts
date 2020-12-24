@@ -49,7 +49,7 @@ export class ItemStockEffects {
       const data : FindResultsModel= result['data'];
       return new ItemStocksPageLoaded({
         itemStocks: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

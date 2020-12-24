@@ -49,7 +49,7 @@ export class AssignClassTeacherEffects {
       const data : FindResultsModel= result['data'];
       return new AssignClassTeachersPageLoaded({
         assignClassTeachers: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

@@ -49,7 +49,7 @@ export class IncomeHeadEffects {
       const data : FindResultsModel= result['data'];
       return new IncomeHeadsPageLoaded({
         incomeHeads: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

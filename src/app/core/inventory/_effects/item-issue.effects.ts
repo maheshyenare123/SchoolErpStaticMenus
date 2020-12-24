@@ -49,7 +49,7 @@ export class ItemIssueEffects {
       const data : FindResultsModel= result['data'];
       return new ItemIssuesPageLoaded({
         itemIssues: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

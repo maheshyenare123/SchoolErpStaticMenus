@@ -1,7 +1,8 @@
 export class Constants {
    public static URL: any = {
       // HOST_URL: 'http://yamistha.cloudjiffy.net/',
-      HOST_URL: 'http://3.140.52.88:8080/',
+      // HOST_URL: 'http://3.140.52.88:8080/',
+      HOST_URL: 'http://localhost:8080/',
       accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsIlNlc3Npb25JRCI6MSwiaWF0IjoxNjA1NjgwNTE4LCJleHAiOjE2MDU3NjY5MTh9.ylU_vhIgkXCnK_JPjpzUB2o-if_vtSf0eSTu4t-XQnk-MuolPdbe1W7rQvYagANBzlU3efKk8U57FqfMqiIFOg',
       sessionId: '1',
 // http://3.140.52.88:8080/swagger-ui.html#
@@ -10,6 +11,8 @@ export class Constants {
 
    public static DISPATCH: string = 'dispatch';
    public static RECEIVE: string = 'receive';
+   public static HOLIDAY: string = 'holiday';
+   public static PRESENT: string = 'present';
 
 
    public static Front_Office: any = {
@@ -59,6 +62,7 @@ export class Constants {
    public static Homework: any = {
 
       Homework_Add: 'api/homework',
+      Homework_Evaluation:'api/homework-evaluation'
 
    }
    public static Library: any = {
@@ -77,6 +81,7 @@ export class Constants {
       Department: 'api/department',
       Leave_Type: 'api/leave-type',
       Staff_Leave:'api/staff-leave',
+      Staff_Leave_Request:'api/staff-leave-request',
       Staff_Leave_Details:'api/staff-leave-details',
       Staff_Payroll: 'api/staff-payroll',
       Staff_Rating: 'api/staff-rating',

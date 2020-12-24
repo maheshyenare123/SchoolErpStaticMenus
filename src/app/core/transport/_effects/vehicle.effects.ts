@@ -49,7 +49,7 @@ export class VehicleEffects {
       const data : FindResultsModel= result['data'];
       return new VehiclesPageLoaded({
         vehicles: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

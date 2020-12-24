@@ -6,7 +6,7 @@ import { each } from 'lodash';
 import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
 // State
 import { LibraryMemberListsState } from '../_reducers/library-member-list.reducers';
-import { LibraryMemberListModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
 
 export const selectLibraryMemberListsState = createFeatureSelector<LibraryMemberListsState>('libraryMemberLists');
 
@@ -38,12 +38,12 @@ export const selectLibraryMemberListsShowInitWaitingMessage = createSelector(
 export const selectLibraryMemberListsInStore = createSelector(
     selectLibraryMemberListsState,
     libraryMemberListsState => {
-      const items: LibraryMemberListModel[] = [];
+      const items: LibraryMemberIssueModel[] = [];
       each(libraryMemberListsState.entities, element => {
         items.push(element);
       });
       const httpExtension = new HttpExtenstionsModel();
-      const result: LibraryMemberListModel[] =
+      const result: LibraryMemberIssueModel[] =
         httpExtension.sortArray(items, libraryMemberListsState.lastQuery.sortField, libraryMemberListsState.lastQuery.sortOrder);
       return new QueryResultsModel(result, libraryMemberListsState.totalCount, '');
     }

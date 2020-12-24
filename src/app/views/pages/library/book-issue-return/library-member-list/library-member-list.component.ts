@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { LibraryMemberListsDataSource, LibraryMemberListModel, LibraryMemberListsPageRequested, OneLibraryMemberListDeleted, ManyLibraryMemberListsDeleted } from 'src/app/core/library';
+import { LibraryMemberListsDataSource, LibraryMemberIssueModel, LibraryMemberListsPageRequested, OneLibraryMemberListDeleted, ManyLibraryMemberListsDeleted } from 'src/app/core/library';
 import { QueryParamsModel, LayoutUtilsService, MessageType } from 'src/app/core/_base/crud';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription, merge, fromEvent, of } from 'rxjs';
@@ -31,8 +31,8 @@ filterStatus = '';
 filterCondition = '';
 lastQuery: QueryParamsModel;
 // Selection
-selection = new SelectionModel<LibraryMemberListModel>(true, []);
-librarymemberlistsResult: LibraryMemberListModel[] = [];
+selection = new SelectionModel<LibraryMemberIssueModel>(true, []);
+librarymemberlistsResult: LibraryMemberIssueModel[] = [];
 private subscriptions: Subscription[] = [];
 
 
@@ -181,9 +181,9 @@ restoreState(queryParams: QueryParamsModel, id: number) {
 /**
  * Delete product
  *
- * @param _item: LibraryMemberListModel
+ * @param _item: LibraryMemberIssueModel
  */
-deleteLibraryMemberList(_item: LibraryMemberListModel) {
+deleteLibraryMemberList(_item: LibraryMemberIssueModel) {
   const _title = ' LibraryMemberList Delete';
   const _description = 'Are you sure to permanently delete this  LibraryMemberList?';
   const _waitDesciption = ' LibraryMemberList is deleting...';
@@ -289,7 +289,7 @@ deleteProducts() {
 	 * Show add customer dialog
 	 */
 	addLibraryMemberList() {
-		const newCustomer = new LibraryMemberListModel();
+		const newCustomer = new LibraryMemberIssueModel();
 		newCustomer.clear(); // Set all defaults fields
 		this.editLibraryMemberList(newCustomer);
 	}
@@ -298,7 +298,7 @@ deleteProducts() {
 	 * Show Edit customer dialog and save after success close result
 	 * @param customer: CustomerModel
 	 */
-	editLibraryMemberList(librarymemberlist: LibraryMemberListModel) {
+	editLibraryMemberList(librarymemberlist: LibraryMemberIssueModel) {
 		let saveMessageTranslateParam = 'ECOMMERCE.CUSTOMERS.EDIT.';
     const _saveMessage = librarymemberlist.id > 0 ? 'Edit  LibraryMemberList' : 'Create  LibraryMemberList';
     
@@ -314,7 +314,7 @@ deleteProducts() {
 		// });
 	}
 
-  issueBook(librarymember: LibraryMemberListModel) {
+  issueBook(librarymember: LibraryMemberIssueModel) {
 		// let saveMessageTranslateParam = 'ECOMMERCE.CUSTOMERS.EDIT.';
    // const _saveMessage = librarymember.id > 0 ? 'Issue Book' : '';
     

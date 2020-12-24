@@ -4,7 +4,7 @@ import { Update } from '@ngrx/entity';
 // CRUD
 import { QueryParamsModel } from '../../_base/crud';
 // Models
-import { LibraryMemberListModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
 
 export enum LibraryMemberListActionTypes {
   LibraryMemberListOnServerCreated = '[Edit LibraryMemberList Dialog] LibraryMemberList On Server Created',
@@ -22,14 +22,14 @@ export enum LibraryMemberListActionTypes {
 
 export class LibraryMemberListOnServerCreated implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListOnServerCreated;
-  constructor(public payload: { libraryMemberList: LibraryMemberListModel }) {
+  constructor(public payload: { libraryMemberList: LibraryMemberIssueModel }) {
   }
 }
 
 export class LibraryMemberListCreated implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListCreated;
 
-  constructor(public payload: { libraryMemberList: LibraryMemberListModel }) {
+  constructor(public payload: { libraryMemberList: LibraryMemberIssueModel }) {
   }
 }
 
@@ -37,8 +37,8 @@ export class LibraryMemberListUpdated implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListUpdated;
 
   constructor(public payload: {
-    partialLibraryMemberList: Update<LibraryMemberListModel>, // For State update
-    libraryMemberList: LibraryMemberListModel // For Server update (through service)
+    partialLibraryMemberList: Update<LibraryMemberIssueModel>, // For State update
+    libraryMemberList: LibraryMemberIssueModel // For Server update (through service)
   }) {
   }
 }
@@ -47,7 +47,7 @@ export class LibraryMemberListsStatusUpdated implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListsStatusUpdated;
 
   constructor(public payload: {
-    libraryMemberLists: LibraryMemberListModel[],
+    libraryMemberLists: LibraryMemberIssueModel[],
     status: number
   }) {
   }
@@ -77,7 +77,7 @@ export class LibraryMemberListsPageRequested implements Action {
 export class LibraryMemberListsPageLoaded implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListsPageLoaded;
 
-  constructor(public payload: { libraryMemberLists: LibraryMemberListModel[], totalCount: number, page: QueryParamsModel }) {
+  constructor(public payload: { libraryMemberLists: LibraryMemberIssueModel[], totalCount: number, page: QueryParamsModel }) {
   }
 }
 

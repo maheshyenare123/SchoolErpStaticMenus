@@ -49,7 +49,7 @@ export class LeaveTypeEffects {
       const data : FindResultsModel= result['data'];
       return new LeaveTypesPageLoaded({
         leaveTypes: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

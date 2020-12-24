@@ -52,7 +52,7 @@ export class AssignStudentExamEffects {
       return new AssignStudentExamsPageLoaded({
         
       assignStudentExams: data.content,
-      totalCount: data.totalPages,
+      totalCount: data.totalElements,
       page: lastQuery
     
       });

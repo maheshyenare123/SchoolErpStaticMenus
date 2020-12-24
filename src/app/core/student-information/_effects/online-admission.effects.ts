@@ -49,7 +49,7 @@ export class OnlineAdmissionEffects {
       const data : FindResultsModel= result['data'];
       return new OnlineAdmissionsPageLoaded({
         onlineAdmissions: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

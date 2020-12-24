@@ -110,6 +110,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 			distinctUntilChanged()
 		).subscribe(res => {
 			this.customersResult = res;
+			console.log(this.paginator);
 		});
 		this.subscriptions.push(entitiesSubscription);
 		// First load

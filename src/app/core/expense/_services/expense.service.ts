@@ -42,7 +42,7 @@ export class ExpenseService {
     const url =Constants.URL.HOST_URL+Constants.Expenses.Expense ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

@@ -52,7 +52,7 @@ export class BookIssueReturnEffects {
       
       return new BookIssueReturnsPageLoaded({
         bookIssueReturns: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

@@ -50,7 +50,7 @@ export class FeesMasterEffects {
       const data : FindResultsModel= result['data'];
       return new FeesMastersPageLoaded({
         feesMasters: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

@@ -159,10 +159,13 @@
                                     <ng-container *ngIf="studentAttendence.attendenceType==null ">
 
                                     </ng-container>
-                             
-                                    <mat-radio-button  *ngFor="let attendanceType of attendanceTypeList" [value]="attendanceType.type"   >
+                                    <ng-container  *ngFor="let attendanceType of attendanceTypeList">
+                                        <ng-container *ngIf="attendanceType.type!='holiday'">
+                                    <mat-radio-button  [value]="attendanceType.type">
                                   {{attendanceType.type}}
                                 </mat-radio-button>
+                                </ng-container>
+                                </ng-container>
                                 <!-- <input  matInput hidden [(ngModel)]="attendanceType.attendenceTypeId"/> [checked]="studentAttendence.attendenceType"-->
                               </mat-radio-group>
                             </mat-cell>

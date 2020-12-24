@@ -42,7 +42,7 @@ export class SectionService {
     const url =Constants.URL.HOST_URL+Constants.Academics.Section ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

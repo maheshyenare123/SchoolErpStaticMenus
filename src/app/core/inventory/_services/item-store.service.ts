@@ -42,7 +42,7 @@ export class ItemStoreService {
     const url =Constants.URL.HOST_URL+Constants.Inventory.ItemStore ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

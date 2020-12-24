@@ -42,7 +42,7 @@ export class VisitorPurposeService {
     const url =Constants.URL.HOST_URL+Constants.Front_Office.Visitor_Purpose ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+      params: httpParams
     });
   }
 

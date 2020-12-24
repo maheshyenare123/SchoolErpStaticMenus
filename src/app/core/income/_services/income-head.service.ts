@@ -42,7 +42,7 @@ export class IncomeHeadService {
     const url =Constants.URL.HOST_URL+Constants.Incomes.IncomeHead ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

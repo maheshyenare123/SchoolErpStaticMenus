@@ -49,7 +49,7 @@ export class StaffRatingEffects {
       const data : FindResultsModel= result['data'];
       return new StaffRatingsPageLoaded({
         staffRatings: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

@@ -49,7 +49,7 @@ export class StudentAttendenceEffects {
       const data : FindResultsModel= result['data'];
       return new StudentAttendencesPageLoaded({
         studentAttendences: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
          page: lastQuery
       });
     })

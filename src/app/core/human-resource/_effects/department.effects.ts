@@ -49,7 +49,7 @@ export class DepartmentEffects {
       const data : FindResultsModel= result['data'];
       return new DepartmentsPageLoaded({
         departments: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

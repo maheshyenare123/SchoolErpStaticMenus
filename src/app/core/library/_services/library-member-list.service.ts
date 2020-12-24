@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from "@angular/common/http";
 import { Constants } from '../../api_url';
 import { HttpUtilsService, QueryResultsModel, QueryParamsModel } from '../../_base/crud';
-import { LibraryMemberListModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
 import { Observable } from 'rxjs';
 
 
@@ -14,26 +14,26 @@ export class LibraryMemberListService {
   constructor(private http: HttpClient, private httpUtils: HttpUtilsService) { }
 
   // CREATE =>  POST: add a new LibraryMemberList to the server
-  createLibraryMemberList(libraryMemberList: LibraryMemberListModel): Observable<LibraryMemberListModel> {
+  createLibraryMemberList(libraryMemberList: LibraryMemberIssueModel): Observable<LibraryMemberIssueModel> {
     // Note: Add headers if needed (tokens/bearer)
     const httpHeaders = this.httpUtils.getHTTPHeaders();
-    return this.http.post<LibraryMemberListModel>(Constants.URL.HOST_URL+Constants.Library.Library_Member, libraryMemberList, {headers: httpHeaders});
+    return this.http.post<LibraryMemberIssueModel>(Constants.URL.HOST_URL+Constants.Library.Library_Member, libraryMemberList, {headers: httpHeaders});
   }
 
   // READ
-  getAllLibraryMemberLists(): Observable<LibraryMemberListModel[]> {
+  getAllLibraryMemberLists(): Observable<LibraryMemberIssueModel[]> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
-    return this.http.get<LibraryMemberListModel[]>(Constants.URL.HOST_URL+Constants.Library.Library_Member, {headers: httpHeaders});
+    return this.http.get<LibraryMemberIssueModel[]>(Constants.URL.HOST_URL+Constants.Library.Library_Member, {headers: httpHeaders});
   }
   // READ
-  getAllClasses(): Observable<LibraryMemberListModel[]> {
+  getAllClasses(): Observable<LibraryMemberIssueModel[]> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
-    return this.http.get<LibraryMemberListModel[]>(Constants.URL.HOST_URL+'class', {headers: httpHeaders});
+    return this.http.get<LibraryMemberIssueModel[]>(Constants.URL.HOST_URL+'class', {headers: httpHeaders});
   }
 
-  getLibraryMemberListById(libraryMemberListId: number): Observable<LibraryMemberListModel> {
+  getLibraryMemberListById(libraryMemberListId: number): Observable<LibraryMemberIssueModel> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
-    return this.http.get<LibraryMemberListModel>(Constants.URL.HOST_URL+Constants.Library.Library_Member+ `/${libraryMemberListId}`, {headers: httpHeaders});
+    return this.http.get<LibraryMemberIssueModel>(Constants.URL.HOST_URL+Constants.Library.Library_Member+ `/${libraryMemberListId}`, {headers: httpHeaders});
   }
 
   // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
@@ -47,18 +47,18 @@ export class LibraryMemberListService {
     const url =Constants.URL.HOST_URL+Constants.Library.Library_Member;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 
   // UPDATE => PUT: update the LibraryMemberList on the server
-  updateLibraryMemberList(libraryMemberList: LibraryMemberListModel): Observable<any> {
+  updateLibraryMemberList(libraryMemberList: LibraryMemberIssueModel): Observable<any> {
     const httpHeader = this.httpUtils.getHTTPHeaders();
     return this.http.put(Constants.URL.HOST_URL+Constants.Library.Library_Member+'/'+libraryMemberList.memberId, libraryMemberList, {headers: httpHeader});
   }
 
   // UPDATE Status
-  updateStatusForLibraryMemberList(libraryMemberLists: LibraryMemberListModel[], status: number): Observable<any> {
+  updateStatusForLibraryMemberList(libraryMemberLists: LibraryMemberIssueModel[], status: number): Observable<any> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
     const body = {
       libraryMemberListsForUpdate: libraryMemberLists,
@@ -69,10 +69,10 @@ export class LibraryMemberListService {
   }
 
   // DELETE => delete the LibraryMemberList from the server
-  deleteLibraryMemberList(libraryMemberListId: number): Observable<LibraryMemberListModel> {
+  deleteLibraryMemberList(libraryMemberListId: number): Observable<LibraryMemberIssueModel> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
     const url = `${Constants.URL.HOST_URL+Constants.Library.Library_Member}/${libraryMemberListId}`;
-    return this.http.delete<LibraryMemberListModel>(url, {headers: httpHeaders});
+    return this.http.delete<LibraryMemberIssueModel>(url, {headers: httpHeaders});
   }
 
   deleteLibraryMemberLists(ids: number[] = []): Observable<any> {

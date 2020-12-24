@@ -49,7 +49,7 @@ export class ExamSubjectMarksEffects {
       const data : FindResultsModel= result['data'];
       return new ExamSubjectMarkssPageLoaded({
         examSubjectMarkss: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

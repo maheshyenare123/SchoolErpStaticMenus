@@ -44,7 +44,7 @@ export class AssignVehicleService {
     const url =Constants.URL.HOST_URL+Constants.Transports.AssignVehicle ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

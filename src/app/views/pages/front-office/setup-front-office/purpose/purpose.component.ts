@@ -106,6 +106,7 @@ private componentSubscriptions: Subscription;
 			debugger
 	console.log(res);
 			this.visitorPurposesResult = res;
+			console.log(this.paginator);
 			if(this.visitorPurposesResult.length==0)this.dataSource.hasItems=false;
 		});
 		this.subscriptions.push(entitiesSubscription);

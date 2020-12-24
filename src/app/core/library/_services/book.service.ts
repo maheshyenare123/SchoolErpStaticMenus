@@ -47,7 +47,7 @@ export class BookService {
     const url =Constants.URL.HOST_URL+Constants.Library.Book ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

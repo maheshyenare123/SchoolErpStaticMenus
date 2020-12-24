@@ -49,7 +49,7 @@ export class StudentFeeDepositeEffects {
       const data : FindResultsModel= result['data'];
       return new StudentFeeDepositesPageLoaded({
         studentFeeDeposites: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

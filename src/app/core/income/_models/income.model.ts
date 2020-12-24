@@ -9,7 +9,7 @@ export class IncomeModel {
     isActive: string;
     name: string;
     note: string;
-   
+    incHeadName:string;
     clear() {
         this.amount= 0;
         this.date= '';

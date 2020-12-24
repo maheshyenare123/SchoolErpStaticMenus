@@ -49,7 +49,7 @@ export class StudentFeeDepositeService {
     const url =Constants.URL.HOST_URL+Constants.Fees_Collection.Student_Fee_Deposite ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

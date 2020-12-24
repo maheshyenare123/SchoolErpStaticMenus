@@ -49,7 +49,7 @@ export class ReferenceEffects {
       const data : FindResultsModel= result['data'];
       return new ReferencesPageLoaded({
         references: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

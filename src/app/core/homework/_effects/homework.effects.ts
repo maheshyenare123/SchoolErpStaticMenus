@@ -39,7 +39,7 @@ export class HomeworkEffects {
     ofType<HomeworksPageRequested>(HomeworkActionTypes.HomeworksPageRequested),
     mergeMap(({payload}) => {
       this.store.dispatch(this.showPageLoadingDistpatcher);
-      const requestToServer = this.homeworksService.findHomeworks(payload.page);
+      const requestToServer = this.homeworksService.findHomeworks(payload.page,payload.classId,payload.sectionId,payload.subjectGroupSubjectId,payload.subjectId);
       const lastQuery = of(payload.page);
       return forkJoin(requestToServer, lastQuery);
     }),
@@ -49,7 +49,7 @@ export class HomeworkEffects {
       const data : FindResultsModel= result['data'];
       return new HomeworksPageLoaded({
         homeworks: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

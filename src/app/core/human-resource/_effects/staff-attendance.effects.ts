@@ -49,7 +49,7 @@ export class StaffAttendanceEffects {
       const data : FindResultsModel= result['data'];
       return new StaffAttendancesPageLoaded({
         staffAttendances: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

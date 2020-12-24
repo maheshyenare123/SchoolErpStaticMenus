@@ -49,7 +49,7 @@ export class FeesTypeEffects {
       const data : FindResultsModel= result['data'];
       return new FeesTypesPageLoaded({
         feesTypes: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

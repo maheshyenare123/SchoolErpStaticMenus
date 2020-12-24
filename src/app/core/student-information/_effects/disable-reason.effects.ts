@@ -49,7 +49,7 @@ export class DisableReasonEffects {
       const data : FindResultsModel= result['data'];
       return new DisableReasonsPageLoaded({
         disableReasons: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

@@ -49,7 +49,7 @@ export class StaffLeaveRequestEffects {
       const data : FindResultsModel= result['data'];
       return new StaffLeaveRequestsPageLoaded({
         staffLeaveRequests: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

@@ -1,4 +1,4 @@
-export class LibraryMemberListModel {
+export class LibraryMemberIssueModel {
 
     libraryCardNo: string;
     memberId: number;
@@ -11,6 +11,15 @@ export class LibraryMemberListModel {
     gender: string;
     email: string;
    
+
+
+        
+
+
+
+
+
+
     clear() {
         this.libraryCardNo= '';
         this.memberId= 0;

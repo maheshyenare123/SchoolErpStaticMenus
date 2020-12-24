@@ -42,7 +42,7 @@ export class DepartmentService {
     const url =Constants.URL.HOST_URL+Constants.Human_Resource.Department ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

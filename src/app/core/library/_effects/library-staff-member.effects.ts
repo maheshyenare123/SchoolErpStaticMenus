@@ -49,7 +49,7 @@ export class LibraryStaffMemberEffects {
       const data : FindResultsModel= result['data'];
       return new LibraryStaffMembersPageLoaded({
         libraryStaffMembers: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

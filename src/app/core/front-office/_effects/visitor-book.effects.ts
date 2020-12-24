@@ -49,7 +49,7 @@ export class VisitorBookEffects {
       const data : FindResultsModel= result['data'];
       return new VisitorBooksPageLoaded({
         visitorBooks: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

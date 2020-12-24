@@ -49,7 +49,7 @@ export class ExamGroupEffects {
       const data : FindResultsModel= result['data'];
       return new ExamGroupsPageLoaded({
         examGroups: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

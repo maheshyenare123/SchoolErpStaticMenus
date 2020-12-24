@@ -54,7 +54,7 @@ export class AssignStudentFeemasterEffects {
       return new AssignStudentFeemastersPageLoaded({
         
       assignStudentFeemasters: data1.content,
-      totalCount: data1.totalPages,
+      totalCount: data1.totalElements,
       page: lastQuery
     
       });

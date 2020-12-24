@@ -49,7 +49,7 @@ export class SectionEffects {
       const data : FindResultsModel= result['data'];
       return new SectionsPageLoaded({
         sections: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

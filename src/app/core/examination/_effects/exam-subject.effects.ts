@@ -52,7 +52,7 @@ export class ExamSubjectEffects {
       return new ExamSubjectsPageLoaded({
         
       examSubjects: data.content,
-      totalCount: data.totalPages,
+      totalCount: data.totalElements,
       page: lastQuery
     
       });

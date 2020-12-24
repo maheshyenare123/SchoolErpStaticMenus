@@ -42,7 +42,7 @@ export class ExamService {
     const url =Constants.URL.HOST_URL+Constants.Exams.Exam+`/${examGroupId}` ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

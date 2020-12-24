@@ -49,7 +49,7 @@ export class FeesReminderEffects {
       const data : FindResultsModel= result['data'];
       return new FeesRemindersPageLoaded({
         feesReminders: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

@@ -42,7 +42,7 @@ export class ItemStockService {
     const url =Constants.URL.HOST_URL+Constants.Inventory.ItemStock ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

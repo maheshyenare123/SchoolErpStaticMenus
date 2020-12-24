@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormArray} from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { HomeworksDataSource, HomeworkDtoModel, HomeworksPageRequested, OneHomeworkDeleted, ManyHomeworksDeleted } from 'src/app/core/homework';
+import { HomeworksDataSource, HomeworkDtoModel, HomeworksPageRequested, OneHomeworkDeleted, ManyHomeworksDeleted, HomeworkEvaluationService, HomeworkEvaluationDtoModel } from 'src/app/core/homework';
 import { QueryParamsModel, LayoutUtilsService, MessageType } from '../../../../core/_base/crud';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription, merge, fromEvent, of } from 'rxjs';
@@ -60,6 +60,7 @@ constructor(public dialog: MatDialog,
              private studentClassService: StudentClassService,
 		private subjectService: SubjectService,
     private subjectGroupService: SubjectGroupService,
+    private homeworkEvaluationService:HomeworkEvaluationService
     ) { }
 
 
@@ -153,7 +154,7 @@ this.subscriptions.push(sortSubscription);
 - when a sort event occurs => this.sort.sortChange
 **/
 const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-  tap(() => this.loadHomeworksList())
+  tap(() => this.loadHomeworksList(controls.classesId.value,controls.sectionId.value,controls.subjectGroupSubjectId.value,controls.subjectId.value))
 )
 .subscribe();
 this.subscriptions.push(paginatorSubscriptions);
@@ -184,7 +185,7 @@ const entitiesSubscription = this.dataSource.entitySubject.pipe(
 this.subscriptions.push(entitiesSubscription);
 // First load
 of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-  this.loadHomeworksList();
+  this.loadHomeworksList(controls.classesId.value,controls.sectionId.value,controls.subjectGroupSubjectId.value,controls.subjectId.value);
 }); // Remove this line, just loading imitation
 
 
@@ -201,7 +202,7 @@ ngOnDestroy() {
 /**
  * Load Products List
  */
-loadHomeworksList() {
+loadHomeworksList(classId,sectionId,subjectGroupSubjectId,subjectId) {
   this.selection.clear();
   const queryParams = new QueryParamsModel(
     this.filterConfiguration(),
@@ -211,7 +212,7 @@ loadHomeworksList() {
     this.paginator.pageSize
   );
   // Call request from server
-  this.store.dispatch(new HomeworksPageRequested({ page: queryParams }));
+  this.store.dispatch(new HomeworksPageRequested({ page: queryParams ,classId,sectionId,subjectGroupSubjectId,subjectId}));
  
   this.selection.clear();
 }
@@ -278,6 +279,7 @@ createForm() {
     subjectId: [this.homework.subjectId, Validators.required],
 
   })
+
 
 }
 
@@ -416,25 +418,35 @@ deleteProducts() {
 			}
 
 			this.layoutUtilsService.showActionNotification(_saveMessage, _messageType);
-			this.loadHomeworksList();
+			// this.loadHomeworksList();
 		});
   }
   
   evaluateHomework(homework: HomeworkDtoModel) {
-		let saveMessageTranslateParam = 'ECOMMERCE.CUSTOMERS.EDIT.';
-    //const _saveMessage = homework.id > 0 ? 'Edit  Homework' : 'Create  Homework';
-    
-		//const _messageType = homework.id > 0 ? MessageType.Update : MessageType.Create;
-		const dialogRef = this.dialog.open(HomeworkEvaluationEditDialogComponent, { data: { homework } });
+    this.getStudentDataForEvaluation(homework);
+
+  }
+  
+  getStudentDataForEvaluation(homework){
+    let _saveMessage = 'Evaluate Homework Sucessfully';
+    const _messageType = MessageType.Update ;
+		this.homeworkEvaluationService.findStudentHomeworkEvaluations(homework.id).subscribe(res=>{
+
+			const data=res['data'];
+const homeworkEvaluationStudentList=data['content'];
+    const dialogRef = this.dialog.open(HomeworkEvaluationEditDialogComponent, { data: { homework,homeworkEvaluationStudentList } });
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
 			}
+      this.layoutUtilsService.showActionNotification(_saveMessage, _messageType);
+    });
+    
+		})
 
-		//	this.layoutUtilsService.showActionNotification(_saveMessage, _messageType);
-			this.loadHomeworksList();
-		});
 	}
+
+
 
 /**
  * Check all rows are selected

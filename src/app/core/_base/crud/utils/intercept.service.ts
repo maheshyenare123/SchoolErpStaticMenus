@@ -66,7 +66,6 @@ export class InterceptService implements HttpInterceptor {
                 this.store.dispatch(new Logout());
                 this.router.navigate(['/auth/login']);
                 document.location.reload();
-             
              }
 
 

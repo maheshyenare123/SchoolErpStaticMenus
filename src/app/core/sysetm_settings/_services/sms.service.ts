@@ -43,7 +43,7 @@ export class SmsService {
     const url =Constants.URL.HOST_URL+Constants.System_Settings.Sms ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

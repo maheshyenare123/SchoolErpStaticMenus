@@ -15,11 +15,13 @@ export class HttpUtilsService {
    */
   getFindHTTPParams(queryParams): HttpParams {
     return new HttpParams()
-      .set('lastNamefilter', queryParams.filter)
-      .set('sortOrder', queryParams.sortOrder)
-      .set('sortField', queryParams.sortField)
-      .set('pageNumber', queryParams.pageNumber.toString())
+      // .set('lastNamefilter', queryParams.filter)
+      // .set('sortOrder', queryParams.sortOrder)
+      .set('sortBy', queryParams.sortField)
+      .set('pageNo', queryParams.pageNumber.toString())
       .set('pageSize', queryParams.pageSize.toString());
+      // @RequestParam(defaultValue = "0") Integer pageNo,
+			// @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy
   }
 
   /**

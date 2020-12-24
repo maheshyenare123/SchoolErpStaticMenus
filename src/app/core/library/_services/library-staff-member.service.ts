@@ -47,7 +47,7 @@ export class LibraryStaffMemberService {
     const url =Constants.URL.HOST_URL+Constants.Library.Library_Staff_Member ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

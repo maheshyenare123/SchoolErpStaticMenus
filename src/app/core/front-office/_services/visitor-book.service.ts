@@ -43,7 +43,7 @@ export class VisitorBookService {
     const url =Constants.URL.HOST_URL+Constants.Front_Office.Visitor_Book ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

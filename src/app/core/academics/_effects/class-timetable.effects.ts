@@ -49,7 +49,7 @@ export class ClassTimetableEffects {
       const data : FindResultsModel= result['data'];
       return new ClassTimetablesPageLoaded({
         classTimetables: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

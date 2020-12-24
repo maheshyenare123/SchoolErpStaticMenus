@@ -49,7 +49,7 @@ export class RoomTypeEffects {
       const data : FindResultsModel= result['data'];
       return new RoomTypesPageLoaded({
         roomTypes: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

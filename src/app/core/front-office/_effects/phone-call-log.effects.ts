@@ -49,7 +49,7 @@ export class PhoneCallLogEffects {
       const data : FindResultsModel= result['data'];
       return new PhoneCallLogsPageLoaded({
         phoneCallLogs: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

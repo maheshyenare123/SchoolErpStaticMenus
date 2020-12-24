@@ -49,7 +49,7 @@ export class FeesDiscountEffects {
       const data : FindResultsModel= result['data'];
       return new FeesDiscountsPageLoaded({
         feesDiscounts: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

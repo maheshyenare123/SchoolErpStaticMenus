@@ -49,7 +49,7 @@ export class BulkDeleteEffects {
       const data : FindResultsModel= result['data']
       return new BulkDeletesPageLoaded({
         bulkDeletes: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

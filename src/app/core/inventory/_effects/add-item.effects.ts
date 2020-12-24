@@ -50,7 +50,7 @@ export class AddItemEffects {
       const data : FindResultsModel= result['data'];
       return new AddItemsPageLoaded({
         addItems: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })

@@ -54,7 +54,7 @@ export class AssignStudentFeediscountEffects {
       return new AssignStudentFeediscountsPageLoaded({
         
       assignStudentFeediscounts: data1.content,
-      totalCount: data1.totalPages,
+      totalCount: data1.totalElements,
       page: lastQuery
     
       });

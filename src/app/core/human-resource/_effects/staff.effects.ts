@@ -51,7 +51,7 @@ export class StaffEffects {
       const data : FindResultsModel= result['data'];
       return new StaffsPageLoaded({
         staffs: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })
@@ -73,7 +73,7 @@ export class StaffEffects {
       const data : FindResultsModel= result['data'];
       return new StaffsPageLoaded({
         staffs: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })
@@ -94,7 +94,7 @@ export class StaffEffects {
       const data : FindResultsModel= result['data'];
       return new StaffsPageLoaded({
         staffs: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

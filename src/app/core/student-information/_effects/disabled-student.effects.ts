@@ -49,7 +49,7 @@ export class DisabledStudentEffects {
       const data : FindResultsModel= result['data']
       return new DisabledStudentsPageLoaded({
         disabledStudents: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

@@ -47,7 +47,7 @@ export class BookIssueReturnService {
     const url =Constants.URL.HOST_URL+Constants.Library.Book_Issue_Return+"/"+id ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

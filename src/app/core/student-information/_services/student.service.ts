@@ -21,7 +21,7 @@ export class StudentService {
   }
 
   // READ
-  getAllStudents(): Observable<StudentDtoModel[]> {
+  getAllStudents(classId,sectionId): Observable<StudentDtoModel[]> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
     return this.http.get<StudentDtoModel[]>(Constants.URL.HOST_URL+Constants.Student_Information.Student, {headers: httpHeaders});
   }

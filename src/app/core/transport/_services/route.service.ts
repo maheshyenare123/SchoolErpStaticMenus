@@ -42,7 +42,7 @@ export class RouteService {
     const url =Constants.URL.HOST_URL+Constants.Transports.Route ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

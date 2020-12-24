@@ -48,7 +48,7 @@ export class ExamSubjectMarksService {
     // const url =Constants.URL.HOST_URL+Constants.Exams.ExamSubjectMarks+"students" ;
     // return this.http.get<QueryResultsModel>(url, {
     //   headers: httpHeaders,
-    //   // params: httpParams
+    //  params: httpParams
     // });
 
 
@@ -65,7 +65,7 @@ export class ExamSubjectMarksService {
      const url =Constants.URL.HOST_URL+Constants.Exams.ExamSubjectMarks+"/students" ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
 
   }

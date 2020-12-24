@@ -42,7 +42,7 @@ export class PhoneCallLogService {
     const url =Constants.URL.HOST_URL+Constants.Front_Office.Phone_Call_Log ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

@@ -49,7 +49,7 @@ export class ClassEffects {
       const data : FindResultsModel= result['data'];
       return new ClasssPageLoaded({
         classs: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

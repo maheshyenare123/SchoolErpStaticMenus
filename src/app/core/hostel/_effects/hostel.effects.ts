@@ -49,7 +49,7 @@ export class HostelEffects {
       const data : FindResultsModel= result['data'];
       return new HostelsPageLoaded({
         hostels: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

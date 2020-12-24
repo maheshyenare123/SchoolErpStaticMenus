@@ -42,7 +42,7 @@ export class FeesReminderService {
     const url =Constants.URL.HOST_URL+Constants.Fees_Collection.FeesReminder ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

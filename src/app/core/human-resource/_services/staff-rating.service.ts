@@ -42,7 +42,7 @@ export class StaffRatingService {
     const url =Constants.URL.HOST_URL+Constants.Human_Resource.Staff_Rating ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

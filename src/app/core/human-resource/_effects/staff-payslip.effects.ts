@@ -49,7 +49,7 @@ export class StaffPayslipEffects {
       const data : FindResultsModel= result['data'];
       return new StaffPayslipsPageLoaded({
         staffPayslips: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

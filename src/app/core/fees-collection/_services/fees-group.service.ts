@@ -42,7 +42,7 @@ export class FeesGroupService {
     const url =Constants.URL.HOST_URL+Constants.Fees_Collection.Fees_Group ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

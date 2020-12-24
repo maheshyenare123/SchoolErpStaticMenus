@@ -135,7 +135,8 @@ ngOnInit() {
 
 	loadAllStudent() {
 		debugger
-		this.studentService.getAllStudents().subscribe(res => {
+		//add classid sectionid
+		this.studentService.getAllStudents(0,0).subscribe(res => {
 			const data = res['data'];
 			this.studentList = data['content'];
 			console.log(this.studentList)

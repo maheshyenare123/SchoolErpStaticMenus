@@ -184,7 +184,7 @@ this.subscriptions.push(sortSubscription);
 - when a sort event occurs => this.sort.sortChange
 **/
 const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-  tap(() => this.loadHomeworksList())
+  tap(() => this.loadHomeworksList(controls.classesId.value,controls.sectionId.value,controls.subjectGroupSubjectId.value,controls.subjectId.value))
 )
 .subscribe();
 this.subscriptions.push(paginatorSubscriptions);
@@ -215,9 +215,8 @@ const entitiesSubscription = this.dataSource.entitySubject.pipe(
 this.subscriptions.push(entitiesSubscription);
 // First load
 of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-  this.loadHomeworksList();
+  this.loadHomeworksList(controls.classesId.value,controls.sectionId.value,controls.subjectGroupSubjectId.value,controls.subjectId.value);
 }); // Remove this line, just loading imitation
-
 
 
 }
@@ -232,7 +231,7 @@ ngOnDestroy() {
 /**
  * Load Products List
  */
-loadHomeworksList() {
+loadHomeworksList(classId,sectionId,subjectGroupSubjectId,subjectId) {
   this.selection.clear();
   const queryParams = new QueryParamsModel(
     this.filterConfiguration(),
@@ -242,7 +241,7 @@ loadHomeworksList() {
     this.paginator.pageSize
   );
   // Call request from server
-  this.store.dispatch(new HomeworksPageRequested({ page: queryParams }));
+  this.store.dispatch(new HomeworksPageRequested({ page: queryParams,classId,sectionId,subjectGroupSubjectId,subjectId }));
  
   this.selection.clear();
 }

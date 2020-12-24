@@ -49,7 +49,7 @@ export class ApproveLeaveEffects {
       const data : FindResultsModel= result['data'];
       return new ApproveLeavesPageLoaded({
         approveLeaves: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

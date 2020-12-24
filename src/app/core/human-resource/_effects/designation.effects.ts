@@ -49,7 +49,7 @@ export class StaffDesignationEffects {
       const data : FindResultsModel= result['data'];
       return new StaffDesignationsPageLoaded({
         staffDesignations: data.content,
-        totalCount: data.totalPages,
+    totalCount: data.totalElements,
         page: lastQuery
       });
     })

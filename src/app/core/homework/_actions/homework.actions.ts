@@ -70,7 +70,7 @@ export class ManyHomeworksDeleted implements Action {
 export class HomeworksPageRequested implements Action {
   readonly type = HomeworkActionTypes.HomeworksPageRequested;
 
-  constructor(public payload: { page: QueryParamsModel }) {
+  constructor(public payload: { page: QueryParamsModel,classId:number,sectionId:number,subjectGroupSubjectId:number,subjectId:number }) {
   }
 }
 

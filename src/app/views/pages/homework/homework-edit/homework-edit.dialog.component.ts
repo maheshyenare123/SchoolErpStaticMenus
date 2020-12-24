@@ -206,6 +206,8 @@ export class HomeworkEditDialogComponent implements OnInit, OnDestroy {
 		_homework.section = controls.section.value;
 		_homework.sectionId = controls.sectionId.value;
 		_homework.subjectGroupSubjectId = controls.subjectGroupSubjectId.value;
+
+		
 		_homework.subjectId = controls.subjectId.value;
 		_homework.subjectName = controls.subjectName.value;
 		_homework.description = controls.description.value;

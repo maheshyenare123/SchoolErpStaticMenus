@@ -49,7 +49,7 @@ export class StudentClassEffects {
       const data : FindResultsModel= result['data'];
       return new StudentClasssPageLoaded({
         studentClasss: data.content,
-    totalCount: data.totalPages,
+    totalCount: data.totalElements,
     page: lastQuery
       });
     })

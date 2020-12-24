@@ -1,11 +1,12 @@
 export class FindResultsModel {
     // fields
     content: any[];
-    totalPages: number;
+    // totalPages: number;
+    totalElements:number;
     errorMessage: string;
-    constructor(items: any[] = [], totalCount: number = 0, errorMessage: string = '') {
+    constructor(items: any[] = [], totalElements: number = 0, errorMessage: string = '') {
       this.content = items;
-      this.totalPages = totalCount;
+      this.totalElements = totalElements;
     }
     
   }

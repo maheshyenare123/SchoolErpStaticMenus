@@ -42,7 +42,7 @@ export class HostelRoomService {
     const url =Constants.URL.HOST_URL+Constants.Hostels.HostelRoom ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

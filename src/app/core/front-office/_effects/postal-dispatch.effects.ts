@@ -50,7 +50,7 @@ export class PostalDispatchEffects {
       const data : FindResultsModel= result['data'];
       return new PostalDispatchsPageLoaded({
         postalDispatchs: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

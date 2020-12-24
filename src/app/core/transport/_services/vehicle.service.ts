@@ -42,7 +42,7 @@ export class VehicleService {
     const url =Constants.URL.HOST_URL+Constants.Transports.Vehicle ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

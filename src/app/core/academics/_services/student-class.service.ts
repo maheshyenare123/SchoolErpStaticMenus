@@ -45,7 +45,7 @@ export class StudentClassService {
     const url =Constants.URL.HOST_URL+Constants.Academics.Class ;
     return this.http.get<QueryResultsModel>(url, {
       headers: httpHeaders,
-      // params: httpParams
+     params: httpParams
     });
   }
 

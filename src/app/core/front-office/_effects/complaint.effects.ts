@@ -49,7 +49,7 @@ export class ComplaintEffects {
       const data : FindResultsModel= result['data'];
       return new ComplaintsPageLoaded({
         complaints: data.content,
-        totalCount: data.totalPages,
+        totalCount: data.totalElements,
         page: lastQuery
       });
     })

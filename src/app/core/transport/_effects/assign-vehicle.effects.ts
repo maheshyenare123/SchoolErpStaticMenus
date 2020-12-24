@@ -49,7 +49,7 @@ export class AssignVehicleEffects {
       const data : FindResultsModel= result['data'];
       return new AssignVehiclesPageLoaded({
         assignVehicles: data.content,
-    totalCount: data.totalPages,
+totalCount: data.totalElements,
     page: lastQuery
       });
     })
