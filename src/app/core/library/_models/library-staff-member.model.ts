@@ -8,7 +8,7 @@ export class LibraryStaffMemberModel {
     memberId: number;
     mobileno: string;
     name: string;
-    staffId: number;
+    id: number;
 
     clear() {
         this.dob= '';
@@ -19,6 +19,6 @@ export class LibraryStaffMemberModel {
         this.memberId= 0;
         this.mobileno= '';
         this.name= '';
-        this.staffId= 0;
+        this.id= 0;
     }
 }

@@ -6,7 +6,7 @@ import { each } from 'lodash';
 import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
 // State
 import { LibraryMemberListsState } from '../_reducers/library-member-list.reducers';
-import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-lssue.model';
 
 export const selectLibraryMemberListsState = createFeatureSelector<LibraryMemberListsState>('libraryMemberLists');
 

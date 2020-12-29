@@ -11,15 +11,6 @@ export class LibraryMemberIssueModel {
     gender: string;
     email: string;
    
-
-
-        
-
-
-
-
-
-
     clear() {
         this.libraryCardNo= '';
         this.memberId= 0;

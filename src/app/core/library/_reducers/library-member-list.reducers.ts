@@ -4,10 +4,10 @@ import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/e
 // Actions
 import { LibraryMemberListActions, LibraryMemberListActionTypes } from '../_actions/library-member-list.actions';
 // Models
-import { LibraryMemberListModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-lssue.model';
 import { QueryParamsModel } from '../../_base/crud';
 
-export interface LibraryMemberListsState extends EntityState<LibraryMemberListModel> {
+export interface LibraryMemberListsState extends EntityState<LibraryMemberIssueModel> {
   listLoading: boolean;
   actionsloading: boolean;
   totalCount: number;
@@ -16,7 +16,7 @@ export interface LibraryMemberListsState extends EntityState<LibraryMemberListMo
   showInitWaitingMessage: boolean;
 }
 
-export const adapter: EntityAdapter<LibraryMemberListModel> = createEntityAdapter<LibraryMemberListModel>();
+export const adapter: EntityAdapter<LibraryMemberIssueModel> = createEntityAdapter<LibraryMemberIssueModel>();
 
 export const initialLibraryMemberListsState: LibraryMemberListsState = adapter.getInitialState({
   libraryMemberListForEdit: null,
@@ -52,7 +52,7 @@ export function libraryMemberListsReducer(state = initialLibraryMemberListsState
       return adapter.updateOne(action.payload.partialLibraryMemberList, state);
     // case LibraryMemberListActionTypes.LibraryMemberListsStatusUpdated: {
     //   // tslint:disable-next-line
-    //   const _partialLibraryMemberLists: Update<LibraryMemberListModel>[] = [];
+    //   const _partialLibraryMemberLists: Update<LibraryMemberIssueModel>[] = [];
     //   // tslint:disable-next-line:prefer-const
     //   // tslint:disable-next-line
     //   for (let i = 0; i < action.payload.libraryMemberLists.length; i++) {
@@ -88,7 +88,7 @@ export function libraryMemberListsReducer(state = initialLibraryMemberListsState
   }
 }
 
-export const getLibraryMemberListState = createFeatureSelector<LibraryMemberListModel>('libraryMemberLists');
+export const getLibraryMemberListState = createFeatureSelector<LibraryMemberIssueModel>('libraryMemberLists');
 
 export const {
   selectAll,

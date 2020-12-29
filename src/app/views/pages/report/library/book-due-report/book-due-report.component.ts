@@ -121,7 +121,7 @@ export class BookDueReportComponent implements OnInit {
 		- when a sort event occurs => this.sort.sortChange
 		**/
 		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-			tap(() => this.loadBookIssueReturnList(this.libraryMember.memberId))
+			tap(() => this.loadBookIssueReturnList(this.libraryMember.libararyMemberId))
 		)
 			.subscribe();
 		this.subscriptions.push(paginatorSubscriptions);
@@ -133,7 +133,7 @@ export class BookDueReportComponent implements OnInit {
 			distinctUntilChanged(), // This operator will eliminate duplicate values
 			tap(() => {
 				this.paginator.pageIndex = 0;
-				this.loadBookIssueReturnList(this.libraryMember.memberId);
+				this.loadBookIssueReturnList(this.libraryMember.libararyMemberId);
 			})
 		)
 			.subscribe();
@@ -153,7 +153,7 @@ export class BookDueReportComponent implements OnInit {
 		this.subscriptions.push(entitiesSubscription);
 		// First load
 		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-			this.loadBookIssueReturnList(this.libraryMember.memberId);
+			this.loadBookIssueReturnList(this.libraryMember.libararyMemberId);
 		}); // Remove this line, just loading imitation
 
   }

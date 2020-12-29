@@ -46,7 +46,7 @@ export function bookIssueReturnsReducer(state = initialBookIssueReturnsState, ac
       };
     case BookIssueReturnActionTypes.BookIssueReturnCreated:
       return adapter.addOne(action.payload.bookIssueReturn, {
-        ...state, lastCreatedBookIssueReturnId: action.payload.bookIssueReturn.memberId
+        ...state, lastCreatedBookIssueReturnId: action.payload.bookIssueReturn.libararyMemberId
       });
     case BookIssueReturnActionTypes.BookIssueReturnUpdated:
       return adapter.updateOne(action.payload.partialBookIssueReturn, state);

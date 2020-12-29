@@ -72,14 +72,13 @@ rolesList: RolesDtoModel[] = [];
 		private roleService:RoleService,) { }
 
   ngOnInit() {
-
 	debugger;
 	this.loadAllRoles();
     this.createForm();
 	this.dataSource = new StaffsDataSource(this.store);
   }
 
-  //get All Class List
+  //get All Roles List
 loadAllRoles() {
 	debugger
 	this.roleService.getAllRoles().subscribe(res => {

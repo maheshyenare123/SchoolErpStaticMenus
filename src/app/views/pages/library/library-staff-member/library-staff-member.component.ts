@@ -12,6 +12,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { tap, debounceTime, distinctUntilChanged, skip, delay, take } from 'rxjs/operators';
 import { LibraryStaffMemberEditDialogComponent } from '../library-staff-member-edit/library-staff-member-edit.dialog.component';
+import { RolesDtoModel } from 'src/app/core/Models/rolesDto.model';
 
 
 @Component({
@@ -35,6 +36,11 @@ lastQuery: QueryParamsModel;
 selection = new SelectionModel<LibraryStaffMemberModel>(true, []);
 libraryStaffMembersResult: LibraryStaffMemberModel[] = [];
 private subscriptions: Subscription[] = [];
+
+
+roleId : number;
+
+rolesList: RolesDtoModel[] = [];
 
 constructor(public dialog: MatDialog,
              private activatedRoute: ActivatedRoute,
@@ -112,6 +118,8 @@ getAllLibraryStaffMemberList() {
 ngOnDestroy() {
   this.subscriptions.forEach(el => el.unsubscribe());
 }
+
+
 
 /**
  * Load Products List
@@ -197,7 +205,7 @@ deleteLibraryStaffMember(_item: LibraryStaffMemberModel) {
       return;
     }
 //delete api call
-    this.store.dispatch(new OneLibraryStaffMemberDeleted({ id: _item.staffId }));
+    this.store.dispatch(new OneLibraryStaffMemberDeleted({ id: _item.id }));
     this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
   });
 }
@@ -220,7 +228,7 @@ deleteProducts() {
     const idsForDeletion: number[] = [];
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.selection.selected.length; i++) {
-      idsForDeletion.push(this.selection.selected[i].staffId);
+      idsForDeletion.push(this.selection.selected[i].id);
     }
 
     //many product deleted
@@ -302,9 +310,9 @@ deleteProducts() {
 	 */
 	editLibraryStaffMember(libraryStaffMember: LibraryStaffMemberModel) {
 		let saveMessageTranslateParam = 'ECOMMERCE.CUSTOMERS.EDIT.';
-    const _saveMessage = libraryStaffMember.staffId > 0 ? 'Edit  Library Staff Member' : 'Create  Library Staff Member';
+    const _saveMessage = libraryStaffMember.id > 0 ? 'Edit  Library Staff Member' : 'Create  Library Staff Member';
     
-		const _messageType = libraryStaffMember.staffId > 0 ? MessageType.Update : MessageType.Create;
+		const _messageType = libraryStaffMember.id > 0 ? MessageType.Update : MessageType.Create;
 		const dialogRef = this.dialog.open(LibraryStaffMemberEditDialogComponent, { data: { libraryStaffMember }, width: '450px'});
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {

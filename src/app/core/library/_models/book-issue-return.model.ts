@@ -5,10 +5,14 @@ export class BookIssueReturnModel{
     isActive:string;
     isReturned:number;
     issueDate:string
-    memberId:number;
+    libararyMemberId:number;
     returnDate:string;
     bookNo:string;
 	bookTitle:string
+
+  
+
+
 
     clear() {
         this.bookId= 0;
@@ -18,6 +22,6 @@ export class BookIssueReturnModel{
         this.id= 0;
         this.isActive= '';
         this.isReturned= 0;
-        this.memberId= 0;     
+        this.libararyMemberId= 0;     
     }
     }    

@@ -112,7 +112,7 @@ classList=[]
 	preparelibraryStaffMember(): LibraryStaffMemberModel {
 		const controls = this.libraryStaffMemberForm.controls;
 		const _libraryStaffMember = new LibraryStaffMemberModel();
-		_libraryStaffMember.staffId = this.libraryStaffMember.staffId;
+		_libraryStaffMember.id = this.libraryStaffMember.id;
 	
 		_libraryStaffMember.name = controls.name.value;
 		_libraryStaffMember.email = controls.email.value;
@@ -168,7 +168,7 @@ classList=[]
 	 */
 	updateLibraryStaffMember(_libraryStaffMember: LibraryStaffMemberModel) {
 		const updateLibraryStaffMember: Update<LibraryStaffMemberModel> = {
-			id: _libraryStaffMember.staffId,
+			id: _libraryStaffMember.id,
 			changes: _libraryStaffMember
 		};
 		this.store.dispatch(new LibraryStaffMemberUpdated({

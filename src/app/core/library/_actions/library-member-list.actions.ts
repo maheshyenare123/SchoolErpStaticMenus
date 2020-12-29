@@ -4,7 +4,7 @@ import { Update } from '@ngrx/entity';
 // CRUD
 import { QueryParamsModel } from '../../_base/crud';
 // Models
-import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-lssue.model';
 
 export enum LibraryMemberListActionTypes {
   LibraryMemberListOnServerCreated = '[Edit LibraryMemberList Dialog] LibraryMemberList On Server Created',
@@ -69,14 +69,12 @@ export class ManyLibraryMemberListsDeleted implements Action {
 
 export class LibraryMemberListsPageRequested implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListsPageRequested;
-
   constructor(public payload: { page: QueryParamsModel }) {
   }
 }
 
 export class LibraryMemberListsPageLoaded implements Action {
   readonly type = LibraryMemberListActionTypes.LibraryMemberListsPageLoaded;
-
   constructor(public payload: { libraryMemberLists: LibraryMemberIssueModel[], totalCount: number, page: QueryParamsModel }) {
   }
 }

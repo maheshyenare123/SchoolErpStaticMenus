@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from "@angular/common/http";
 import { Constants } from '../../api_url';
 import { HttpUtilsService, QueryResultsModel, QueryParamsModel } from '../../_base/crud';
-import { LibraryMemberIssueModel } from '../_models/library-member-list.model';
+import { LibraryMemberIssueModel } from '../_models/library-member-lssue.model';
 import { Observable } from 'rxjs';
 
 
