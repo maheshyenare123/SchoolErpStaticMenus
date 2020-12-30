@@ -460,14 +460,22 @@ updateSubjectGroup(_subjectGroup: SubjectGroupDtoModel) {
  * @param _subjectGroup: SubjectGroupDtoModel
  */
 createSubjectGroup(_subjectGroup:SubjectGroupDtoModel) {
+	debugger
 	this.store.dispatch(new SubjectGroupOnServerCreated({ subjectGroup: _subjectGroup }));
 	this.componentSubscriptions = this.store.pipe(
 		select(selectLastCreatedSubjectGroupId),
 		// delay(1000), // Remove this line
 	).subscribe(res => {
 		if (!res) {
+			
 			return;
 		}
+		
+		
+		
+		// else{
+		// 	this.layoutUtilsService.showActionNotification('Class and Section is already assigned.');
+		// }
 
 		// this.dialogRef.close({ _subjectGroup, isEdit: false });
 	});

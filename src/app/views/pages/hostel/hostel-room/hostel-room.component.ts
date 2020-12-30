@@ -57,6 +57,7 @@ files: File[] = [];
 hostelList: HostelModel[] = [];
 roomTypeList: RoomTypeModel[] = [];
 searchType:any
+	List: any;
 
   constructor(public dialog: MatDialog,
 		public snackBar: MatSnackBar,
@@ -138,6 +139,15 @@ this.loadAllRoomType();
 		}, err => {
 		});
   }
+
+  onHotelSelectChange(Id){
+	this.hostelList.map(item=>{
+		if(item.id === Id){
+			this.hostelRoomForm.get('hostelName').setValue(item.hostelName)
+		}
+	})
+  }
+
   loadAllRoomType() {
 		debugger
 		this.roomTypeService.getAllRoomTypes().subscribe(res => {
@@ -147,6 +157,14 @@ this.loadAllRoomType();
 		}, err => {
 		});
 	}
+
+	onRoomTypeSelectChange(Id){
+		this.roomTypeList.map(item=>{
+			if(item.id === Id){
+				this.hostelRoomForm.get('roomType').setValue(item.roomType)
+			}
+		})
+	  }
 	/**
 	 * Load HostelRooms List from service through data-source
 	 */
@@ -234,12 +252,15 @@ this.loadAllRoomType();
 
 createForm() {
 	debugger;
+	
 	this.hostelRoomForm = this.fb.group({
     costPerBed: [this.hostelRoom.costPerBed, Validators.required],
     description: [this.hostelRoom.description, ],
-    hostelId: [this.hostelRoom.hostelId, Validators.required],
+	hostelId: [this.hostelRoom.hostelId, Validators.required],
+	hostelName: [this.hostelRoom.hostelName, Validators.required],
     noOfBed: [this.hostelRoom.noOfBed, Validators.required],
-    roomNo: [this.hostelRoom.roomNo, Validators.required],
+	roomNo: [this.hostelRoom.roomNo, Validators.required],
+	roomType: [this.hostelRoom.roomType, Validators.required],
     roomTypeId: [this.hostelRoom.roomTypeId, Validators.required],
     title: [this.hostelRoom.title, ],
     isActive: [this.hostelRoom.isActive, ],
@@ -267,10 +288,21 @@ prepareHostelRoom(): HostelRoomModel {
 	const controls = this.hostelRoomForm.controls;
 	const _hostelRoom = new HostelRoomModel();
   _hostelRoom.id = this.hostelRoom.id;
-
+// costPerBed: number;
+    // description: string;
+    // hostelId: number;
+    // hostelName: string;
+    // id: number;
+    // isActive: string;
+    // noOfBed: number;
+    // roomNo: string;
+    // roomType: string;
+    // roomTypeId: number;
+    // title: string;
   _hostelRoom.costPerBed = controls.costPerBed.value;
   _hostelRoom.description = controls.description.value;
   _hostelRoom.hostelId = controls.hostelId.value;
+  _hostelRoom.hostelName = controls.hostelName.value;
   _hostelRoom.noOfBed = controls.noOfBed.value;
    if(_hostelRoom.id){
      _hostelRoom.isActive = controls.isActive.value; 
@@ -278,6 +310,7 @@ prepareHostelRoom(): HostelRoomModel {
       _hostelRoom.isActive='yes';
   }
 	_hostelRoom.roomNo = controls.roomNo.value;
+	_hostelRoom.roomType = controls.roomType.value;
   _hostelRoom.roomTypeId = controls.roomTypeId.value;
   _hostelRoom.title = controls.title.value;
 

@@ -132,6 +132,16 @@ this.loadAllExpenseHead()
 		}, err => {
 		});
 	}
+
+	onexpHeadSelectChange(Id){
+		this.expenseHeadList.map(item=>{
+			if(item.id === Id){
+				this.expenseForm.get('expCategory').setValue(item.expCategory)
+			}
+		})
+		
+	   
+	  }
 	/**
 	 * Load Expenses List from service through data-source
 	 */
@@ -237,7 +247,7 @@ createForm() {
     name: [this.expense.name, Validators.required],
     note: [this.expense.note, ],
     isActive: [this.expense.isActive, ],
-		isDeleted: [this.expense.isDeleted, ],
+	expHeadexpCategory: [this.expense.expCategory, ],
 	});
 }
 
@@ -286,12 +296,7 @@ prepareExpense(): ExpenseModel {
   }else{
 	_expense.isActive = 'yes';
   }
-  if(_expense.id>0){
-	_expense.isDeleted = controls.isDeleted.value;
-  }else{
-	_expense.isDeleted = 'yes';
-  }
-
+	_expense.expCategory = controls.expCategory.value;
 	_expense.name = controls.name.value;
   _expense.note = controls.note.value;
 

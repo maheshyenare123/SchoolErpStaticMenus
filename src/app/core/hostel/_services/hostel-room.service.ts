@@ -31,6 +31,11 @@ export class HostelRoomService {
     return this.http.get<HostelRoomModel>(Constants.URL.HOST_URL+Constants.Hostels.HostelRoom+ `/${hostelRoomId}`, {headers: httpHeaders});
   }
 
+  AllHostelRoomsByHostelId(id): Observable<HostelRoomModel[]> {
+    const httpHeaders = this.httpUtils.getHTTPHeaders();
+    return this.http.get<HostelRoomModel[]>(Constants.URL.HOST_URL+Constants.Hostels.HostelRoom+`/hostel-id/${id}`, {headers: httpHeaders});
+  }
+
   // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
   // items => filtered/sorted result
   // Server should return filtered/sorted result

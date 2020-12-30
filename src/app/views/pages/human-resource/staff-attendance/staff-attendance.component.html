@@ -109,13 +109,26 @@
                                     </div>
                                     <div class="col-lg-4 kt-margin-bottom-20-mobile">
                                         <mat-form-field class="mat-form-field-fluid">
+                                            <input matInput [matDatepicker]="picker"
+                                                placeholder="Choose a Date "
+                                                formControlName="attendanceDate" />
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-hint align="start">Please enter
+                                                <strong>Date </strong> in 'mm/dd/yyyy' format</mat-hint>
+                                                <mat-error>Date
+                                                    <strong>is required</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+                                            
+                                        <!-- <mat-form-field class="mat-form-field-fluid">
                                             <input matInput placeholder="Enter Text"
                                                 formControlName="searchText" />
                                             <mat-error>Text
                                                 <strong>is required</strong>
                                             </mat-error>
     
-                                        </mat-form-field>
+                                        </mat-form-field> -->
                                     </div>
                                     <div class="col-lg-4 kt-margin-bottom-20-mobile">
 

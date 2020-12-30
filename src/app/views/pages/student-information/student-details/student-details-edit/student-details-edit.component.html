@@ -243,7 +243,7 @@
 
                                                 <div class="col-lg-12 kt-margin-bottom-20-mobile">
                                                     <mat-form-field class="mat-form-field-fluid">
-                                                        <mat-select placeholder="Class" formControlName="classId"(selectionChange)="onClassSelectChange($event.value)">
+                                                        <mat-select placeholder="Class" (selectionChange)="onClassSelectChange($event.value)">
                                                             <mat-option *ngFor="let classData of classList" [value]="classData.id" >
                                                                 {{classData.classses}}
                                                             </mat-option>
@@ -252,7 +252,7 @@
                                                 </div>
                                                 <div class="col-lg-12 kt-margin-bottom-20-mobile">
                                                     <mat-form-field class="mat-form-field-fluid">
-                                                        <mat-select placeholder="Section" formControlName="sectionId">
+                                                        <mat-select placeholder="Section" (selectionChange)="onSectionSelectChange($event.value)">
                                                             <mat-option *ngFor="let sectionData of sectionList" [value]="sectionData.id">
                                                                 {{sectionData.section}}
                                                             </mat-option>
@@ -263,14 +263,15 @@
                                                 <div class="col-lg-12 kt-margin-bottom-20-mobile">
                                                     <mat-form-field class="mat-form-field-fluid">
                                                         <mat-select placeholder="Student" formControlName="siblingId">
-                                                            <mat-option value="00">Business</mat-option>
-                                                            <mat-option value="11">Individual</mat-option>
+                                                            <mat-option *ngFor="let student of studentList" [value]="student.id">
+                                                                {{student.firstname}}  {{student.lastname}}
+                                                            </mat-option>
                                                         </mat-select>
 
                                                     </mat-form-field>
                                                 </div>
                                                 <button type="button" mat-raised-button color="primary"
-                                                    (click)="onSubmit1()" [disabled]="viewLoading"
+                                                (click)="accordion.closeAll()" [disabled]="viewLoading"
                                                     matTooltip="Save changes">
                                                     Save
                                                 </button>
@@ -512,25 +513,22 @@
                                 <hr>
                                 <div class="form-group kt-form__group row">
                                     <div class="col-lg-6 kt-margin-bottom-20-mobile">
-                                        <mat-select placeholder="Route List" formControlName="routeId">
+                                        <mat-select placeholder="Route List" formControlName="routeId" (selectionChange)="onRouteSelectChange($event.value)">
                                             <mat-option *ngFor="let route of routeList" [value]="route.id" >
                                                 {{route.routeTitle}}
                                             </mat-option>
                                         </mat-select>
-                                        <!-- <mat-form-field appearance="fill">
-                                            <mat-label> Route List</mat-label>
-                                            <select matNativeControl formControlName="routeId">
-                                                
-                                                <optgroup label="RajGurunagar">
-                                                    <option value="MH-14-DW-1772">MH-14-DW-1772</option>
-                                                </optgroup>
-                                                <optgroup label="Moshi">
-                                                    <option value="MH-14-XY-6672">MH-14-XY-6672</option>
-                                                </optgroup>
-                                            </select>
-                                        </mat-form-field> -->
+                                    </div>
+                               
+                                    <div class="col-lg-6 kt-margin-bottom-20-mobile">
+                                        <mat-select placeholder="Vehical List" formControlName="vehrouteId">
+                                            <mat-option *ngFor="let vehicle of vehiclesList" [value]="vehicle.id" >
+                                                {{vehicle.vehicleNo}}
+                                            </mat-option>
+                                        </mat-select>
                                     </div>
                                 </div>
+
                                 <label>Hostel Details</label>
                                 <hr>
                                 <div class="form-group kt-form__group row">
@@ -543,7 +541,7 @@
                                         </mat-form-field> -->
 
                                             <mat-form-field class="mat-form-field-fluid">
-                                                <mat-select placeholder="Hostel" >
+                                                <mat-select placeholder="Hostel"  (selectionChange)="onHostelSelectChange($event.value)">
                                                     <mat-option *ngFor="let hostel of hostelList" [value]="hostel.id" >
                                                         {{hostel.hostelName}}
                                                     </mat-option>
@@ -554,8 +552,9 @@
                                     <div class="col-lg-6 kt-margin-bottom-20-mobile">
                                         <mat-form-field class="mat-form-field-fluid">
                                             <mat-select placeholder="Hostel Room Name" formControlName="hostelRoomId">
-                                                <mat-option value="00">Business</mat-option>
-                                                <mat-option value="11">Individual</mat-option>
+                                                <mat-option *ngFor="let hostelRoom of hostelRoomList" [value]="hostelRoom.id" >
+                                                    {{hostelRoom.roomNo}}
+                                                </mat-option>
                                             </mat-select>
 
                                         </mat-form-field>

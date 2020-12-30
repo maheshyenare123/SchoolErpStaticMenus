@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { StaffAttendancesDataSource, StaffAttendanceModel, selectStaffAttendancesActionLoading, RoleService } from '../../../../core/human-resource';
+import { StaffAttendancesDataSource, StaffAttendanceModel, selectStaffAttendancesActionLoading, RoleService, StaffAttendanceService } from '../../../../core/human-resource';
 import { AttendenceTypeService, AttendenceTypeModel } from '../../../../core/attendance';
 import { QueryParamsModel, LayoutUtilsService, MessageType, TypesUtilsService } from '../../../../core/_base/crud';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -60,7 +60,7 @@ export class StaffAttendanceComponent implements OnInit {
 	// Private properties
 	private componentSubscriptions: Subscription;
 
-	searchText : number;
+	attendanceDate : string;
   roleId : number;
 
 
@@ -78,6 +78,7 @@ export class StaffAttendanceComponent implements OnInit {
 		// private studentClassService: StudentClassService,
 		// private sectionService: SectionService,
 		private attendanceTypeService:AttendenceTypeService,
+		private staffAttendanceService: StaffAttendanceService,
 		private roleService:RoleService,) { }
 
 	ngOnInit() {
@@ -149,7 +150,7 @@ loadAllRoles() {
 			this.hasFormErrors = true;
 			return;
 		}
-	const	date = this.typesUtilsService.dateFormat(new Date());
+		const	date = this.typesUtilsService.dateFormat(controls.attendanceDate.value);
 		this.getAllStudentAttendanceList(controls.roleId.value, date);
 
 
@@ -161,7 +162,7 @@ loadAllRoles() {
 		this.subscriptions.push(sortSubscription);
 
 		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-			tap(() => this.loadStaffAttendanceList(this.roleId, this.searchText))
+			tap(() => this.loadStaffAttendanceList(this.roleId, this.attendanceDate))
 		)
 			.subscribe();
 		this.subscriptions.push(paginatorSubscriptions);
@@ -194,7 +195,7 @@ loadAllRoles() {
 		this.subscriptions.push(entitiesSubscription);
 		// First load
 		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-			this.loadStaffAttendanceList(this.roleId, this.searchText);
+			this.loadStaffAttendanceList(this.roleId, this.attendanceDate);
 		}); // Remove this line, just loading imitation
 
 
@@ -212,19 +213,29 @@ loadAllRoles() {
 	/**
 	 * Load StaffAttendances List from service through data-source
 	 */
-	loadStaffAttendanceList(roleId, searchText) {
+	loadStaffAttendanceList(roleId, attendanceDate) {
 		debugger;
-		this.selection.clear();
-		const queryParams = new QueryParamsModel(
-			this.filterConfiguration(),
-			this.sort.direction,
-			this.sort.active,
-			this.paginator.pageIndex,
-			this.paginator.pageSize
-		);
-		// Call request from server
-	//	this.store.dispatch(new StaffAttendancesPageRequested({ page: queryParams, roleId: roleId, searchText: searchText }));
-		this.selection.clear();
+		// this.selection.clear();
+		// const queryParams = new QueryParamsModel(
+		// 	this.filterConfiguration(),
+		// 	this.sort.direction,
+		// 	this.sort.active,
+		// 	this.paginator.pageIndex,
+		// 	this.paginator.pageSize
+		// );
+
+		this.staffAttendanceService.getAllStaffAttendances(roleId,attendanceDate).subscribe(res=>{
+			console.log(res);
+			// studentAttendencesResult
+			const data   =res['data'];
+			this.dataSource=data['content'];
+		})
+	
+	
+
+		// // Call request from server
+		// this.store.dispatch(new StaffAttendancesPageRequested({ page: queryParams, roleId: roleId, searchText: searchText }));
+		// this.selection.clear();
 	}
 
 //save Attendance button 
@@ -305,7 +316,7 @@ console.log(this.staffAttendancesResult);
 		debugger;
 		this.searchForm = this.fb.group({
 			roleId: [this.roleId, ],
-      		searchText: [this.searchText, ],
+			attendanceDate: [this.typesUtilsService.getDateFromString(this.attendanceDate), Validators.compose([Validators.nullValidator])],
    
 		})
 
