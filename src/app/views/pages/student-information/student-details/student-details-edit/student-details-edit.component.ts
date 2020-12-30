@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Material
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -17,9 +17,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudentDtoModel, selectStudentsActionLoading, StudentUpdated, StudentOnServerCreated, selectLastCreatedStudentId, StudentService, CategoryService, CategoryDtoModel, SchoolHousModel, StudentHouseService, } from '../../../../../core/student-information';
 import { StudentClassService, SectionService, StudentClassModel, SectionDtoModel } from 'src/app/core/academics';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HostelModel, HostelService } from 'src/app/core/hostel';
-import { RouteModel, RouteService } from 'src/app/core/transport';
-
+import { HostelModel, HostelRoomModel, HostelRoomService, HostelService } from 'src/app/core/hostel';
+import { AssignVehicleModel, AssignVehicleService, RouteModel, RouteService, VehicleModel } from 'src/app/core/transport';
+import { StudentModel } from 'src/app/core/Models/student.model';
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'kt-student-details-edit',
@@ -29,7 +30,7 @@ import { RouteModel, RouteService } from 'src/app/core/transport';
   encapsulation: ViewEncapsulation.None
 })
 export class StudentDetailsEditComponent implements OnInit {
-
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   // Public properties
   studentDetail: StudentDtoModel;
   studentDetailForm: FormGroup;
@@ -62,6 +63,11 @@ export class StudentDetailsEditComponent implements OnInit {
   studentId: any;
   hostelList: HostelModel[] = [];
   routeList: RouteModel[] = [];
+  assignVehiclesList: AssignVehicleModel[] = [];
+  vehiclesList: VehicleModel[] = [];
+  classId: any;
+  studentList: StudentModel[] = [];
+  hostelRoomList: HostelRoomModel[] = [];
   constructor(
     //public dialogRef: MatDialogRef<StudentDetailsEditDialogComponent>,
     //  @Inject(MAT_DIALOG_DATA) public data: any,
@@ -76,7 +82,9 @@ export class StudentDetailsEditComponent implements OnInit {
     private router: Router,
     private route:ActivatedRoute,
     private hostelService:HostelService,
+    private hostelRoomService:HostelRoomService,
     private routeService: RouteService,
+    private assignVehicleService: AssignVehicleService,
     ) {
   }
 
@@ -102,6 +110,7 @@ this.loadAllStudentCategory();
 this.loadAllStudentHouse()
 this.loadAllHostel();
 this.loadAllRoutes()
+this.loadAllAssignVehicals();
     //this.studentDetail = this.data.studentDetail;
     const newStudent = new StudentDtoModel();
 		newStudent.clear(); // Set all defaults fields
@@ -133,6 +142,7 @@ loadAllClasses() {
 	});
 }
 onClassSelectChange(classId){
+  this.classId = classId;
   this.loadAllSectionsByClassId(classId);
  
 }
@@ -145,6 +155,38 @@ loadAllSectionsByClassId(id:number) {
 	}, err => {
 	});
 }
+
+onSectionSelectChange(sectionId){
+
+  this.loadAllStudentByClassIdandSectionId(this.classId,sectionId);
+ 
+}
+
+loadAllStudentByClassIdandSectionId(classId:number,sectionId:number) {
+	debugger
+	this.studentService.allStudents(0,classId,sectionId).subscribe(res => {
+
+		this.studentList = res['data'];
+		console.log(this.studentList)
+	}, err => {
+	});
+}
+
+onHostelSelectChange(hostelId){
+  this.loadAllHostelRoomsByHostelId(hostelId);
+ 
+}
+loadAllHostelRoomsByHostelId(id:number) {
+	debugger
+	this.hostelRoomService.AllHostelRoomsByHostelId(id).subscribe(res => {
+
+		this.hostelRoomList = res;
+		console.log(this.hostelRoomList)
+	}, err => {
+	});
+}
+
+
 	//get All Source List
 	loadAllStudentCategory() {
 		debugger
@@ -192,6 +234,23 @@ loadAllSectionsByClassId(id:number) {
 		});
 	}
 
+  loadAllAssignVehicals() {
+		debugger
+		this.assignVehicleService.getAllAssignVehicles().subscribe(res => {
+			const data = res['data'];
+			this.assignVehiclesList = data['content'];
+			console.log(this.assignVehiclesList)
+		}, err => {
+		});
+	}
+  onRouteSelectChange(routeId){
+    this.assignVehiclesList.map(item=>{
+      if(item.id === routeId){
+        this.vehiclesList = item.vehicles;
+      }
+    })
+  }
+  
 
   /**
    * On destroy
@@ -215,7 +274,7 @@ loadAllSectionsByClassId(id:number) {
       categoryId: [this.studentDetail.categoryId, 0],
       religion: [this.studentDetail.religion, ''],
       cast: [this.studentDetail.cast, ''],
-      mobileno: [this.studentDetail.mobileno, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      mobileno: [this.studentDetail.mobileno, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)]],
       email: [this.studentDetail.email, Validators.compose([Validators.required, Validators.email])],
       admissionDate: [this.typesUtilsService.getDateFromString(this.studentDetail.admissionDate), Validators.compose([Validators.nullValidator])],
       bloodGroup: [this.studentDetail.bloodGroup, ''],
@@ -229,16 +288,16 @@ loadAllSectionsByClassId(id:number) {
 
     this.parentGuardianFormGroup = this.fb.group({
       fatherName: [this.studentDetail.fatherName, ''],
-      fatherPhone: [this.studentDetail.fatherPhone, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      fatherPhone: [this.studentDetail.fatherPhone, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)]],
       fatherOccupation: [this.studentDetail.fatherOccupation, ''],
       fatherPic: [this.studentDetail.fatherPic, ''],
       motherName: [this.studentDetail.motherName, ''],
-      motherPhone: [this.studentDetail.motherPhone, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      motherPhone: [this.studentDetail.motherPhone, [Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)]],
       motherOccupation: [this.studentDetail.motherOccupation, ''],
       motherPic: [this.studentDetail.motherPic, ''],
       guardianIs: [this.studentDetail.guardianIs, Validators.required],
       guardianName: [this.studentDetail.guardianName, Validators.required],
-      guardianPhone: [this.studentDetail.guardianPhone, [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(10)]],
+      guardianPhone: [this.studentDetail.guardianPhone, [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(10),Validators.minLength(10)]],
       guardianOccupation: [this.studentDetail.guardianOccupation, ''],
       guardianPic: [this.studentDetail.guardianPic, ''],
       guardianRelation: [this.studentDetail.guardianRelation, ''],
@@ -250,7 +309,7 @@ loadAllSectionsByClassId(id:number) {
       currentAddress: [this.studentDetail.currentAddress, ''],
       permanentAddress: [this.studentDetail.permanentAddress, ''],
       routeId: [this.studentDetail.routeId, 0],
-
+      vehrouteId: [this.studentDetail.vehrouteId, 0],
       hostelRoomId: [this.studentDetail.hostelRoomId, 0],
       bankAccountNo: [this.studentDetail.bankAccountNo, ''],
       bankName: [this.studentDetail.bankName, ''],
@@ -279,7 +338,7 @@ loadAllSectionsByClassId(id:number) {
       samagraId: [this.studentDetail.samagraId, ''],
       state: [this.studentDetail.state, ''],
       transportFees: [this.studentDetail.transportFees, 0],
-      vehrouteId: [this.studentDetail.vehrouteId, 0],
+      
 
 
     });
@@ -381,7 +440,7 @@ loadAllSectionsByClassId(id:number) {
     _studentDetail.currentAddress = controls3.currentAddress.value;
     _studentDetail.permanentAddress = controls3.permanentAddress.value;
     _studentDetail.routeId = controls3.routeId.value;
-
+    _studentDetail.vehrouteId = controls3.vehrouteId.value;
     _studentDetail.hostelRoomId = controls3.hostelRoomId.value;
     _studentDetail.bankAccountNo = controls3.bankAccountNo.value;
     _studentDetail.bankName = controls3.bankName.value;
@@ -410,7 +469,7 @@ loadAllSectionsByClassId(id:number) {
     _studentDetail.samagraId = controls.samagraId.value;
     _studentDetail.state = controls.state.value;
     _studentDetail.transportFees = controls.transportFees.value;
-    _studentDetail.vehrouteId = controls.vehrouteId.value;
+   
     if(_studentDetail.id>0){
       _studentDetail.isActive = controls.isActive.value;
     }else{
@@ -491,13 +550,6 @@ loadAllSectionsByClassId(id:number) {
 
       this.hasFormErrors = true;
       return;
-    }
-
-    const editedstudentDetail = this.preparestudentDetail();
-    if (editedstudentDetail.id > 0) {
-      this.updateStudentDetail(editedstudentDetail);
-    } else {
-      this.createStudentDetail(editedstudentDetail);
     }
   }
   /**

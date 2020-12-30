@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from "@angular/common/http";
+import { HttpClient,HttpHeaders, HttpParams } from "@angular/common/http";
 import { Constants } from '../../api_url';
 import { HttpUtilsService, QueryResultsModel, QueryParamsModel } from '../../_base/crud';
 import { StaffAttendanceModel } from '../_models/staff-attendance.model';
@@ -21,9 +21,30 @@ export class StaffAttendanceService {
   }
 
   // READ
-  getAllStaffAttendances(): Observable<StaffAttendanceModel[]> {
+  // getAllStaffAttendances(): Observable<StaffAttendanceModel[]> {
+  //   const httpHeaders = this.httpUtils.getHTTPHeaders();
+  //   return this.http.get<StaffAttendanceModel[]>(Constants.URL.HOST_URL+Constants.Human_Resource.Staff_Attendance, {headers: httpHeaders});
+  // }
+
+
+  getAllStaffAttendances(roleId:number,date:string){
+    // http://yamistha.cloudjiffy.net/api/student-attendance?classesId=1&date=2020-11-19&pageNo=0&pageSize=10&sectionId=1&sortBy=id
     const httpHeaders = this.httpUtils.getHTTPHeaders();
-    return this.http.get<StaffAttendanceModel[]>(Constants.URL.HOST_URL+Constants.Human_Resource.Staff_Attendance, {headers: httpHeaders});
+    // const httpParams = this.httpUtils.getFindHTTPParams(queryParams);
+  
+    const httpParams =new HttpParams()
+    .set('roleId', roleId.toString())
+    .set('date', date)
+    .set('pageNo', '0')
+    .set('pageSize', '10')
+    .set('sortBy', 'id');
+    
+    const url =Constants.URL.HOST_URL+Constants.Attendance.Student_Attendance ;
+    return this.http.get<QueryResultsModel>(url, {
+      headers: httpHeaders,
+      params: httpParams
+    });
+  
   }
 
   getStaffAttendanceById(staffAttendanceId: number): Observable<StaffAttendanceModel> {

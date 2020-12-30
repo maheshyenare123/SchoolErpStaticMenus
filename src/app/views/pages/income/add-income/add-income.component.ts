@@ -131,6 +131,14 @@ this.loadAllIncomeHead();
 		}, err => {
 		});
 	}
+
+	onIncHeadSelectChange(Id){
+		this.incomeHeadList.map(item=>{
+			if(item.id === Id){
+				this.incomeForm.get('incHeadIncomeCategory').setValue(item.incomeCategory)
+			}
+		})
+	  }
 	/**
 	 * Load Incomes List from service through data-source
 	 */
@@ -231,7 +239,8 @@ createForm() {
     amount: [this.income.amount, Validators.required],
     date: [this.typesUtilsService.getDateFromString(this.income.date), Validators.compose([Validators.nullValidator])],
     documents: [this.income.documents, ],
-    incHeadId: [this.income.incHeadId, Validators.required],
+	incHeadId: [this.income.incHeadId, Validators.required],
+	incHeadIncomeCategory: [this.income.incHeadIncomeCategory, Validators.required],
     invoiceNo: [this.income.invoiceNo, ],
     name: [this.income.name, Validators.required],
     note: [this.income.note, ],
@@ -279,6 +288,7 @@ prepareIncome(): IncomeModel {
     }
   _income.documents = controls.documents.value;
   _income.incHeadId = controls.incHeadId.value;
+  _income.incHeadIncomeCategory = controls.incHeadIncomeCategory.value;
   _income.invoiceNo = controls.invoiceNo.value;
   if(_income.id>0){
 	_income.isActive = controls.isActive.value;

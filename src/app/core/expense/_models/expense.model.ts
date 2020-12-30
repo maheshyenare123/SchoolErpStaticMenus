@@ -4,10 +4,10 @@ export class ExpenseModel {
     date: string;
     documents: string;
     expHeadId: number;
+    expCategory: string;
     id: number;
     invoiceNo: string;
     isActive: string;
-    isDeleted: string;
     name: string;
     note: string;
 
@@ -16,10 +16,10 @@ export class ExpenseModel {
         this.date= '';
         this.documents= '';
         this.expHeadId= 0;
+        this.expCategory=''
         this.id= 0;
         this.invoiceNo= '';
         this.isActive= '';
-        this.isDeleted= '';
         this.name= '';
         this.note= '';
     }

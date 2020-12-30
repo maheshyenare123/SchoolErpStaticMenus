@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-lg-12 kt-margin-bottom-20-mobile">
                                     <mat-form-field class="mat-form-field-fluid">
-                                        <mat-select placeholder="Hostel" formControlName="hostelId">
+                                        <mat-select placeholder="Hostel" formControlName="hostelId" (selectionChange)="onHotelSelectChange($event.value)">
                                             <mat-option *ngFor="let hostel of hostelList" [value]="hostel.id" >
                                                 {{hostel.hostelName}}
                                             </mat-option>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-lg-12 kt-margin-bottom-20-mobile">
                                     <mat-form-field class="mat-form-field-fluid">
-                                        <mat-select placeholder="Room Type" formControlName="roomTypeId">
+                                        <mat-select placeholder="Room Type" formControlName="roomTypeId" (selectionChange)="onRoomTypeSelectChange($event.value)">
                                             <mat-option *ngFor="let roomType of roomTypeList" [value]="roomType.id" >
                                                 {{roomType.roomType}}
                                             </mat-option>
@@ -150,12 +150,12 @@
                         <ng-container matColumnDef="hostelId">
                             <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Hostel
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let hostelRoom">{{hostelRoom.hostelId}}</mat-cell>
+                            <mat-cell *matCellDef="let hostelRoom">{{hostelRoom.hostelName}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="roomTypeId">
                             <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>Room Type
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let hostelRoom">{{hostelRoom.roomTypeId}}</mat-cell>
+                            <mat-cell *matCellDef="let hostelRoom">{{hostelRoom.roomType}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="noOfBed">
                             <mat-header-cell class="w-75" *matHeaderCellDef mat-sort-header>No Of Bed

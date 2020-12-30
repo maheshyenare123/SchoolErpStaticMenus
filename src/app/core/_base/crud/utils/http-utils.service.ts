@@ -29,7 +29,7 @@ export class HttpUtilsService {
    */
   getHTTPHeaders(): HttpHeaders {
     let result = new HttpHeaders();
-const accessToken=localStorage.getItem('token');
+const accessToken= localStorage.getItem('token');
 
     result = result.set('Content-Type', 'application/json');
     result = result.set('Authorization', 'Bearer ' +accessToken);

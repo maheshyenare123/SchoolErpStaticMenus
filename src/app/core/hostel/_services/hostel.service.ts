@@ -77,7 +77,6 @@ export class HostelService {
     return this.http.put<QueryResultsModel>(url, body, {headers: httpHeaders});
   }
 
-
 }
 
 

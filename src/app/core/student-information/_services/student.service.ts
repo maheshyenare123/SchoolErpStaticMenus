@@ -56,7 +56,26 @@ export class StudentService {
     });
   }
 
+  allStudents(IsPagination,classId,sectionId): Observable<any> {
+    // Note: Add headers if needed (tokens/bearer)
+    const httpHeaders = this.httpUtils.getHTTPHeaders();
+    // const httpParams = this.httpUtils.getFindHTTPParams(queryParams);
+    // httpParams.set('isActive', 'active')
 
+    const httpParams =new HttpParams()
+      .set('IsPagination', IsPagination)
+      .set('classId', classId)
+      .set('isActive', 'yes')
+      .set('sectionId', sectionId)
+      .set('sortBy', 'id');
+
+      // http://yamistha.cloudjiffy.net/api/student?isActive=yes&pageNo=0&pageSize=10&sortBy=id
+    const url =Constants.URL.HOST_URL+Constants.Student_Information.Student ;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+      params: httpParams
+    });
+  }
 
 
   // http://yamistha.cloudjiffy.net/api/student/api/disable-student?classId=1&pageNo=0&pageSize=10&sectionId=1&sortBy=id

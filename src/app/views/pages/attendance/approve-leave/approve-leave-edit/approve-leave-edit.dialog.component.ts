@@ -42,6 +42,7 @@ export class ApproveLeaveEditDialogComponent implements OnInit, OnDestroy {
 	classList: StudentClassModel[] = [];
 	sectionList: SectionDtoModel[] = [];
 	studentList: StudentDtoModel[] = [];
+	classId: any;
 
 	constructor(public dialogRef: MatDialogRef<ApproveLeaveEditDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -76,6 +77,7 @@ export class ApproveLeaveEditDialogComponent implements OnInit, OnDestroy {
 		});
 	}
 	onClassSelectChange(classId) {
+		this.classId = classId;
 		this.loadAllSectionsByClassId(classId);
 	}
 	loadAllSectionsByClassId(id: number) {
@@ -87,22 +89,22 @@ export class ApproveLeaveEditDialogComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	onSectionSelectChange(sectionId) {
+	onSectionSelectChange(sectionId){
 
-		this.loadAllStudent(this.approveLeaveForm.controls['classId'].value, sectionId)
-	}
-
-
-	loadAllStudent(classsId, sectionId) {
-		debugger
-		this.studentService.getAllStudents(classsId, sectionId).subscribe(res => {
-			const data = res['data'];
-			this.studentList = data['content'];
-			console.log(this.studentList)
-
-		}, err => {
-		});
-	}
+		this.loadAllStudentByClassIdandSectionId(this.classId,sectionId);
+	   
+	  }
+	  
+	  loadAllStudentByClassIdandSectionId(classId:number,sectionId:number) {
+		  debugger
+		  this.studentService.allStudents(0,classId,sectionId).subscribe(res => {
+	  
+			  this.studentList = res['data'];
+			  console.log(this.studentList)
+		  }, err => {
+		  });
+	  }
+	  
 	/**
 	 * On destroy
 	 */

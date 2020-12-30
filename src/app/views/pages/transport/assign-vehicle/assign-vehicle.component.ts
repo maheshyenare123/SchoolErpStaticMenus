@@ -269,6 +269,7 @@ createForm() {
 	debugger;
 	this.assignVehicleForm = this.fb.group({
 	routeId: [this.assignVehicle.routeId, Validators.required],
+	routeTitle: [this.assignVehicle.routeTitle, Validators.required],
 	isActive: [this.assignVehicle.isActive, ],
     // sections: [this.assignVehicle.sections, Validators.required],
 		// subjects: [this.assignVehicle.subjects, Validators.required],
@@ -290,10 +291,13 @@ onVehicleCheckBoxChanges(_isChecked: boolean, id: number) {
 	}
 }
 
-onRouteSelectChange(classId){
-	var classObj=this.routeList.find(x => x.id === classId);
-	// this.assignVehicleForm.controls.className.setValue(classObj.classses);
-
+onRouteSelectChange(routeId){
+	this.routeList.map(item=>{
+		if(item.id === routeId){
+				this.assignVehicleForm.controls.routeTitle.setValue(item.routeTitle);
+		}
+	})
+	
 }
 /**
  * Check control is invalid
@@ -321,7 +325,7 @@ prepareAssignVehicle(): AssignVehicleModel {
 		_assignVehicle.isActive = 'yes';
 	}
   _assignVehicle.routeId = controls.routeId.value;
-  
+  _assignVehicle.routeTitle = controls.routeTitle.value;
 //   _assignVehicle.sections = controls.sections.value;
 //   _assignVehicle.subjects = controls.subjects.value;
 

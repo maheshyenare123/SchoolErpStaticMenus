@@ -46,6 +46,8 @@ export class StudentDetailService {
     });
   }
 
+
+  
   // UPDATE => PUT: update the studentDetail on the server
   updateStudentDetail(studentDetail: StudentDtoModel): Observable<any> {
     const httpHeaders = this.httpUtils.getHTTPHeaders();
