@@ -23,7 +23,7 @@ export class EnquiryModel {
 
     address: string;
     assigned: string;
-    classesId: 0;
+    classId: 0;
     classes: string;
     contact: string;
     date: string;
@@ -45,7 +45,7 @@ export class EnquiryModel {
         this.address = '';
         this.assigned = '';
         this.classes = '';
-        this.classesId = 0;
+        this.classId = 0;
         this.contact = '';
         this.date = '';
         this.description = '';
